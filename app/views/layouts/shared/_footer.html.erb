@@ -1,0 +1,22 @@
+<footer role='contentinfo'> 
+  <div id='footer-container'>
+    <div id='footer'>
+      <div class='row'>
+        <div class='col-sm-4'>
+
+        </div>
+        <div id='footer-links'  class="col-sm-8">
+          <ul>
+            <li><a href='https://www.lib.berkeley.edu/visit/earth-sciences'>!!!!Earth Sciences &amp; Map Library</a></li>
+            <li><%= link_to(
+              (image_tag "library_logo_white.svg",
+                "alt" => "UC Berkeley Main Library",
+                "data-svg-fallback" => (image_tag "library_logo_white.png")),
+              "http://www.lib.berkeley.edu/",
+              :class => 'footer-img') %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
