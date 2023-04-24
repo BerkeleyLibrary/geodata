@@ -1,3 +1,10 @@
+# Read Docker secrets into the environment
+Dir['/run/secrets/*'].each do |filepath|
+  secret = File.read(filepath)
+  secret_name = File.basename(filepath)
+  ENV[secret_name] ||= secret unless secret.empty?
+end
+
 require_relative "boot"
 
 require "rails/all"
@@ -10,6 +17,7 @@ module Geodata
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+    config.action_mailer.default_options = { from: "lib-geodata@berkeley.edu" }
     config.lit_gtag_id = ENV.fetch('LIT_GTAG_ID', nil)
     # Configuration for the application, engines, and railties goes here.
     #
