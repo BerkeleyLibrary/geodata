@@ -2,15 +2,16 @@
 $ucb_footer_height: 100px;
 $darkblue: #003262 !default;
 
-* {
-  box-sizing: border-box;
-}
+// * {
+//   box-sizing: border-box;
+// }
 
 .ucb_container{
   min-height: 100%;
-  // width: 100%;
+  width: 100%;
   // background:yellow;
-  margin-bottom: ucb_footer_height; 
+  margin-bottom: 100px; 
+  
 
   // @media (min-width: 768px) {
   //   margin-bottom: ucb_footer_height !important;
@@ -18,7 +19,7 @@ $darkblue: #003262 !default;
 }
 
 .spacer {
-  height: ucb_footer_height; 
+  height: 100px;
   // background:red;
 }
 
