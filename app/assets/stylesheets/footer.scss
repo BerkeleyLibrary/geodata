@@ -1,15 +1,15 @@
 #footer-container {
-  background-color:  #003262;
+  background-color: darkblue;
   clear: both;
   margin-top: 25px;
   position: absolute;
   width: 100%;
 }
 
-#footer {
+#footer {  
   height: 100px;
   padding: 20px 0 10px 0;
-
+ 
   ul {
     list-style-type: none;
 
@@ -25,15 +25,15 @@
       padding: 0 50px 0 0;
     }
   }
-
+  
   li a {
     white-space: nowrap;
-    color: #ffffff;
+    color: white;
     font-weight: bold;
     font-size: 16px;
     &:hover,
     &:focus {
-      color: #fdb515;
+      color: #fdb515; 
     }
   }
 
