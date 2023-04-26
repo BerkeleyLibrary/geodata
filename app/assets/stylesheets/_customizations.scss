@@ -1,26 +1,12 @@
 
-$ucb_footer_height: 100px;
-$darkblue: #003262 !default;
-
-// * {
-//   box-sizing: border-box;
-// }
-
 .ucb_container{
   min-height: 100%;
-  width: 100%;
-  // background:yellow;
-  margin-bottom: 90px; 
-  
-
-  // @media (min-width: 768px) {
-  //   margin-bottom: ucb_footer_height !important;
-  // }
+  width: 100%;  
+  margin-bottom: 90px;
 }
 
 .spacer {
   height: 90px;
-  // background:red;
 }
 
 .navbar {  

@@ -1,5 +1,5 @@
 #footer-container {
-  background-color: darkblue;
+  background-color: #003262;
   clear: both;
   margin-top: 25px;
   position: absolute;
@@ -8,20 +8,15 @@
 
 #footer {  
   @extend .container-fluid;
-  height:90px;
-  
-  padding-top: 30px;
-  
- 
+  height:90px;  
+  padding-top: 30px; 
   ul {
     list-style-type: none;
-
     margin: 0;
     padding: 0;
     :last-child {
                 margin-right:20px;
     }
-
     li {
       display: inline;
       margin: 0 12px 4px 0;
@@ -39,7 +34,6 @@
       color: #fdb515; 
     }
   }
-
 }
 
 #footer-links {
