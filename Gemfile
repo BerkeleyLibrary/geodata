@@ -11,7 +11,8 @@ gem 'omniauth-cas'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
-gem 'pg'
+gem "pg", "~> 1.4.6"
+# gem 'pg'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"

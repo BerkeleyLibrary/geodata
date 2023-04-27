@@ -279,7 +279,7 @@ GEM
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
     ostruct (0.5.5)
-    pg (1.5.2)
+    pg (1.4.6)
     popper_js (1.16.1)
     public_suffix (5.0.1)
     puma (5.6.5)
@@ -417,7 +417,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   omniauth-cas
-  pg
+  pg (~> 1.4.6)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   rsolr (>= 1.0, < 3)
