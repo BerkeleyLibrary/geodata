@@ -8,6 +8,6 @@ class SessionsController < ApplicationController
     if signed_in?
       sign_out current_user
     end
-    redirect_to calnet_logout_url
+    redirect_to calnet_logout_url, allow_other_host: true
   end
 end
