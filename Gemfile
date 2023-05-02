@@ -32,6 +32,7 @@ group :development, :test do
   gem 'rubocop-rails', '~> 2.19', '>= 2.19.1', require: false
   gem 'rubocop-rspec', '~> 2.20', require: false
   gem 'solr_wrapper', '>= 0.3'
+  gem 'brakeman'
 
 end
 
