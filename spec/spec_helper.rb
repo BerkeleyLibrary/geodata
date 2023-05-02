@@ -10,7 +10,7 @@ ENV['RAILS_ENV'] = 'test'
 # require 'simplecov' if ENV['COVERAGE']
 require 'simplecov'
 require 'rspec_junit_formatter'
-SimpleCov.start 'rails'
+# SimpleCov.start 'rails'
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

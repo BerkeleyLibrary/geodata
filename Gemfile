@@ -25,6 +25,7 @@ gem "devise"
 gem "devise-guests", "~> 0.8"
 
 group :development, :test do
+  gem "rspec-rails"
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "solr_wrapper", ">= 0.3"
 end
@@ -34,7 +35,7 @@ group :development do
 end
 
 group :test do
-  gem "rspec-rails"
+ 
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
