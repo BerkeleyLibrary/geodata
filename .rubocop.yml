@@ -36,7 +36,7 @@ Layout/EmptyLinesAroundModuleBody:
 
 # Reasonable line-length check; it's too easy for the cure to be worse than the disease
 Layout/LineLength:
-  Max: 150
+  Max: 350
 
 # Make indents consistent regardless of the lengths of variables and method names and whatnot
 Layout/MultilineMethodCallIndentation:
@@ -344,3 +344,10 @@ Rails/RedundantPresenceValidationOnBelongsTo: # new in 2.13
 Rails/RootJoinChain: # new in 2.13
   Enabled: true
 
+# to skip default code generation
+Layout/ClassLength:
+  Enabled: false
+Layout/MethodLength:
+  Enabled: false
+Layout/BlockLength:
+  Enabled: false

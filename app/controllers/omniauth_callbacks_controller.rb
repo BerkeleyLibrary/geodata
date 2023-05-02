@@ -7,7 +7,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     }.to_json)
 
     user = User.from_calnet(auth_params)
-    print user.calnet_uid
+    Rails.logger.info(user.calnet_uid)   
     sign_in user
 
     # @note Devise clears session variables matching "devise.*" after sign in,
