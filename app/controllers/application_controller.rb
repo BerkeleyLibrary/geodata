@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Shim because we're not using Devise's :database_authenticatable
-  def new_session_path(scope)
+  def new_session_path(_scope)
     new_user_session_path
   end
 
@@ -20,10 +20,9 @@ class ApplicationController < ActionController::Base
   def calnet_logout_url(return_url = root_url)
     host = Devise.omniauth_configs[:calnet].options[:host]
     path = Devise.omniauth_configs[:calnet].options[:logout_url]
-    URI::HTTPS.build(host: host, path: path, query: {
-      service: return_url,
+    URI::HTTPS.build(host:, path:, query: {
+      service: return_url
     }.to_query).to_s
   end
-
 
 end

@@ -6,8 +6,6 @@ require 'rails_helper'
 #   end
 # end
 
-require 'rails_helper'
-
 RSpec.describe 'View Catalog' do
   it 'can view Home Page' do
     get '/'
@@ -15,4 +13,3 @@ RSpec.describe 'View Catalog' do
     expect(response.body).to include('UC Berkeley GeoData Repository')
   end
 end
-

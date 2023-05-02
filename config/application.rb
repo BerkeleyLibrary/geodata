@@ -5,9 +5,9 @@ Dir['/run/secrets/*'].each do |filepath|
   ENV[secret_name] ||= secret unless secret.empty?
 end
 
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -17,7 +17,7 @@ module Geodata
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-    config.action_mailer.default_options = { from: "lib-geodata@berkeley.edu" }
+    config.action_mailer.default_options = { from: 'lib-geodata@berkeley.edu' }
     config.lit_gtag_id = ENV.fetch('LIT_GTAG_ID', nil)
     # Configuration for the application, engines, and railties goes here.
     #
