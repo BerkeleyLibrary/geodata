@@ -68,3 +68,6 @@ yarn-debug.log*
 
 # Ignore solr data
 /solr/geodata-test/*
+
+# Build/test artifacts
+/artifacts/
