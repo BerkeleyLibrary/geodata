@@ -28,6 +28,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "solr_wrapper", ">= 0.3"
+  gem 'colorize'
 end
 
 group :development do  

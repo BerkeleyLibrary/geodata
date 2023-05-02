@@ -6,10 +6,10 @@ ENV['RAILS_ENV'] = 'test'
 # ------------------------------------------------------------
 # Dependencies
 
-# require 'colorize'
-# require 'simplecov' if ENV['COVERAGE']
-require 'simplecov'
-require 'rspec_junit_formatter'
+require 'colorize'
+require 'simplecov' if ENV['COVERAGE']
+# require 'simplecov'
+# require 'rspec_junit_formatter'
 # SimpleCov.start 'rails'
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
