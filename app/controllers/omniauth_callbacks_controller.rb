@@ -1,19 +1,8 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # Sets session data following successful Calnet login
   def calnet
-    Rails.logger.debug({
-      message: 'Received omniauth calnet callback',
-      omniauth_params: auth_params
-    }.to_json)
-
-    user = User.from_calnet(auth_params)
-    Rails.logger.info(user.calnet_uid)
-    sign_in user
-
-    # @note Devise clears session variables matching "devise.*" after sign in,
-    # so we must add this supplemental data *after* calling sign_in.
-    # set_roles_from_casauth(auth_params)
-
+    check_auth_params
+    calnet_sign_in
     redirect_to params[:url] || root_path
   rescue StandardError => e
     logger.error "Calnet | ERROR: #{e.inspect}"
@@ -23,7 +12,21 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
+  def calnet_sign_in
+    user = User.from_calnet(auth_params)
+    Rails.logger.info(user.calnet_uid)
+    sign_in user
+  end
+
   def auth_params
     request.env['omniauth.auth']
   end
+
+  def check_auth_params
+    Rails.logger.debug({
+      message: 'Received omniauth calnet callback',
+      omniauth_params: auth_params
+    }.to_json)
+  end
+
 end
