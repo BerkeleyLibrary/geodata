@@ -6,7 +6,7 @@ ENV['RAILS_ENV'] = 'test'
 # ------------------------------------------------------------
 # Dependencies
 
-require 'colorize'
+# require 'colorize'
 require 'simplecov' if ENV['COVERAGE']
 # require 'simplecov'
 # require 'rspec_junit_formatter'
