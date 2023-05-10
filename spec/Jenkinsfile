@@ -1,0 +1,11 @@
+dockerComposePipeline(
+  stack: [template: 'postgres-solr'],
+  commands: [
+    'rake db:setup',
+    'rake geoblacklight:index:seed',
+    'rake spec',
+  ],
+  artifacts: [
+    junit: 'artifacts/rspec/specs.xml',
+  ]
+)

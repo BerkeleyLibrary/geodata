@@ -66,11 +66,5 @@ yarn-debug.log*
 /storage/*
 !/storage/.keep
 
-# Ignore solr data
-/solr/geodata-test/data/index/*
-!/solr/geodata-test/data/index/segments_*
-/solr/geodata-test/data/tlog/*
-
-
 # Build/test artifacts
 /artifacts/

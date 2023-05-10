@@ -12,3 +12,4 @@
 
 // Required by GeoBlacklight
 //= require geoblacklight
+

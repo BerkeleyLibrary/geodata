@@ -33,7 +33,7 @@ group :development, :test do
   gem 'rubocop-rspec', '~> 2.20', require: false
   gem 'solr_wrapper', '>= 0.3'
   gem 'brakeman'
-
+  # gem 'factory_bot_rails'
 end
 
 group :development do
@@ -41,7 +41,6 @@ group :development do
 end
 
 group :test do
-
   gem 'capybara'
   gem 'rspec_junit_formatter', require: false
   gem 'selenium-webdriver'

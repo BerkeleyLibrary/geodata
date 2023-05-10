@@ -1,4 +1,5 @@
 require 'active_support/core_ext/integer/time'
+require Rails.root.join('app/mailers/interceptors/staging_interceptor')
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -63,6 +64,22 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "geodata_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true   # set to false later
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => 'smtp.gmail.com',
+    :port                 => 587,
+    :domain               => 'berkeley.edu',
+    :user_name            => ENV['MAIL_USERNAME'] || 'lib-geodata@berkeley.edu',
+    :password             => ENV['MAIL_PASSWORD'],
+    :authentication       => 'plain',
+    :enable_starttls_auto => true,
+  }
+
+  if ENV["INTERCEPT_EMAILS"].present?
+    ActionMailer::Base.register_interceptor(StagingInterceptor)
+  end
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -73,7 +90,7 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # Don't log any deprecations.
-  config.active_support.report_deprecations = false
+  config.active_support.report_deprecations = :notify
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
