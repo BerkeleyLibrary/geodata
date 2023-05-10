@@ -65,21 +65,19 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = true   # set to false later
+  config.action_mailer.raise_delivery_errors = true # set to false later
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => 'smtp.gmail.com',
-    :port                 => 587,
-    :domain               => 'berkeley.edu',
-    :user_name            => ENV['MAIL_USERNAME'] || 'lib-geodata@berkeley.edu',
-    :password             => ENV['MAIL_PASSWORD'],
-    :authentication       => 'plain',
-    :enable_starttls_auto => true,
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'berkeley.edu',
+    user_name: ENV['MAIL_USERNAME'] || 'lib-geodata@berkeley.edu',
+    password: ENV['MAIL_PASSWORD'],
+    authentication: 'plain',
+    enable_starttls_auto: true
   }
 
-  if ENV["INTERCEPT_EMAILS"].present?
-    ActionMailer::Base.register_interceptor(StagingInterceptor)
-  end
+  ActionMailer::Base.register_interceptor(StagingInterceptor) if ENV['INTERCEPT_EMAILS'].present?
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

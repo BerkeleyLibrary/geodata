@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NotificationsMailer, :type => :mailer do
+RSpec.describe NotificationsMailer, type: :mailer do
   describe 'Email notification' do
     let(:mail) { NotificationsMailer.signup.deliver_now }
 

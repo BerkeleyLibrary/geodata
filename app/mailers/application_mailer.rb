@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: 'lib-geodata@berkeley.edu'
   layout 'mailer'
 end

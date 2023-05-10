@@ -25,14 +25,14 @@ gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
-  #gem 'colorize'
+  # gem 'colorize'
+  gem 'brakeman'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rails', '~> 2.19', '>= 2.19.1', require: false
   gem 'rubocop-rspec', '~> 2.20', require: false
   gem 'solr_wrapper', '>= 0.3'
-  gem 'brakeman'
   # gem 'factory_bot_rails'
 end
 
