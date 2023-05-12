@@ -88,13 +88,13 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: root
 
-    solr:
-        image: solr:${SOLR_VERSION}
-        restart: always
-        ports:
-          - 8983:8983
-        volumes:
-          - ./solr:/var/solr/data/configsets/solr:delegated
+      solr:
+          image: solr:${SOLR_VERSION}
+          restart: always
+          ports:
+            - 8983:8983
+          volumes:
+            - ./solr:/var/solr/data/configsets/solr:delegated
 
     steps:
       - name: Run tests
