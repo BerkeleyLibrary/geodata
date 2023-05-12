@@ -104,3 +104,22 @@ COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
 RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java \
 &&  rails assets:precompile assets:clean log:clear tmp:clear
 RUN mkdir tmp/cache/downloads
+
+
+# Preserve build arguments - from galc
+
+# passed in by CI
+ARG BUILD_TIMESTAMP
+ARG BUILD_URL
+ARG DOCKER_TAG
+ARG GIT_BRANCH
+ARG GIT_COMMIT
+ARG GIT_URL
+
+# build arguments aren't persisted in the image, but ENV values are
+ENV BUILD_TIMESTAMP="${BUILD_TIMESTAMP}"
+ENV BUILD_URL="${BUILD_URL}"
+ENV DOCKER_TAG="${DOCKER_TAG}"
+ENV GIT_BRANCH="${GIT_BRANCH}"
+ENV GIT_COMMIT="${GIT_COMMIT}"
+ENV GIT_URL="${GIT_URL}"
