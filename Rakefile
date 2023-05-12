@@ -6,7 +6,7 @@
 
 require File.expand_path('config/application', __dir__)
 Rails.application.load_tasks
-# require 'solr_wrapper/rake_task' unless Rails.env.production?
+require 'solr_wrapper/rake_task' unless Rails.env.production?
 
 # ------------------------------------------------------------
 # Setup
@@ -23,9 +23,8 @@ task :check do
 
   Rake::Task[:setup].invoke
   # Rake::Task[:coverage].invoke
-  Rake::Task[:solr:restart].invoke  
-  # may not need to call this
-  # Rake::Task[:geoblacklight:index:seed].invoke
+  # Rake::Task[':solr:restart'].invoke  
+  Rake::Task[':geoblacklight:index:seed'].invoke
   Rake::Task[:rspec].invoke
 end
 
