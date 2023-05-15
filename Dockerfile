@@ -101,8 +101,12 @@ COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
 # Sanity-check that the bundle is correctly installed, that the Gemfile
 # and Gemfile.lock are synced, and that assets are able to be compiled.
 # no need to run bundle install
+# RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java \
+# &&  rails assets:precompile assets:clean log:clear tmp:clear
+# RUN mkdir tmp/cache/downloads
+
 RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java \
-&&  rails assets:precompile assets:clean log:clear tmp:clear
+&&  log:clear tmp:clear
 RUN mkdir tmp/cache/downloads
 
 
