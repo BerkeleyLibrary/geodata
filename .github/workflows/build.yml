@@ -90,7 +90,7 @@ jobs:
           POSTGRES_PASSWORD: root
 
       solr:
-          image: solr:${SOLR_VERSION}
+          image: solr:${{SOLR_VERSION}}
           # restart: always
           ports:
             - 8983:8983
