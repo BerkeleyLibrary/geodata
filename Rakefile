@@ -24,7 +24,7 @@ task :check do
 
   Rake::Task[:setup].invoke
   # Rake::Task[:coverage].invoke
-  # Rake::Task[':solr:restart'].invoke  
+  Rake::Task['solr:restart'].invoke  
   Rake::Task['geoblacklight:index:seed'].invoke
   Rake::Task[:rspec].invoke
 end

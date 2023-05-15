@@ -91,7 +91,7 @@ jobs:
 
       solr:
           image: solr:8
-          restart: always
+          #restart: always
           ports:
             - 8983:8983
           volumes:
