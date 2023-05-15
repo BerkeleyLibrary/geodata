@@ -95,7 +95,7 @@ jobs:
           ports:
             - 8983:8983
           volumes:
-            - ./solr:/var/solr/data/configsets/solr:delegated
+            - ${{ github.workspace }}/solr:/var/solr/data/configsets/solr:delegated
 
     steps:
       - name: Run tests
