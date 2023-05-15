@@ -107,7 +107,7 @@ COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
 
 # RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java \
 # &&  log:clear tmp:clear
-RUN mkdir tmp/cache/downloads
+# RUN mkdir tmp/cache/downloads
 
 
 # Preserve build arguments - from galc
