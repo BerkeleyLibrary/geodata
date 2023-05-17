@@ -27,6 +27,7 @@ RUN apt-get update -qq
 RUN apt-get install -y --no-install-recommends \
      bash \
      curl \
+     default-jre \
      ca-certificates \    
      nodejs \
      libpq-dev \
