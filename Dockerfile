@@ -2,7 +2,7 @@
 # Target: base
 # Includes system dependencies common to both dev and production.
 
-FROM ruby:3.2.2-slim AS base
+FROM ruby:3.2.2 AS base
 
 # This is just metadata and doesn't actually "expose" this port. Rather, it
 # tells other tools (e.g. Traefik) what port the service in this image is
