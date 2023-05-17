@@ -1,0 +1,5 @@
+
+collection:
+  dir: solr/geodata-test/
+  name: geodata-test
+version: 8

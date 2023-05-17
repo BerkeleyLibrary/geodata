@@ -15,6 +15,19 @@ desc 'Set up DB'
 # task setup: %w[db:await db:setup]
 task setup: %w[db:setup]
 
+#------------------
+# create solr instance and seeding
+desc 'Solr seeds'
+task prepare_solr: [environment] do 
+  if Rails.env.test?
+    SolrWrapper.wrap do |solr|
+      solr.with_collection(name: 'geodata-test', dir: "#{Rails.root}/solr/geodata-test") do
+        Rake::Task['geoblacklight:solr:seed'].invoke      
+      end
+    end
+  end
+end
+
 # ------------------------------------------------------------
 # Check (setup + coverage)
 
@@ -24,8 +37,9 @@ task :check do
 
   Rake::Task[:setup].invoke
   # Rake::Task[:coverage].invoke
-  Rake::Task['solr:restart'].invoke  
-  Rake::Task['geoblacklight:index:seed'].invoke
+  # Rake::Task['solr:restart'].invoke  
+  # Rake::Task['geoblacklight:index:seed'].invoke
+  Rake::Task[:prepare_solr].invoke
   Rake::Task[:rspec].invoke
 end
 
