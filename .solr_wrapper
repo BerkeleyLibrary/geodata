@@ -2,4 +2,4 @@
 collection:
   dir: solr/geodata-test/
   name: geodata-test
-version: 8
+version: '9.2.1'
