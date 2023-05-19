@@ -109,7 +109,7 @@ jobs:
     
       - name: Validate database migrations
         env:
-          RAILS_ENV: production
+          RAILS_ENV: test
           DISABLE_DATABASE_ENVIRONMENT_CHECK: 1
         run: rails --trace db:drop db:create db:migrate
 
