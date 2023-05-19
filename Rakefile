@@ -37,8 +37,9 @@ task :check do
   raise "Can't run specs; expected RAILS_ENV=\"test\", was #{Rails.env.inspect}" unless Rails.env.test?
   require 'solr_wrapper'
   SolrWrapper.wrap do |solr|
+    Rake::Task[:setup].invoke
     solr.with_collection(name: 'geodata-test', dir: "#{Rails.root}/config/solr") do
-      Rake::Task[:setup].invoke
+     
       # Rake::Task[:coverage].invoke
       # Rake::Task['solr:restart'].invoke  
       Rake::Task['geoblacklight:index:seed'].invoke
