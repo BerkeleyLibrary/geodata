@@ -117,7 +117,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: /opt/app/artifacts/**
+          path: |
+            /opt/app/artifacts/**
+            /tmp/solr*/server/logs
+        
 
   # TODO: DRY w/release.yml
   push:
