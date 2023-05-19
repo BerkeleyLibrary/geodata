@@ -13,8 +13,8 @@ require 'solr_wrapper' unless Rails.env.production?
 # Setup
 
 desc 'Set up DB'
-  task setup: %w[db:await db:setup]
-# task setup: %w[db:setup]
+  # task setup: %w[db:await db:setup]
+  task setup: %w[db:setup]
 
 #------------------
 # create solr instance and seeding
