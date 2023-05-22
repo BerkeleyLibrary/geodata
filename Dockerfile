@@ -2,7 +2,7 @@
 # Target: base
 # Includes system dependencies common to both dev and production.
 
-FROM ruby:3.2.2-alpine3.17 AS base
+FROM ruby:3.2.2 AS base
 
 # This is just metadata and doesn't actually "expose" this port. Rather, it
 # tells other tools (e.g. Traefik) what port the service in this image is
@@ -11,33 +11,29 @@ FROM ruby:3.2.2-alpine3.17 AS base
 # @see https://docs.docker.com/engine/reference/builder/#expose
 EXPOSE 3000
 
-RUN addgroup -S -g 40012 geodata \
-&&  adduser -S -u 40012 -G geodata geodata \
-&&  install -o geodata -g geodata -d /opt/app \
-&&  chown -R geodata:geodata /opt \
-&&  chown -R geodata:geodata /opt/app  /usr/local/bundle
+ENV APP_USER=geodata
+ENV APP_UID=40012
 
-RUN apk --no-cache --update upgrade \
-&&  apk --no-cache add \
-        bash \
-        ca-certificates \
-        git \
-        libc6-compat \
-        nodejs \
-        openssl \
-        postgresql-libs \
-        sqlite-libs \
-        shared-mime-info \
-        tzdata \
-        xz-libs \
+RUN groupadd --system --gid $APP_UID $APP_USER \
+    && useradd --home-dir /opt/app --system --uid $APP_UID --gid $APP_USER $APP_USER
+
+RUN mkdir -p /opt/app \
+    && chown -R $APP_USER:$APP_USER /opt/app /usr/local/bundle
+
+# Get list of available packages
+RUN apt-get update -qq 
+
+# Install standard packages from the Debian repository
+RUN apt-get install -y --no-install-recommends \
+     bash \
+     curl \
+     default-jre \
+     ca-certificates \    
+     nodejs \
+     libpq-dev \
+     libvips42 \
+     yarn\
 &&  rm -rf /var/cache/apk/*
-
-RUN apk update && apk add -u yarn
-
-# # Replace the default 1.x bundler with 2.x, as required by this bundle. - no need for geoblacklight 3.1
-# RUN yes | gem uninstall --force -i /usr/local/lib/ruby/gems/2.5.0 bundler \
-# &&  gem install -i /usr/local/lib/ruby/gems/2.5.0 --version=2.0.1 bundler
-# ENV BUNDLER_VERSION='2.0.1'
 
 # By default, run as the geodata user
 USER geodata
@@ -64,12 +60,12 @@ FROM base AS development
 
 # Install system packages needed to build gems with C extensions.
 USER root
-RUN apk --update --no-cache add \
-        build-base \
-        coreutils \
-        postgresql-dev \
-        curl \
-        sqlite-dev
+
+# Install system packages needed to build gems with C extensions.
+RUN apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    make
 
 # Drop back to the GeoData user
 USER geodata
@@ -101,10 +97,8 @@ COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
 # Sanity-check that the bundle is correctly installed, that the Gemfile
 # and Gemfile.lock are synced, and that assets are able to be compiled.
 # no need to run bundle install
-RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java \
-&&  rails assets:precompile assets:clean log:clear tmp:clear
-RUN mkdir tmp/cache/downloads
 
+RUN rails assets:precompile assets:clean log:clear tmp:clear
 
 # Preserve build arguments - from galc
 

@@ -35,6 +35,7 @@ jobs:
 
     permissions:
       packages: write
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -75,6 +76,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
+      options: --init
       image: ${{ needs.build.outputs.build_image }}
 
     defaults:
@@ -88,13 +90,13 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: root
 
-      solr:
-          image: solr:${SOLR_VERSION}
-          restart: always
-          ports:
-            - 8983:8983
-          volumes:
-            - ./solr:/var/solr/data/configsets/solr:delegated
+      # solr:
+      #     image: solr:8
+      #     #restart: always
+      #     ports:
+      #       - 8983:8983
+      #     volumes:
+      #       - ${{ github.workspace }}/solr:/var/solr/data/configsets/solr:delegated
 
     steps:
       - name: Run tests
@@ -107,7 +109,7 @@ jobs:
     
       - name: Validate database migrations
         env:
-          RAILS_ENV: production
+          RAILS_ENV: test
           DISABLE_DATABASE_ENVIRONMENT_CHECK: 1
         run: rails --trace db:drop db:create db:migrate
 
@@ -116,7 +118,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
-          path: /opt/app/artifacts/**
+          path: |
+            /opt/app/artifacts/**
+            /tmp/solr*/server/logs
+        
 
   # TODO: DRY w/release.yml
   push:

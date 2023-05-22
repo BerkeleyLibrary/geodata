@@ -1,0 +1,5 @@
+
+collection:
+  dir: config/solr/
+  name: geodata-test
+version: '8.11.2'

@@ -2,6 +2,7 @@ require 'active_support/core_ext/integer/time'
 require Rails.root.join('app/mailers/interceptors/staging_interceptor')
 
 Rails.application.configure do
+  # config.secret_key_base = ENV['SECRET_KEY_BASE']
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
