@@ -14,10 +14,10 @@
     ],
     "schema_provider_s": "Berkeley",
     "gbl_resourceClass_sm": [
-      "Datasets"
+      "Point"
     ],
     "gbl_resourceType_sm": [
-      "Point Data"
+      "Dataset"
     ],
     "dcat_keyword_sm": [
       "Transportation", 

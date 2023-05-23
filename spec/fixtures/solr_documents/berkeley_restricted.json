@@ -14,10 +14,10 @@
   ],
   "schema_provider_s": "Berkeley", 
   "gbl_resourceClass_sm": [
-    "Datasets"
+    "Polygon"
   ],
   "gbl_resourceType_sm": [
-    "Polygon Data"
+    "Dataset"
   ],
   "dct_subject_sm": [
     "Boundaries", 
