@@ -35,5 +35,6 @@ services:
     restart: always   
     environment: 
       DATABASE_URL: postgres://root:root@db/geodata-dev?pool=5
+      SOLR_URL: http://solr:8983/solr/geodata-test
     volumes:
       - ./:/opt/app:delegated

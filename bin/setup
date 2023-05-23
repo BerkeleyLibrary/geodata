@@ -29,8 +29,8 @@ FileUtils.chdir APP_ROOT do
   
 
   # puts "\n== Starting solr ==" 
-   system! 'bin/rails  solr:restart'
-   # system! 'bin/rails geoblacklight:index:seed'
+  # system! 'bin/rails  solr:restart'
+  system! 'bin/rails geoblacklight:index:seed'
 
   # puts "\n== Removing old logs and tempfiles =="
   system! "bin/rails log:clear tmp:clear"
