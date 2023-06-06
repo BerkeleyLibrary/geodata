@@ -17,7 +17,7 @@ services:
       - 5432:5432
 
   solr:
-    image: solr:${SOLR_VERSION}
+    image: solr:${SOLR_VERSION:-8.11.1}
     restart: always
     ports:
       - 8983:8983

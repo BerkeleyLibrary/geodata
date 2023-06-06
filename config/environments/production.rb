@@ -78,7 +78,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  ActionMailer::Base.register_interceptor(StagingInterceptor) if ENV['INTERCEPT_EMAILS'].present?
+  ActionMailer::Base.register_interceptor(Interceptors::StagingInterceptor) if ENV['INTERCEPT_EMAILS'].present?
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
