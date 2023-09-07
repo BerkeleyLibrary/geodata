@@ -187,6 +187,7 @@ class CatalogController < ApplicationController
       if: proc { |_, _, doc| doc.external_url },
       helper_method: :render_references_url
     )
+    config.add_show_field Settings.FIELDS.DISPLAY_NOTE, label: 'Dispaly Note', itemprop: 'display_note'
 
     # ADDITIONAL FIELDS
     # The following fields are not user friendly and are not set to appear on the item show page. They contain non-literal values, codes, URIs, or are otherwise designed to power features in the interface.
