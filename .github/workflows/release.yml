@@ -1,6 +1,9 @@
 name: Release
 
 on:
+  push:
+    branches:
+      - main
   release:
     types:
       - published
@@ -51,6 +54,7 @@ jobs:
         with:
           images: ${{ env.BASE_IMAGE_NAME }}
           tags:
+            type=raw,value=latest,enable={{is_default_branch}}
             type=semver,pattern={{major}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{version}}
