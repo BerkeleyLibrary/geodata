@@ -67,7 +67,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tag and push image
-        uses: akhilerm/tag-push-action@v2
+        uses: akhilerm/tag-push-action@v2.1.0
         with:
           src: ${{ env.BUILD_IMAGE }}
           dst: |
