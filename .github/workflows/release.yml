@@ -6,20 +6,18 @@ on:
       - published
   workflow_dispatch:
   workflow_run:
-    workflows:
-      - Build
-    types:
-      - completed
+    workflows: ["Build"]
+    types: ["completed"]
+    branches:
+      - main
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
   setup:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      # See https://github.com/docker/build-push-action/blob/v2.10.0/TROUBLESHOOTING.md#repository-name-must-be-lowercase
       - name: Sanitize image name
         uses: actions/github-script@v6
         id: image-name
@@ -36,9 +34,9 @@ jobs:
       build_image: ${{ steps.image-name.outputs.result }}:${{ env.SHORT_SHA }}
 
   push:
-    needs: setup
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    needs: setup
     permissions:
       packages: write
     env:
