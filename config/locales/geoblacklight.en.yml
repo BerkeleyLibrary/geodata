@@ -1,0 +1,13 @@
+en:
+  geoblacklight:
+    home:
+      headline: 'Explore and discover...'
+      search_heading: 'Find the maps and data you need'
+      category_heading: 'Find by...'
+      map_heading: 'Find by location'
+      institution: 'Institution'
+      placename: 'Placename'
+      resource_class: 'Resource Class'
+      subject: 'Subject'
+      theme: 'Theme'
+      version: 'GeoBlacklight version %{version}'
