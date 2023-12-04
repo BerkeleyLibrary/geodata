@@ -17,7 +17,7 @@ module Geodata
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-    config.action_mailer.default_options = { from: 'lib-geodata@berkeley.edu' }
+    config.action_mailer.default_options = { from: 'fake@berkeley.edu' }
     config.lit_gtag_id = ENV.fetch('LIT_GTAG_ID', nil)
     # Configuration for the application, engines, and railties goes here.
     #
