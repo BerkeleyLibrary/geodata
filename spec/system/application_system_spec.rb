@@ -7,6 +7,6 @@ RSpec.describe 'View Restricted Data', type: :system do
 
   it 'can veiw restricted data' do
     visit '/catalog/berkeley-s7b12n'
-    expect(page).to have_text('Administrative Boundary Maps of China, 1949-2014')
+    expect(page).to have_text('Login to View and Download')
   end
 end
