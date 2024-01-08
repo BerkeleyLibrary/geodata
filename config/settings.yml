@@ -127,9 +127,9 @@ DISPLAY_NOTES_SHOWN:
 
 # Web services shown in tool panel
 WEBSERVICES_SHOWN:
-  - 'wms'
+  # - 'wms'
   - 'tms'
-  - 'wfs'
+  # - 'wfs'
   - 'xyz'
   - 'wmts'
   - 'tilejson'
