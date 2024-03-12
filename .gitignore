@@ -1,5 +1,6 @@
 *.rbc
 capybara-*.html
+.bash*
 .rspec
 /db/*.sqlite3
 /db/*.sqlite3-journal
