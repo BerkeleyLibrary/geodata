@@ -74,12 +74,4 @@ yarn-debug.log*
 /artifacts/
 
 # Ignore solr files
-/solr/geodata-test/data/index/*
-/solr/geodata-test/data/tlog/*
-/solr/geodata/data/index/*
-/solr/geodata/data/tlog/*
-
-!/solr/geodata-test/data/index/.keep
-!/solr/geodata-test/data/tlog/.keep
-!/solr/geodata/data/index/.keep
-!/solr/geodata/data/tlog/.keep
+solr/*/data/*
