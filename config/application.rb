@@ -19,6 +19,11 @@ module Geodata
     config.load_defaults 7.0
     config.action_mailer.default_options = { from: 'fake@berkeley.edu' }
     config.lit_gtag_id = ENV.fetch('LIT_GTAG_ID', nil)
+
+    # Silenced by default to minimize log noise
+    # @see https://ucblib.atlassian.net/browse/DEV-517
+    Deprecation.default_deprecation_behavior = ENV.fetch('LIT_DEPRECATION_BEHAVIOR', 'silence').to_sym
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
