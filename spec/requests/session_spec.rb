@@ -12,4 +12,10 @@ RSpec.describe 'Sessions' do
     get destroy_user_session_path
     expect(response).to have_http_status(302)
   end
+
+  it 'redirects to auth.berkeley.edu' do
+    get user_calnet_omniauth_authorize_path
+    expect(response).to have_http_status(302)
+    expect(response.location).to match(%r{https://auth-test.berkeley.edu})
+  end
 end
