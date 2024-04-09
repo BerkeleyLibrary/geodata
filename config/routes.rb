@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   devise_scope :user do
     get 'users/sign_in', to: 'sessions#new', as: :new_user_session
+    # match 'users/sign_in', to: 'sessions#new', as: :new_user_session, via: [:get, :post]
     get 'users/sign_out', to: 'sessions#destroy', as: :destroy_user_session
+  
   end
 
   concern :exportable, Blacklight::Routes::Exportable.new

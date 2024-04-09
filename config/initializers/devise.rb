@@ -274,12 +274,14 @@ Devise.setup do |config|
   config.sign_out_via = :get
   config.omniauth :cas,
                   name: :calnet,
+                  # url: "https://auth#{'-test' unless Rails.env.production?}.berkeley.edu",
                   host: "auth#{'-test' unless Rails.env.production?}.berkeley.edu",
                   login_url: '/cas/login',
                   logout_url: '/cas/logout',
                   service_validate_url: '/cas/p3/serviceValidate'
 
-  # ==> Warden configuration
+
+  
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
