@@ -6,27 +6,7 @@
     </li>
     <% else %>
     <li>
-
-
- 
-    <%= link_to t('login2'),  user_calnet_omniauth_authorize_path, method: 'post'%>   
-
-
-
-
-
-<%
-=begin%>
- 
- <%= form_tag(user_calnet_omniauth_authorize_path, method: 'post') do %>
-  <button type='submit'>Login with Developer</button>
-<% end %>   
-<%
-=end%>
-
-
-
-
+      <%= link_to t('login'),  user_calnet_omniauth_authorize_path, method: 'post'%>   
     </li>
     <% end %>
   </ul>
