@@ -47,6 +47,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'rspec', '~> 3.13'
   gem 'rspec_junit_formatter', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', '~> 0.21', require: false
