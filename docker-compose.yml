@@ -46,4 +46,4 @@ services:
       - 4444:4444
       - 7900:7900
     platform: linux/amd64
-    shm_size: 2g
+    shm_size: 3g

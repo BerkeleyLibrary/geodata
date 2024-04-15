@@ -24,6 +24,7 @@ RSpec.feature 'Homepage', type: :feature, js: true do
   include Capybara::DSL
   scenario 'User visits the homepage' do
     # root_path = 'https://www.google.com'
+    sleep(60)
     root_path = 'http://localhost:3000/'
     visit root_path
     expect(page).to have_content('UC Berkeley GeoData Repository')
