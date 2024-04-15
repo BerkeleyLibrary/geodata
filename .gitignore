@@ -33,6 +33,8 @@ config/master.key
 /.bundle
 /vendor/bundle
 /.local
+/.webdrivers
+/.cache
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
 

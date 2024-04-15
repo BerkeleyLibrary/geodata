@@ -8,6 +8,33 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 
+Capybara.register_driver :remote_selenium_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless=new')
+  options.add_argument('--no-sandbox')
+  # options.add_argument('--disable-dev-shm-usage')
+#   options.add_argument('--disable-gpu')
+  options.add_argument('--window-size=2560,1344')
+  options.add_argument('--disable-smooth-scrolling')
+  capabilities = [
+    options,
+    Selenium::WebDriver::Remote::Capabilities.new(
+      'goog:loggingPrefs' => {
+        browser: 'ALL', driver: 'ALL'
+      }
+    )
+  ]
+
+  Capybara::Selenium::Driver.new(app,
+    browser: :remote,
+    capabilities:,
+    url: "http://#{ENV['SELENIUM_HOST'] || 'selenium'}:4444/",
+  )
+
+end
+
+Capybara.default_driver = Capybara.javascript_driver = :remote_selenium_headless
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
