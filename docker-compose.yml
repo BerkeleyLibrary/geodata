@@ -30,6 +30,7 @@ services:
       target: development
     depends_on:
       - db
+      - selenium
     ports:
       - 3000:3000
     restart: always
@@ -38,3 +39,11 @@ services:
       SOLR_URL: http://solr:8983/solr/geodata-test
     volumes:
       - ./:/opt/app:delegated
+
+  selenium:
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
+      - 7900:7900
+    platform: linux/amd64
+    shm_size: 2g
