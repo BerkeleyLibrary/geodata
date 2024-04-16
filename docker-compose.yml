@@ -31,6 +31,10 @@ services:
     depends_on:
       - db
       - selenium
+    networks:
+      default:
+        aliases:
+          - app.test
     ports:
       - 3000:3000
     restart: always
@@ -47,3 +51,7 @@ services:
       - 7900:7900
     platform: linux/amd64
     shm_size: 3g
+    networks:
+      default:
+        aliases:
+          - selenium.test
