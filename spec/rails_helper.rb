@@ -16,7 +16,6 @@ require 'selenium-webdriver'
 
 Capybara.register_driver(:remote) do |app|
   chrome_args = %w[
-    --disable-dev-shm-usage
     --disable-smooth-scrolling
     --headless
     --window-size=2560,1344

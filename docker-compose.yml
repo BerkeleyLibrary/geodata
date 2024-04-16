@@ -54,3 +54,4 @@ services:
       default:
         aliases:
           - selenium.test
+    shm_size: 2g
