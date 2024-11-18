@@ -29,6 +29,7 @@ gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'vite_rails', '~> 3.0'
 
 group :development, :test do
   # gem 'colorize'
