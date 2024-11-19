@@ -114,8 +114,10 @@ RUN bundle install
 COPY --chown=geodata . .
 
 # Create cache/pids/etc directories.
-RUN bundle exec -- rails log:clear tmp:create \
-    &&  rails assets:precompile
+# RUN bundle exec -- rails log:clear tmp:create \
+#     &&  rails assets:precompile
+RUN bundle exec -- rails log:clear tmp:create
+
 RUN mkdir tmp/cache/downloads
 
 # ============================================================================
