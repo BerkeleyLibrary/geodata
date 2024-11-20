@@ -85,3 +85,9 @@ node_modules
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
 
+# Ignore yarn files
+yarn.lock
+/.yarnrc
+
+# Ignore .npm files
+/.npm

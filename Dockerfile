@@ -136,7 +136,8 @@ COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
 # and Gemfile.lock are synced, and that assets are able to be compiled.
 # no need to run bundle install
 
-RUN rails assets:precompile assets:clean log:clear tmp:clear
+#RUN rails assets:precompile assets:clean log:clear tmp:clear
+RUN bundle exec -- rails log:clear tmp:create
 
 # Preserve build arguments - from galc
 
