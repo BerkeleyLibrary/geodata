@@ -24,7 +24,6 @@ RUN mkdir -p /opt/app \
 RUN apt-get update -qq 
 
 
-
 # Install standard packages from the Debian repository
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
@@ -33,23 +32,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \ 
     libpq-dev \
     libvips42 \
-    gnupg \
     && rm -rf /var/lib/apt/lists/*
 
-
-# # Install standard packages from the Debian repository
-# RUN apt-get install -y --no-install-recommends \
-#     bash \
-#     curl \
-#     default-jre \
-#     ca-certificates \    
-#     nodejs \
-#     libpq-dev \
-#     libvips42 \
-#     yarn\
-#     &&  rm -rf /var/cache/apk/*
-
-# Install Node.js (using NodeSource to get the latest LTS version, e.g., 16.x)
+# Install Node.js (using NodeSource to get the latest LTS version, e.g., 20.x)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - && \
     apt-get install -y nodejs
 
@@ -57,19 +42,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - && \
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && apt-get install -y yarn
-
-
-# # Install standard packages from the Debian repository
-# RUN apt-get install -y --no-install-recommends \
-#      bash \
-#      curl \
-#      default-jre \
-#      ca-certificates \    
-#      nodejs \
-#      libpq-dev \
-#      libvips42 \
-#      yarn\
-# &&  rm -rf /var/cache/apk/*
 
 # By default, run as the geodata user
 USER geodata
@@ -114,9 +86,8 @@ RUN bundle install
 COPY --chown=geodata . .
 
 # Create cache/pids/etc directories.
-# RUN bundle exec -- rails log:clear tmp:create \
-#     &&  rails assets:precompile
-RUN bundle exec -- rails log:clear tmp:create
+RUN bundle exec -- rails log:clear tmp:create \
+    &&  rails assets:precompile
 
 RUN mkdir tmp/cache/downloads
 
@@ -136,8 +107,7 @@ COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
 # and Gemfile.lock are synced, and that assets are able to be compiled.
 # no need to run bundle install
 
-#RUN rails assets:precompile assets:clean log:clear tmp:clear
-RUN bundle exec -- rails log:clear tmp:create
+RUN rails assets:precompile assets:clean log:clear tmp:clear
 
 # Preserve build arguments - from galc
 
