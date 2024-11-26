@@ -32,17 +32,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     default-jre \
     ca-certificates \ 
     libpq-dev \
-    libvips42 \
-    && rm -rf /var/lib/apt/lists/*
+    libvips42 
 
 # Install Node.js (using NodeSource to get the latest LTS version, e.g., 20.x)
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - && \
-    apt-get install -y --no-install-recommends nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - \
+    && apt-get install -y --no-install-recommends nodejs
 
 # Install Yarn (using the official Yarn repository)
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y --no-install-recommends yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update && apt-get install -y --no-install-recommends yarn \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 # By default, run as the geodata user
 USER geodata
@@ -89,10 +89,6 @@ COPY --chown=geodata . .
 # Create cache/pids/etc directories.
 RUN bundle exec -- rails log:clear tmp:create \
     &&  rails assets:precompile
-
-
-# RUN npx vite build --debug
-# RUN mkdir tmp/cache/downloads
 
 # ============================================================================
 # Target: production
