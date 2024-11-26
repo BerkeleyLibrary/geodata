@@ -28,6 +28,7 @@ RUN apt-get update -qq
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     curl \
+    gpg \
     default-jre \
     ca-certificates \ 
     libpq-dev \
@@ -36,12 +37,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Node.js (using NodeSource to get the latest LTS version, e.g., 20.x)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - && \
-    apt-get install -y nodejs
+    apt-get install -y --no-install-recommends nodejs
 
 # Install Yarn (using the official Yarn repository)
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y yarn
+    apt-get update && apt-get install -y --no-install-recommends yarn
 
 # By default, run as the geodata user
 USER geodata
@@ -50,7 +51,7 @@ USER geodata
 WORKDIR /opt/app
 
 # Add binstubs to the path.
-ENV PATH "/opt/app/bin:$PATH"
+ENV PATH="/opt/app/bin:$PATH"
 
 
 # If run with no other arguments, the image will start the rails server by
@@ -89,7 +90,9 @@ COPY --chown=geodata . .
 RUN bundle exec -- rails log:clear tmp:create \
     &&  rails assets:precompile
 
-RUN mkdir tmp/cache/downloads
+
+# RUN npx vite build --debug
+# RUN mkdir tmp/cache/downloads
 
 # ============================================================================
 # Target: production
