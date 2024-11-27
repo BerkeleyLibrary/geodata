@@ -90,14 +90,6 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: root
 
-      # solr:
-      #     image: solr:8
-      #     #restart: always
-      #     ports:
-      #       - 8983:8983
-      #     volumes:
-      #       - ${{ github.workspace }}/solr:/var/solr/data/configsets/solr:delegated
-
     steps:
       - name: Run tests
         env:
@@ -115,7 +107,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts
           path: |
