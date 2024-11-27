@@ -2,6 +2,7 @@ name: Build
 on: [ push, pull_request, workflow_dispatch ]
 env:
   REGISTRY: ghcr.io
+  ACTIONS_STEP_DEBUG: true
 
 jobs:
   # TODO: DRY w/release.yml
@@ -39,10 +40,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -53,7 +54,7 @@ jobs:
           echo BUILD_TIMESTAMP="$(date --utc --iso-8601=seconds)" >> $GITHUB_ENV
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
@@ -137,7 +138,7 @@ jobs:
           images: ${{ env.BASE_IMAGE_NAME }}
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
