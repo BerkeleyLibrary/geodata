@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      options: --init
+      # options: --init
       image: ${{ needs.build.outputs.build_image }}
 
     defaults:
