@@ -38,7 +38,7 @@ task :check do
 
   require 'solr_wrapper'
   Rake::Task[:setup].invoke
-  SolrWrapper.wrap(solr_options: { force: true }) do |solr|
+  SolrWrapper.wrap(persist: true, solr_options: { force: true }) do |solr|
     solr.with_collection(name: 'geodata-test', dir: "#{Rails.root}/config/solr") do
 
       # Rake::Task[:coverage].invoke
