@@ -345,9 +345,9 @@ Rails/RootJoinChain: # new in 2.13
   Enabled: true
 
 # to skip default code generation
-Layout/ClassLength:
+Metrics/ClassLength:
   Enabled: false
-Layout/MethodLength:
+Metrics/MethodLength:
   Enabled: false
-Layout/BlockLength:
+Metrics/BlockLength:
   Enabled: false
