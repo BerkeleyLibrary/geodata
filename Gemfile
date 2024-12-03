@@ -9,16 +9,19 @@ gem 'bootsnap', require: false
 gem 'bootstrap', '~> 4.0'
 gem 'devise'
 gem 'devise-guests', '~> 0.8'
-gem 'geoblacklight', '~> 4.1.1'
+# gem 'geoblacklight', '~> 4.1.1'
+gem 'geoblacklight', '~> 4.4.2'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'jquery-rails'
-gem 'omniauth', '< 2.0'
-gem 'omniauth-cas'
+gem 'omniauth'
+gem 'omniauth-cas', '3.0.0'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
 gem 'pg', '~> 1.4.6'
 gem 'puma', '~> 6.4.1'
 gem 'rack-timeout', '~> 0.6.3'
-gem 'rails', '~> 7.0.8'
+# gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.1.5'
 gem 'rsolr', '>= 1.0', '< 3'
 gem 'sassc-rails', '~> 2.1'
 gem 'sprockets', '< 4.0'
@@ -27,6 +30,7 @@ gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'vite_rails', '~> 3.0'
 
 group :development, :test do
   # gem 'colorize'
@@ -46,6 +50,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'rspec', '~> 3.13'
   gem 'rspec_junit_formatter', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', '~> 0.21', require: false

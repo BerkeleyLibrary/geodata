@@ -32,7 +32,9 @@ config/master.key
 ## Environment normalization:
 /.bundle
 /vendor/bundle
-
+/.local
+/.webdrivers
+/.cache
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
 
@@ -75,3 +77,17 @@ yarn-debug.log*
 
 # Ignore solr files
 solr/*/data/*
+
+# Vite Ruby
+/public/vite*
+node_modules
+# Vite uses dotenv and suggests to ignore local-only env files. See
+# https://vitejs.dev/guide/env-and-mode.html#env-files
+*.local
+
+# Ignore yarn files
+yarn.lock
+/.yarnrc
+
+# Ignore .npm files
+/.npm

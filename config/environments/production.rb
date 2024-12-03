@@ -73,7 +73,7 @@ Rails.application.configure do
     port: 587,
     domain: 'berkeley.edu',
     user_name: ENV['MAIL_USERNAME'] || 'lib-geodata@berkeley.edu',
-    password: ENV['MAIL_PASSWORD'],
+    password: ENV.fetch('MAIL_PASSWORD', nil),
     authentication: 'plain',
     enable_starttls_auto: true
   }
@@ -92,7 +92,7 @@ Rails.application.configure do
   config.active_support.report_deprecations = :notify
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = Logger::Formatter.new
 
   # Use a different logger for distributed setups.
   # require "syslog/logger"
