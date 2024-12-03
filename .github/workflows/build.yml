@@ -77,8 +77,8 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      options: --init
-      image: ${{ needs.build.outputs.build_image }}
+      image: alpine:latest
+      options: --user=root
 
     defaults:
       run:
