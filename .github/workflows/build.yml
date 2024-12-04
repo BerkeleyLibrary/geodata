@@ -9,7 +9,7 @@ jobs:
       - name: Add variables to the GitHub environment
         run: |
           JOB_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          echo "$JOB_URL" >> "$GITHUB_ENV"
+          echo "JOB_URL=$JOB_URL" >> "$GITHUB_ENV"
 
   build:
     if: github.event_name != 'release'
