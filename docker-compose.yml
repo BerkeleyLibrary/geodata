@@ -1,6 +1,31 @@
-version: "3.8"
+---
 
 services:
+  app:
+    build:
+      context: .
+      target: ${DOCKER_APP_BUILD_TARGET:-development}
+      args:
+        - BUILD_TIMESTAMP=${BUILD_TIMESTAMP}
+        - BUILD_URL=https://github.com/${GITHUB_REPOSITORY:-berkeleylibrary/geodata}/actions/runs/${GITHUB_RUN_ID:-development}
+        - DOCKER_TAG=${BUILD_IMAGE}
+        - GIT_BRANCH=${GIT_REF_NAME}
+        - GIT_COMMIT=${GIT_SHA}
+        - GIT_URL=${GIT_REPOSITORY_URL}
+      tags:
+        - ghcr.io/berkeleylibrary/geodata:${DOCKER_APP_TAG}
+    depends_on:
+      - db
+      - solr
+    ports:
+      - 3000:3000
+    restart: always
+    environment:
+      - DATABASE_URL=postgres://root:root@db/geodata-dev?pool=5
+      - SOLR_URL=http://solr:8983/solr/geodata-test
+    volumes:
+      - ./:/opt/app:delegated
+
   adminer:
     image: adminer
     restart: always
@@ -11,30 +36,13 @@ services:
     image: postgres:12.2
     restart: always
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
     ports:
       - 5432:5432
 
   solr:
-    image: solr:${SOLR_VERSION:-8.11.1}
+    build: solr
     restart: always
     ports:
       - 8983:8983
-    volumes:
-      - ./solr:/var/solr/data/configsets/solr:delegated
-
-  app:
-    build:
-      context: .
-      target: development
-    depends_on:
-      - db
-    ports:
-      - 3000:3000
-    restart: always   
-    environment: 
-      DATABASE_URL: postgres://root:root@db/geodata-dev?pool=5
-      SOLR_URL: http://solr:8983/solr/geodata-test
-    volumes:
-      - ./:/opt/app:delegated
