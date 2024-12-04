@@ -6,10 +6,12 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - name: Add variables to the GitHub environment
+      - name: Set and debug environment variables
         run: |
           JOB_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           echo "JOB_URL=$JOB_URL" >> "$GITHUB_ENV"
+
+          env | sort
 
   build:
     if: github.event_name != 'release'
