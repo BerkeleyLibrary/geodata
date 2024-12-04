@@ -1,19 +1,16 @@
 ---
 
 services:
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
   app:
     build:
       context: .
-      target: ${DOCKER_APP_BUILD_TARGET:-development}
-      args:
-        - BUILD_TIMESTAMP=${BUILD_TIMESTAMP}
-        - BUILD_URL=https://github.com/${GITHUB_REPOSITORY:-berkeleylibrary/geodata}/actions/runs/${GITHUB_RUN_ID:-development}
-        - DOCKER_TAG=${BUILD_IMAGE}
-        - GIT_BRANCH=${GIT_REF_NAME}
-        - GIT_COMMIT=${GIT_SHA}
-        - GIT_URL=${GIT_REPOSITORY_URL}
-      tags:
-        - ghcr.io/berkeleylibrary/geodata:${DOCKER_APP_TAG}
+      target: development
     depends_on:
       - db
       - solr
@@ -25,12 +22,6 @@ services:
       - SOLR_URL=http://solr:8983/solr/geodata-test
     volumes:
       - ./:/opt/app:delegated
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
 
   db:
     image: postgres:12.2
