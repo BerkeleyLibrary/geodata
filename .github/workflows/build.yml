@@ -5,16 +5,20 @@ on: [ push, workflow_dispatch ]
 jobs:
   setup:
     runs-on: ubuntu-latest
-    steps:
-      - name: Set and debug environment variables
-        run: |
-          JOB_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          echo "JOB_URL=$JOB_URL" >> "$GITHUB_ENV"
 
-          env | sort
+    outputs:
+      build_url: ${{ steps.data.outputs.build_url }}
+
+    steps:
+      - id: data
+        name: Populates outputs
+        run: |
+          echo "build_url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "$GITHUB_OUTPUT"
 
   build:
     if: github.event_name != 'release'
+
+    needs: setup
 
     permissions:
       packages: write
@@ -23,17 +27,17 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         platform:
           - linux/amd64
           - linux/arm64
-      fail-fast: false
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Docker meta
+      - name: Construct image tags and labels
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -41,7 +45,7 @@ jobs:
             ghcr.io/berkeleylibrary/geodata
           labels: |
             edu.berkeley.lib.build-timestamp=${{ github.event.repository.updated_at }}
-            edu.berkeley.lib.build-url=${{ env.JOB_URL }}
+            edu.berkeley.lib.build-url=${{ needs.setup.outputs.build_url }}
             edu.berkeley.lib.git-ref-name=${{ github.ref_name }}
             edu.berkeley.lib.git-repository-url=${{ github.repositoryUrl }}
             edu.berkeley.lib.git-sha=${{ github.sha }}
@@ -60,7 +64,7 @@ jobs:
           push: false
           build-args: |
             BUILD_TIMESTAMP=${{ github.event.repository.updated_at }}
-            BUILD_URL=${{ env.JOB_URL }}
+            BUILD_URL=${{ needs.setup.outputs.build_url }}
             GIT_REF_NAME=${{ github.ref_name }}
             GIT_REPOSITORY_URL=${{ github.repositoryUrl }}
             GIT_SHA=${{ github.sha }}
