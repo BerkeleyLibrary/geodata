@@ -55,6 +55,9 @@ bower.json
 # Ignore Bash history file.
 .bash_history
 
+# Ignore Yarn folder settings
+.yarn
+
 # Ignore node_modules
 node_modules/
 
