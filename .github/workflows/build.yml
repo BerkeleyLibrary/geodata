@@ -22,6 +22,7 @@ jobs:
 
     env:
       COMPOSE_FILE: docker-compose.yml:docker-compose.ci.yml
+      DOCKER_APP_IMAGE: app-run-${{ github.run_id}}
 
     outputs:
       imageid: ${{ steps.image }}
@@ -64,6 +65,7 @@ jobs:
             edu.berkeley.lib.git-repository-url=${{ github.repositoryUrl }}
             edu.berkeley.lib.git-sha=${{ github.sha }}
           tags: |
+            type=raw,value=${{ env.DOCKER_APP_IMAGE }}
             type=sha
             type=ref,event=branch
             type=ref,event=pr
@@ -86,10 +88,6 @@ jobs:
           push: false
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
-
-      - name: Set the application image
-        run: |
-          echo DOCKER_APP_IMAGE=${{ steps.image.outputs.imageid }} >> "$GITHUB_ENV"
 
       - name: Start the stack
         run: |
