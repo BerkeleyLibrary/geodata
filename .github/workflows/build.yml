@@ -35,8 +35,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        base:
-          - osfamily
+        os_family:
+          - linux
         architecture:
           - amd64
           - arm64
@@ -82,7 +82,7 @@ jobs:
             GIT_REF_NAME=${{ github.ref_name }}
             GIT_REPOSITORY_URL=${{ github.repositoryUrl }}
             GIT_SHA=${{ github.sha }}
-          platforms: ${{ matrix.osfamily }}/${{ matrix.architecture }}
+          platforms: ${{ matrix.os_family }}/${{ matrix.architecture }}
           push: false
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -111,5 +111,5 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.osfamily }}-${{ matrix.architecture }}
+          name: test-results-${{ matrix.os_family }}-${{ matrix.architecture }}
           path: tmp/artifacts
