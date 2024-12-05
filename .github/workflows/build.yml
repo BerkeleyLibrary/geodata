@@ -33,11 +33,13 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
+        base:
+          - osfamily
+        architecture:
+          - amd64
+          - arm64
 
     steps:
       - name: Checkout repository
@@ -80,7 +82,7 @@ jobs:
             GIT_REF_NAME=${{ github.ref_name }}
             GIT_REPOSITORY_URL=${{ github.repositoryUrl }}
             GIT_SHA=${{ github.sha }}
-          platforms: ${{ matrix.platform }}
+          platforms: ${{ matrix.osfamily }}/${{ matrix.architecture }}
           push: false
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -109,5 +111,5 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.platform }}
+          name: test-results-${{ matrix.osfamily }}-${{ matrix.architecture }}
           path: tmp/artifacts
