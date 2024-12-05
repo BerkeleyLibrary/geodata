@@ -11,7 +11,6 @@ require 'rails_helper'
 #   end
 # end
 
-
 # describe 'User Util Links' do
 #     it 'has link' do
 #        visit root_path
@@ -28,6 +27,6 @@ RSpec.feature 'Homepage', type: :feature, js: true do
     # sleep(60)
     root_path = 'http://app.test:3000/'
     visit root_path
-    expect(page).to have_content('UC Berkeley GeoData Repository')
+    expect(page).to have_title('UC Berkeley GeoData Repository')
   end
 end
