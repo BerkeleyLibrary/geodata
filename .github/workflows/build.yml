@@ -91,6 +91,7 @@ jobs:
 
       - name: Start the stack
         run: |
+          docker image ls
           docker compose up --build --detach
           sleep 10
 
