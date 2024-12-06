@@ -1,0 +1,16 @@
+---
+
+services:
+  adminer: !reset
+
+  app:
+    build: !reset
+    image: ${DOCKER_APP_IMAGE}
+    ports: !reset
+    volumes: !reset
+
+  db:
+    ports: !reset
+
+  solr:
+    ports: !reset

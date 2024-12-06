@@ -33,34 +33,7 @@ task setup: %w[db:setup]
 # Check (setup + coverage)
 
 desc 'Set up, check test coverage'
-task :check do
-  raise "Can't run specs; expected RAILS_ENV=\"test\", was #{Rails.env.inspect}" unless Rails.env.test?
-
-  require 'solr_wrapper'
-  Rake::Task[:setup].invoke
-  SolrWrapper.wrap do |solr|
-    solr.with_collection(name: 'geodata-test', dir: "#{Rails.root}/config/solr") do
-
-      # Rake::Task[:coverage].invoke
-      # Rake::Task['solr:restart'].invoke
-      Rake::Task['geoblacklight:index:seed'].invoke
-      # Rake::Task[:prepare_solr].invoke
-      Rake::Task[:spec].invoke
-    end
-  end
-end
-
-# desc 'Set up, check test coverage'
-# task :check do
-#   raise "Can't run specs; expected RAILS_ENV=\"test\", was #{Rails.env.inspect}" unless Rails.env.test?
-
-#   Rake::Task[:setup].invoke
-#   # Rake::Task[:coverage].invoke
-#   # Rake::Task['solr:restart'].invoke
-#   # Rake::Task['geoblacklight:index:seed'].invoke
-#   #Rake::Task[:prepare_solr].invoke
-#   Rake::Task[:spec].invoke
-# end
+task check: %w[setup geoblacklight:index:seed spec]
 
 # clear rspec/rails default :spec task
 Rake::Task[:default].clear if Rake::Task.task_defined?(:default)
