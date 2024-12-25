@@ -41,10 +41,12 @@ services:
       SOLR_URL: http://solr:8983/solr/geodata-test
     volumes:
       - ./:/opt/app:delegated
+    # links:
+    #   - selenium
 
   selenium:
-    # image: selenium/standalone-chrome:4.10.0
-    image: selenium/standalone-chrome
+    image: selenium/standalone-chrome:4.10.0
+    # image: selenium/standalone-chrome
     ports:
       - 4444:4444
       - 7900:7900

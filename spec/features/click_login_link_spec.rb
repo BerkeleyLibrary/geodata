@@ -1,6 +1,13 @@
 require 'rails_helper'
 require 'uri'
 
+RSpec.feature 'Open home page', type: :feature do
+  scenario 'Open home page to view institutions' do
+    visit root_path
+    expect(page).to have_title('UC Berkeley GeoData Repository')
+  end
+end
+
 # RSpec.feature 'Clicking login link on home page', type: :feature do
 #   scenario 'User clicks login link and goes redirected login page' do
 #     visit root_path
@@ -29,7 +36,7 @@ require 'uri'
 #   end
 # end
 
-RSpec.feature 'Homepage', type: :feature, js: true do
+!RSpec.feature 'Homepage', type: :feature, js: true do
   include Capybara::DSL
   scenario 'User clicks login link and goes redirected login page' do
     # visit root_path
