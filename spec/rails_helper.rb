@@ -7,14 +7,10 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
-
-################## from TIND_QA ######################
-
-# require 'rspec'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 
-Capybara.register_driver(:remote) do |app|
+Capybara.register_driver(:remote_chrome) do |app|
   chrome_args = %w[
     --disable-smooth-scrolling
     --headless
@@ -49,7 +45,16 @@ Capybara.register_driver(:remote) do |app|
                                  url: "http://#{ENV['SELENIUM_HOST'] || 'selenium.test'}:4444/")
 end
 
-Capybara.default_driver = Capybara.javascript_driver = :remote
+# Capybara.register_driver :remote_chrome do |app|
+#   Capybara::Selenium::Driver.new(
+#     app,
+#     browser: :chrome,
+#     url: 'http://selenium.test:4444',
+#     options: Selenium::WebDriver::Chrome::Options.new
+#   )
+# end
+
+Capybara.default_driver = Capybara.javascript_driver = :remote_chrome
 Capybara.app_host = 'http://app.test:3000'
 Capybara.server_host = '0.0.0.0'
 # Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}" if ENV['SELENIUM_REMOTE_URL'].present?
@@ -64,7 +69,7 @@ RSpec.configure do |config|
     #   browser: :remote,
     #   url: 'http://selenium.test:4444'
     # }
-    driven_by :remote
+    driven_by :remote_chrome
   end
   config.use_transactional_fixtures = false
 
