@@ -5,12 +5,12 @@ RSpec.describe 'View Restricted Data', type: :system do
   #   driven_by(:rack_test)
   # end
 
-  before do
-    driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: {
-      browser: :remote,
-      url: 'http://selenium.test:4444'
-    }
-  end
+  # before do
+  #   driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: {
+  #     browser: :remote,
+  #     url: 'http://selenium.test:4444'
+  #   }
+  # end
 
   it 'can view restricted data' do
     visit '/catalog/berkeley-s7b12n'

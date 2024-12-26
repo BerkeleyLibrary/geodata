@@ -52,12 +52,20 @@ end
 Capybara.default_driver = Capybara.javascript_driver = :remote
 Capybara.app_host = 'http://app.test:3000'
 Capybara.server_host = '0.0.0.0'
+# Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}" if ENV['SELENIUM_REMOTE_URL'].present?
 Capybara.always_include_port = true
 Capybara.run_server = false
 
 #############
 
 RSpec.configure do |config|
+  config.before(:each, type: :system) do
+    # driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: {
+    #   browser: :remote,
+    #   url: 'http://selenium.test:4444'
+    # }
+    driven_by :remote
+  end
   config.use_transactional_fixtures = false
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
