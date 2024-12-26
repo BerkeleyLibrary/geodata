@@ -26,7 +26,7 @@ Capybara.register_driver(:remote) do |app|
     'download.default_directory' => '/tmp'
   }
 
-  chrome_options = ::Selenium::WebDriver::Chrome::Options.new(args: chrome_args, prefs: chrome_prefs).tap do |options|
+  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args, prefs: chrome_prefs).tap do |options|
     # NOTE: Different Selenium/Chrome versions set download directory differently -- see
     #       https://github.com/teamcapybara/capybara/blob/3.38.0/spec/selenium_spec_chrome.rb#L15-L20
     if (download_dir = chrome_prefs['download.default_directory'])
@@ -44,19 +44,18 @@ Capybara.register_driver(:remote) do |app|
   ]
 
   Capybara::Selenium::Driver.new(app,
-    browser: :remote,
-    capabilities:,
-    url: "http://#{ENV['SELENIUM_HOST'] || 'selenium.test'}:4444/",
-  )
+                                 browser: :remote,
+                                 capabilities:,
+                                 url: "http://#{ENV['SELENIUM_HOST'] || 'selenium.test'}:4444/")
 end
 
 Capybara.default_driver = Capybara.javascript_driver = :remote
 Capybara.app_host = 'http://app.test:3000'
 Capybara.server_host = '0.0.0.0'
 Capybara.always_include_port = true
+Capybara.run_server = false
 
 #############
-
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
