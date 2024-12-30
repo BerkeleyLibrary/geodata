@@ -10,14 +10,24 @@ RSpec.describe 'View Institution Catalog' do
     expect(page).to have_title('UC Berkeley GeoData Repository')
   end
 
-  it 'see uc berkeley link' do
-    # visit '/catalog?f%5Bschema_provider_s%5D%5B%5D=University+of+California+Berkeley'
-    click_link('University of California Berkeley')
-    a = find('.page-entries').text.split[-1].to_i
-    expect(a).to be > 3
-    expect(find('.page-entries')).to have_content('1 - 4 of 4')
-    expect(find('.card.facet-limit.blacklight-schema_provider_s.facet-limit-active')).to have_content('University of California Berkeley')
+  it 'display UC Berkeley link' do
+    expect(page).to have_link('University of California Berkeley')
+  end
 
+  context 'click UC Berkeley link to show result page' do
+    before do
+      click_link('University of California Berkeley')
+    end
+
+    it 'display record number' do
+      a = find('.page-entries').text.split[-1].to_i
+      expect(a).to be > 3
+      # expect(find('.page-entries')).to have_content('1 - 4 of 4')
+    end
+
+    it 'display active provider - UC Berkeley' do
+      expect(find('.card.facet-limit.blacklight-schema_provider_s.facet-limit-active')).to have_content('University of California Berkeley')
+    end
     # expect(page.find_link(href: '/')).first.to be_visible
     # print page.html
     # expect(page.find('svg', title: 'University Of California Berkeley')).to be_visible

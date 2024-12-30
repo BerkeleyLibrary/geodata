@@ -9,6 +9,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
+require 'socket'
 
 Capybara.register_driver(:remote_chrome) do |app|
   chrome_args = %w[
@@ -55,8 +56,9 @@ end
 # end
 
 Capybara.default_driver = Capybara.javascript_driver = :remote_chrome
-Capybara.app_host = 'http://app.test:3000'
+# Capybara.app_host = 'http://app.test:3000'
 # Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}" if ENV['SELENIUM_HOST'].present?
+Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:3000"
 Capybara.server_host = '0.0.0.0'
 Capybara.always_include_port = true
 Capybara.run_server = false
