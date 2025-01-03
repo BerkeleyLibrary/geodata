@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # RSpec.describe 'View Restricted Data', type: :system do
-RSpec.describe 'View Restricted Data' do
+RSpec.describe 'View Restricted Data', type: :system do
   let(:app_hostname) { IPSocket.getaddress(Socket.gethostname) }
   let(:cas_url) { "/cas/login?service=http://#{app_hostname}:3000/users/auth/calnet/callback?url=http://#{app_hostname}:3000/catalog/berkeley-s7b12n" }
   before do
