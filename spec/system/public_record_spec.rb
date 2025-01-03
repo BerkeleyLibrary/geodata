@@ -56,14 +56,13 @@ RSpec.describe 'View Search Reslut', type: :system do
     it 'displays the download button' do
       expect(page).to have_button('downloads-button')
     end
-
     it_behaves_like 'download link invisible', 'Original Shapefile'
     it_behaves_like 'download link invisible', 'Export Shapefile'
     it_behaves_like 'download link invisible', 'Export KMZ'
     it_behaves_like 'download link invisible', 'Export GeoJSON'
-
   end
-  context 'clicking button to display downloading links' do
+
+  context 'downloading links available' do
     before do
       find('#downloads-button').click
     end
@@ -76,26 +75,18 @@ RSpec.describe 'View Search Reslut', type: :system do
     it_behaves_like 'download link visible', 'Original Shapefile', href, css_downloads
 
     href = ''
-    css_downloads = { location: 'a[data-download-path="/download/berkeley-s7038h?type=shapefile"]',
-                      style: 'a[data-download="trigger"]',
-                      type: 'a[data-download-type="shapefile"]',
-                      id: 'a[data-download-id="berkeley-s7038h"]' }
+    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=shapefile"]'
+    css_downloads[:type] = 'a[data-download-type="shapefile"]'
     it_behaves_like 'download link visible', 'Export Shapefile', href, css_downloads
 
-    css_downloads = { location: 'a[data-download-path="/download/berkeley-s7038h?type=kmz"]',
-                      style: 'a[data-download="trigger"]',
-                      type: 'a[data-download-type="kmz"]',
-                      id: 'a[data-download-id="berkeley-s7038h"]' }
+    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=kmz"]'
+    css_downloads[:type] = 'a[data-download-type="kmz"]'
     it_behaves_like 'download link visible', 'Export KMZ', href, css_downloads
 
-    css_downloads = { location: 'a[data-download-path="/download/berkeley-s7038h?type=geojson"]',
-                      style: 'a[data-download="trigger"]',
-                      type: 'a[data-download-type="geojson"]',
-                      id: 'a[data-download-id="berkeley-s7038h"]' }
+    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=geojson"]'
+    css_downloads[:type] = 'a[data-download-type="geojson"]'
     it_behaves_like 'download link visible', 'Export GeoJSON', href, css_downloads
-
   end
-  # end
 end
 
 # RSpec.shared_examples 'download link visible' do |page, text, href, css_downloads|
