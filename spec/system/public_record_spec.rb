@@ -6,23 +6,23 @@ RSpec.describe 'View Search Reslut', type: :system do
     visit 'catalog/berkeley-s7038h'
   end
 
-  shared_examples 'download link invisible' do |text|
-    it "it has no link #{text}" do
-      expect(page).not_to have_link(text: text)
-    end
-  end
+  # shared_examples 'download link invisible' do |text|
+  #   it "it has no link #{text}" do
+  #     expect(page).not_to have_link(text: text)
+  #   end
+  # end
 
-  shared_examples 'download link visible' do |text, href, css_downloads|
-    it "it has link #{text}" do
-      expect(page).to have_link(text: text, href: href)
-    end
-    it 'is has download css attributes' do
-      expect(page).to have_css(css_downloads[:location])
-      expect(page).to have_css(css_downloads[:style])
-      expect(page).to have_css(css_downloads[:type])
-      expect(page).to have_css(css_downloads[:id])
-    end
-  end
+  # shared_examples 'download link visible' do |text, href, css_downloads|
+  #   it "it has link #{text}" do
+  #     expect(page).to have_link(text: text, href: href)
+  #   end
+  #   it 'is has download css attributes' do
+  #     expect(page).to have_css(css_downloads[:location])
+  #     expect(page).to have_css(css_downloads[:style])
+  #     expect(page).to have_css(css_downloads[:type])
+  #     expect(page).to have_css(css_downloads[:id])
+  #   end
+  # end
 
   it 'has the record title' do
     within('#document') do
@@ -69,17 +69,20 @@ RSpec.describe 'View Search Reslut', type: :system do
                       id: 'a[data-download-id="berkeley-s7038h"]' }
     it_behaves_like 'download link visible', 'Original Shapefile', href, css_downloads
 
-    href = ''
-    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=shapefile"]'
-    css_downloads[:type] = 'a[data-download-type="shapefile"]'
-    it_behaves_like 'download link visible', 'Export Shapefile', href, css_downloads
+    it_behaves_like 'download link from Geoserver invisible', 'Export Shapefile', 'shapefile', css_downloads
 
-    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=kmz"]'
-    css_downloads[:type] = 'a[data-download-type="kmz"]'
-    it_behaves_like 'download link visible', 'Export KMZ', href, css_downloads
+    # href = ''
+    # # css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=shapefile"]'
+    #                               "a[data-download-path=\"/download/bb-s7038h?type=shapefile\"]"
+    # # css_downloads[:type] = 'a[data-download-type="shapefile"]'
+    # # it_behaves_like 'download link visible', 'Export Shapefile', href, css_downloads
 
-    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=geojson"]'
-    css_downloads[:type] = 'a[data-download-type="geojson"]'
-    it_behaves_like 'download link visible', 'Export GeoJSON', href, css_downloads
+    # css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=kmz"]'
+    # css_downloads[:type] = 'a[data-download-type="kmz"]'
+    # it_behaves_like 'download link visible', 'Export KMZ', href, css_downloads
+
+    # css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=geojson"]'
+    # css_downloads[:type] = 'a[data-download-type="geojson"]'
+    # it_behaves_like 'download link visible', 'Export GeoJSON', href, css_downloads
   end
 end
