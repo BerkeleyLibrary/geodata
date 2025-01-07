@@ -26,8 +26,10 @@ config/master.key
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
 
-# Ignore Byebug command history file.
+# Ignore command history file.
 .byebug_history
+.irb_history
+
 
 # Ignore node_modules
 node_modules/
