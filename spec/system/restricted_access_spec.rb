@@ -11,7 +11,7 @@ RSpec.describe 'View Restricted Data' do
     expect(page).to have_link('Login to View and Download')
   end
 
-  it 'clicking login to view and download link' do
+  it 'open calnet login page when clicking login to view and download link' do
     find('.btn.btn-default').click
     raw_url = page.current_url
     uri = URI.parse(raw_url)

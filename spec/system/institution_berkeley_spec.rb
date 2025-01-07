@@ -18,7 +18,7 @@ RSpec.describe 'View Institution Catalog' do
       click_link('University of California Berkeley')
     end
 
-    it 'display record number' do
+    it 'display total record number bigger than 3' do
       expect(find('.page-entries'))
 
       total_record_num = find('.page-entries').text.split[-1].strip.to_i
