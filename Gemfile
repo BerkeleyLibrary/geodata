@@ -2,14 +2,12 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
-
 gem 'berkeley_library-logging', '~> 0.2.7'
 gem 'blacklight', '~> 7.0'
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 4.0'
 gem 'devise'
 gem 'devise-guests', '~> 0.8'
-# gem 'geoblacklight', '~> 4.1.1'
 gem 'geoblacklight', '~> 4.4.2'
 gem 'importmap-rails'
 gem 'jbuilder'
@@ -20,7 +18,6 @@ gem 'omniauth-rails_csrf_protection', '~> 1.0'
 gem 'pg', '~> 1.4.6'
 gem 'puma', '~> 6'
 gem 'rack-timeout', '~> 0.6.3'
-# gem 'rails', '~> 7.0.8'
 gem 'rails', '~> 7.1.5'
 gem 'rsolr', '>= 1.0', '< 3'
 gem 'sassc-rails', '~> 2.1'
@@ -33,7 +30,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'vite_rails', '~> 3.0'
 
 group :development, :test do
-  # gem 'colorize'
   gem 'brakeman'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails'
@@ -41,7 +37,6 @@ group :development, :test do
   gem 'rubocop-rails', '~> 2.19', '>= 2.19.1', require: false
   gem 'rubocop-rspec', '~> 2.20', require: false
   gem 'solr_wrapper', '>= 0.3'
-  # gem 'factory_bot_rails'
 end
 
 group :development do
