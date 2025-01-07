@@ -1,7 +1,7 @@
 require 'rails_helper'
 require_relative '../support/shared_examples/link_spec'
 
-RSpec.describe 'View Search Reslut', type: :system do
+RSpec.describe 'View Search Reslut' do
   before do
     visit 'catalog/berkeley-s7038h'
   end

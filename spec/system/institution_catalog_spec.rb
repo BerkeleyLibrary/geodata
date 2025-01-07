@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'View Institution Catalog', type: :system do
+RSpec.describe 'View Institution Catalog' do
   before do
     visit '/'
   end
