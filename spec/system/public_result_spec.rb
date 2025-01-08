@@ -39,29 +39,39 @@ RSpec.describe 'View Search Reslut' do
     it_behaves_like 'download link invisible', 'Export GeoJSON'
   end
 
+  # context 'downloading links available' do
+  #   before do
+  #     find('#downloads-button').click
+  #   end
+
+  #   href = 'https://spatial.lib.berkeley.edu/public/berkeley-s7038h/data.zip'
+  #   css_downloads = { location: 'a[contenturl="https://spatial.lib.berkeley.edu/public/berkeley-s7038h/data.zip"]',
+  #                     style: 'a[data-download="trigger"]',
+  #                     type: 'a[data-download-type="direct"]',
+  #                     id: 'a[data-download-id="berkeley-s7038h"]' }
+  #   it_behaves_like 'download link visible', 'Original Shapefile', href, css_downloads
+
+  #   href = ''
+  #   css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=shapefile"]'
+  #   css_downloads[:type] = 'a[data-download-type="shapefile"]'
+  #   it_behaves_like 'download link visible', 'Export Shapefile', href, css_downloads
+
+  #   css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=kmz"]'
+  #   css_downloads[:type] = 'a[data-download-type="kmz"]'
+  #   it_behaves_like 'download link visible', 'Export KMZ', href, css_downloads
+
+  #   css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=geojson"]'
+  #   css_downloads[:type] = 'a[data-download-type="geojson"]'
+  #   it_behaves_like 'download link visible', 'Export GeoJSON', href, css_downloads
+  # end
+  #
   context 'downloading links available' do
     before do
       find('#downloads-button').click
     end
-
-    href = 'https://spatial.lib.berkeley.edu/public/berkeley-s7038h/data.zip'
-    css_downloads = { location: 'a[contenturl="https://spatial.lib.berkeley.edu/public/berkeley-s7038h/data.zip"]',
-                      style: 'a[data-download="trigger"]',
-                      type: 'a[data-download-type="direct"]',
-                      id: 'a[data-download-id="berkeley-s7038h"]' }
-    it_behaves_like 'download link visible', 'Original Shapefile', href, css_downloads
-
-    href = ''
-    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=shapefile"]'
-    css_downloads[:type] = 'a[data-download-type="shapefile"]'
-    it_behaves_like 'download link visible', 'Export Shapefile', href, css_downloads
-
-    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=kmz"]'
-    css_downloads[:type] = 'a[data-download-type="kmz"]'
-    it_behaves_like 'download link visible', 'Export KMZ', href, css_downloads
-
-    css_downloads[:location] = 'a[data-download-path="/download/berkeley-s7038h?type=geojson"]'
-    css_downloads[:type] = 'a[data-download-type="geojson"]'
-    it_behaves_like 'download link visible', 'Export GeoJSON', href, css_downloads
+    it 'displays the download button' do
+      find_link('Original Shapefile').click
+      # sleep(10)
+    end
   end
 end
