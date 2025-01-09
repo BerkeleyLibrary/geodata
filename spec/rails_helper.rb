@@ -11,15 +11,23 @@ require 'selenium-webdriver'
 require 'socket'
 
 Capybara.register_driver(:remote_chrome) do |app|
+  # chrome_args = %w[
+  #   --disable-smooth-scrolling
+  #   --headless
+  #   --window-size=2560,1344
+  # ]
+
+  # chrome_prefs = {
+  #   'download.prompt_for_download' => false,
+  #   'download.default_directory' => '/tmp'
+  # }
+  #
   chrome_args = %w[
     --disable-smooth-scrolling
-    --headless
     --window-size=2560,1344
   ]
-
   chrome_prefs = {
-    'download.prompt_for_download' => false,
-    'download.default_directory' => '/tmp'
+    'download.prompt_for_download' => false
   }
 
   chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args, prefs: chrome_prefs).tap do |options|
