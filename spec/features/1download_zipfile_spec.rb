@@ -18,7 +18,7 @@ RSpec.describe 'File Download', type: :feature do
 
     @driver = Selenium::WebDriver.for(:remote, url: 'http://selenium.test:4444/', capabilities: options)
     @driver.navigate.to 'http://app.test:3000/catalog/berkeley-s7038h'
-    @driver.find_element(:id, '#downloads-button').click
+    @driver.find_element(:id, 'downloads-button').click
     # FileUtils.rm_f(zip_file_path)
     # visit 'catalog/berkeley-s7038h'
   end
@@ -29,11 +29,11 @@ RSpec.describe 'File Download', type: :feature do
   end
 
   context 'verify souce data zip file' do
-    before do
-      find('#downloads-button').click
-    end
+    # before do
+    #   find('#downloads-button').click
+    # end
     it 'click link to download original source data zip file' do
-      find_link('Original Shapefile').click
+      @driver.find_link('Original Shapefile').click
       sleep 5
 
       # wait = Selenium::WebDriver::Wait.new(timeout: 30)

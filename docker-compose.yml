@@ -45,6 +45,7 @@ services:
 
   selenium:
     image: selenium/standalone-chrome
+    # image: selenium/standalone-chrome:119.0
     ports:
       - 4444:4444
       - 7900:7900
@@ -58,3 +59,5 @@ services:
       - downloads:/home/seluser/Downloads
 volumes:
   downloads:
+
+    #https://github.com/SeleniumHQ/docker-selenium/issues/2423
