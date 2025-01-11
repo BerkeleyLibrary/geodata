@@ -11,16 +11,16 @@ RSpec.describe 'File Download', type: :feature do
   before do
 
     # Setup Selenium WebDriver
-    options = Selenium::WebDriver::Chrome::Options.new
-    options.add_preference(:download, default_directory: download_dir)
-    options.add_preference(:download, prompt_for_download: false)
-    options.add_preference(:safebrowsing, enabled: true)
+    # options = Selenium::WebDriver::Chrome::Options.new
+    # options.add_preference(:download, default_directory: download_dir)
+    # options.add_preference(:download, prompt_for_download: false)
+    # options.add_preference(:safebrowsing, enabled: true)
 
-    @driver = Selenium::WebDriver.for(:remote, url: 'http://selenium.test:4444/', capabilities: options)
-    @driver.navigate.to 'http://app.test:3000/catalog/berkeley-s7038h'
-    @driver.find_element(:id, '#downloads-button').click
+    # @driver = Selenium::WebDriver.for(:remote, url: 'http://selenium.test:4444/', capabilities: options)
+    # @driver.navigate.to 'http://app.test:3000/catalog/berkeley-s7038h'
+    # @driver.find_element(:id, '#downloads-button').click
     # FileUtils.rm_f(zip_file_path)
-    # visit 'catalog/berkeley-s7038h'
+    visit 'catalog/berkeley-s7038h'
   end
 
   after do
