@@ -3,10 +3,10 @@ require 'zip'
 require 'fileutils'
 
 RSpec.describe 'File Download', type: :feature do
-  let(:download_dir) { '/home/seluser/Downloads' }
+  let(:download_dir) { '/home/seluser/Downloads/' }
   let(:zip_file_name) { 'data.zip' }
   let(:zip_file_path) { File.join(download_dir, zip_file_name) }
-  let(:crdownload_file) { "#{zip_file_path}.crdownload" }
+  let(:crdownload_files) { Dir.glob(File.join(download_dir, '*.crdownload')) }
 
   before do
 
@@ -24,8 +24,27 @@ RSpec.describe 'File Download', type: :feature do
   end
 
   after do
-    FileUtils.rm_f(crdownload_file)
+    crdownload_files.each { |f| FileUtils.rm_f(f) }
     FileUtils.rm_f(zip_file_path)
+  end
+
+  def wait_for_zip_download(zip_file_path, timeout: 600)
+    start_time = Time.current
+
+    loop do
+      elapsed_time = Time.current - start_time
+      raise "Timeout waiting for #{zip_file_path}" if elapsed_time > timeout
+
+      if File.exist?(zip_file_path) && crdownload_file.empty?
+        puts "File #{zip_file_path} is fully downloaded."
+        return true
+      else
+        sleep 1
+      end
+    end
+  rescue StandardError => e
+    puts "waiting Error: #{e.message}"
+    false
   end
 
   context 'verify souce data zip file' do
@@ -36,11 +55,12 @@ RSpec.describe 'File Download', type: :feature do
       find_link('Original Shapefile').click
       sleep 5
 
-      # wait = Selenium::WebDriver::Wait.new(timeout: 30)
+      # wait = Selenium::WebDriver::Wait.new(timeout: 10)
       # wait.until do
       #   !File.exist?(crdownload_file) && File.exist?(zip_file_path)
       # end
-      expect(File.exist?(zip_file_path)).to be_truthy, "Expected souce data zip file not found: #{zip_file_path}"
+      wait_for_zip_download(zip_file_path, timeout: 30)
+      expect(File.exist?(zip_file_path)).to be_truthy, "Expected source data zip file not found: #{zip_file_path}"
 
     end
 

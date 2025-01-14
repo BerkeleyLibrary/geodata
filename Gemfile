@@ -50,5 +50,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'simplecov', '~> 0.21', require: false
   gem 'simplecov-rcov', '~> 0.2', require: false
-  gem 'webdrivers'
+  # gem 'webdrivers'
 end
