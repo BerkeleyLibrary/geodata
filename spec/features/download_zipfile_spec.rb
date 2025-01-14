@@ -6,6 +6,7 @@ RSpec.describe 'File Download', type: :feature do
   let(:download_dir) { '/home/seluser/Downloads/' }
   let(:zip_file_name) { 'data.zip' }
   let(:zip_file_path) { File.join(download_dir, zip_file_name) }
+  let(:crdownload_file) { "#{zip_file_path}.crdownload" }
   let(:crdownload_files) { Dir.glob(File.join(download_dir, '*.crdownload')) }
 
   before do
@@ -53,7 +54,7 @@ RSpec.describe 'File Download', type: :feature do
     end
     it 'click link to download original source data zip file' do
       find_link('Original Shapefile').click
-      sleep 5
+      # sleep 5
 
       # wait = Selenium::WebDriver::Wait.new(timeout: 10)
       # wait.until do
@@ -61,7 +62,6 @@ RSpec.describe 'File Download', type: :feature do
       # end
       wait_for_zip_download(zip_file_path, timeout: 30)
       expect(File.exist?(zip_file_path)).to be_truthy, "Expected source data zip file not found: #{zip_file_path}"
-
     end
 
     # it 'Source data zip file includes ' do
