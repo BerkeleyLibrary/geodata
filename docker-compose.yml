@@ -46,9 +46,9 @@ services:
   selenium:
     image: selenium/standalone-chrome
     # image: selenium/standalone-chrome:4.10.0
-    environment:
-      # - SE_OTEL_SERVICE_NAME="selenium-standalone"
-      # - SE_ENABLE_TRACING=false
+    # environment:
+    # - SE_OTEL_SERVICE_NAME="selenium-standalone"
+    # - SE_ENABLE_TRACING=false
     ports:
       - 4444:4444
       - 7900:7900
@@ -59,7 +59,8 @@ services:
           - selenium.test
     shm_size: 2g
     volumes:
-      - downloads:/home/seluser/Downloads
+      # - downloads:/home/seluser/Downloads
+      - downloads:/tmp
 
 volumes:
   downloads:
@@ -67,3 +68,4 @@ volumes:
     #https://github.com/SeleniumHQ/docker-selenium/issues/2423
     #https://github.com/SeleniumHQ/docker-selenium?tab=readme-ov-file#standalone
     #https://www.selenium.dev/blog/2023/headless-is-going-away/
+    #https://stackoverflow.com/questions/60687310/test-in-docker-selenium-can-download-file-when-running-locally-but-not-on-jenkin

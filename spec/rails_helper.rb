@@ -29,7 +29,8 @@ Capybara.register_driver(:remote_chrome) do |app|
   # ]
   chrome_prefs = {
     'download.prompt_for_download' => false,
-    'download.default_directory' => '/home/seluser/Downloads',
+    # 'download.default_directory' => '/home/seluser/Downloads',
+    'download.default_directory' => '/tmp',
     'download.directory_upgrade' => true
   }
 
