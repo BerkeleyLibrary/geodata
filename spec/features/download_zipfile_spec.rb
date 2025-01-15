@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'zip'
 require 'fileutils'
 
-RSpec.describe 'File Download', type: :feature do
+RSpec.describe 'File Download' do
   let(:download_dir) { '/home/seluser/Downloads/' }
   let(:zip_file_name) { 'data.zip' }
   let(:zip_file_path) { File.join(download_dir, zip_file_name) }
@@ -10,17 +10,6 @@ RSpec.describe 'File Download', type: :feature do
   let(:crdownload_files) { Dir.glob(File.join(download_dir, '*.crdownload')) }
 
   before do
-
-    # Setup Selenium WebDriver
-    # options = Selenium::WebDriver::Chrome::Options.new
-    # options.add_preference(:download, default_directory: download_dir)
-    # options.add_preference(:download, prompt_for_download: false)
-    # options.add_preference(:safebrowsing, enabled: true)
-
-    # @driver = Selenium::WebDriver.for(:remote, url: 'http://selenium.test:4444/', capabilities: options)
-    # @driver.navigate.to 'http://app.test:3000/catalog/berkeley-s7038h'
-    # @driver.find_element(:id, '#downloads-button').click
-    # FileUtils.rm_f(zip_file_path)
     visit 'catalog/berkeley-s7038h'
   end
 
@@ -37,58 +26,39 @@ RSpec.describe 'File Download', type: :feature do
     FileUtils.rm_f(zip_file_path)
   end
 
-  def wait_for_zip_download(zip_file_path, timeout: 5)
+  def wait_for_download(zip_file_path, timeout: 5)
     start_time = Time.current
 
     loop do
       elapsed_time = Time.current - start_time
-      raise "Timeout waiting for #{zip_file_path}" if elapsed_time > timeout
+      raise "Timeout waiting for downloading #{zip_file_path}" if elapsed_time > timeout
+      return true if File.exist?(zip_file_path)
 
-      if File.exist?(zip_file_path) && crdownload_files.empty?
-        puts "File #{zip_file_path} is fully downloaded."
-        return true
-      else
-        sleep 1
-      end
+      sleep 1
     end
   rescue StandardError => e
-    puts "waiting Error: #{e.message}"
+    Rails.logger.error e.message
     false
   end
 
-  context 'verify souce data zip file' do
+  context 'verify original data.zip file' do
     before do
       find('#downloads-button').click
     end
     it 'click link to download original source data zip file' do
       find_link('Original Shapefile').click
-      # sleep 10
-
-      # wait = Selenium::WebDriver::Wait.new(timeout: 10)
-      # wait.until do
-      #   !File.exist?(crdownload_file) && File.exist?(zip_file_path)
-      # end
-      download_completed = wait_for_zip_download(zip_file_path)
+      download_completed = wait_for_download(zip_file_path)
       if download_completed
-        expect(File.exist?(zip_file_path)).to be_truthy, "Expected data.zip file not found: #{zip_file_path}"
+        expect(File.exist?(zip_file_path)).to be_truthy, "Download completed but data.zip file not found: #{zip_file_path}"
         Zip::File.open(zip_file_path) do |zip_file|
           file_names = zip_file.map(&:name)
           puts "Contents: #{file_names}"
-          expect(file_names).to include('SanBenito_Intersections_2016.shp')
+          expect(file_names).to include('SanBenito_Intersections_2016.shp'), 'SanBenito_Intersections_2016.shp not found in data.zip'
         end
       else
-        expect(File.exist?(crdownload_file)).to be_truthy, "Expected data.zip.crdownload file not found: #{crdownload_file}"
-        expect(File.size(crdownload_file)).to be > 130_000, 'Expected data.zip.crdownload file size < 130000'
+        expect(File.exist?(crdownload_file)).to be_truthy, "Download not completed and incompleted data.zip.crdownload file found: #{crdownload_file}"
+        expect(File.size(crdownload_file)).to be > 130_000, 'Incompleted data.zip.crdownload file size <= 130000'
       end
     end
-
-    # it 'Source data zip file includes ' do
-    #   Zip::File.open(zip_file_path) do |zip_file|
-    #     file_names = zip_file.map(&:name)
-    #     puts "Contents: #{file_names}"
-    #     expect(file_names).to include('SanBenito_Intersections_2016.shp')
-    #   end
-    # end
-
   end
 end
