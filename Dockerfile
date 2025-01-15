@@ -20,8 +20,7 @@ RUN groupadd --system --gid $APP_UID $APP_USER \
 RUN mkdir -p /opt/app \
     && chown -R $APP_USER:$APP_USER /opt/app /usr/local/bundle
 
-RUN  mkdir -p /home/seluser/Downloads \
-    && chown 1200:1201 /home/seluser/Downloads
+RUN  mkdir -p /opt/app/tmp/selenium_downloads 
 
 # Get list of available packages
 RUN apt-get update -qq 

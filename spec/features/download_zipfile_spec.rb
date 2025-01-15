@@ -2,14 +2,15 @@ require 'rails_helper'
 require 'zip'
 require 'fileutils'
 
-RSpec.describe 'File Download' do
-  let(:download_dir) { '/home/seluser/Downloads/' }
+RSpec.describe 'Data.zip File Download' do
+  let(:download_dir) { '/opt/app/tmp/selenium_downloads' }
   let(:zip_file_name) { 'data.zip' }
   let(:zip_file_path) { File.join(download_dir, zip_file_name) }
   let(:crdownload_file) { "#{zip_file_path}.crdownload" }
   let(:crdownload_files) { Dir.glob(File.join(download_dir, '*.crdownload')) }
 
   before do
+    clear_download_files
     visit 'catalog/berkeley-s7038h'
   end
 
@@ -17,13 +18,8 @@ RSpec.describe 'File Download' do
     clear_download_files
   end
 
-  before do
-    clear_download_files
-  end
-
   def clear_download_files
-    crdownload_files.each { |f| FileUtils.rm_f(f) }
-    FileUtils.rm_f(zip_file_path)
+    crdownload_files.append(zip_file_path).compact.each { |f| FileUtils.rm_f(f) }
   end
 
   def wait_for_download(zip_file_path, timeout: 5)
