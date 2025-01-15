@@ -25,18 +25,26 @@ RSpec.describe 'File Download', type: :feature do
   end
 
   after do
+    clear_download_files
+  end
+
+  before do
+    clear_download_files
+  end
+
+  def clear_download_files
     crdownload_files.each { |f| FileUtils.rm_f(f) }
     FileUtils.rm_f(zip_file_path)
   end
 
-  def wait_for_zip_download(zip_file_path, timeout: 600)
+  def wait_for_zip_download(zip_file_path, timeout: 5)
     start_time = Time.current
 
     loop do
       elapsed_time = Time.current - start_time
       raise "Timeout waiting for #{zip_file_path}" if elapsed_time > timeout
 
-      if File.exist?(zip_file_path) && crdownload_file.empty?
+      if File.exist?(zip_file_path) && crdownload_files.empty?
         puts "File #{zip_file_path} is fully downloaded."
         return true
       else
@@ -54,14 +62,24 @@ RSpec.describe 'File Download', type: :feature do
     end
     it 'click link to download original source data zip file' do
       find_link('Original Shapefile').click
-      sleep 10
+      # sleep 10
 
       # wait = Selenium::WebDriver::Wait.new(timeout: 10)
       # wait.until do
       #   !File.exist?(crdownload_file) && File.exist?(zip_file_path)
       # end
-      # wait_for_zip_download(zip_file_path, timeout: 5)
-      expect(File.exist?(zip_file_path)).to be_truthy, "Expected source data zip file not found: #{zip_file_path}"
+      download_completed = wait_for_zip_download(zip_file_path)
+      if download_completed
+        expect(File.exist?(zip_file_path)).to be_truthy, "Expected data.zip file not found: #{zip_file_path}"
+        Zip::File.open(zip_file_path) do |zip_file|
+          file_names = zip_file.map(&:name)
+          puts "Contents: #{file_names}"
+          expect(file_names).to include('SanBenito_Intersections_2016.shp')
+        end
+      else
+        expect(File.exist?(crdownload_file)).to be_truthy, "Expected data.zip.crdownload file not found: #{crdownload_file}"
+        expect(File.size(crdownload_file)).to be > 130_000, 'Expected data.zip.crdownload file size < 130000'
+      end
     end
 
     # it 'Source data zip file includes ' do
