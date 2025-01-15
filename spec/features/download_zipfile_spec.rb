@@ -54,13 +54,13 @@ RSpec.describe 'File Download', type: :feature do
     end
     it 'click link to download original source data zip file' do
       find_link('Original Shapefile').click
-      # sleep 5
+      sleep 10
 
       # wait = Selenium::WebDriver::Wait.new(timeout: 10)
       # wait.until do
       #   !File.exist?(crdownload_file) && File.exist?(zip_file_path)
       # end
-      wait_for_zip_download(zip_file_path, timeout: 30)
+      # wait_for_zip_download(zip_file_path, timeout: 5)
       expect(File.exist?(zip_file_path)).to be_truthy, "Expected source data zip file not found: #{zip_file_path}"
     end
 

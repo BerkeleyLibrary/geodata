@@ -47,6 +47,7 @@ services:
     image: selenium/standalone-chrome
     # image: selenium/standalone-chrome:4.10.0
     # environment:
+    #   - SE_SESSION_REQUEST_TIMEOUT=600
     # - SE_OTEL_SERVICE_NAME="selenium-standalone"
     # - SE_ENABLE_TRACING=false
     ports:
@@ -59,8 +60,8 @@ services:
           - selenium.test
     shm_size: 2g
     volumes:
-      # - downloads:/home/seluser/Downloads
-      - downloads:/tmp
+      - downloads:/home/seluser/Downloads
+      # - downloads:/tmp
 
 volumes:
   downloads:

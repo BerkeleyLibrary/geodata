@@ -11,12 +11,12 @@ require 'selenium-webdriver'
 require 'socket'
 
 Capybara.register_driver(:remote_chrome) do |app|
-  chrome_args = %w[
-    --disable-smooth-scrolling
-    --headless=new
-    --window-size=2560,1344
-    --log-level FINE
-  ]
+  # chrome_args = %w[
+  #   --disable-smooth-scrolling
+  #   --headless=new
+  #   --window-size=2560,1344
+  #   --log-level FINE
+  # ]
 
   # chrome_prefs = {
   #   'download.prompt_for_download' => false,
@@ -27,19 +27,54 @@ Capybara.register_driver(:remote_chrome) do |app|
   #   --disable-smooth-scrolling
   #   --window-size=2560,1344
   # ]
-  chrome_prefs = {
-    'download.prompt_for_download' => false,
-    # 'download.default_directory' => '/home/seluser/Downloads',
-    'download.default_directory' => '/tmp',
-    'download.directory_upgrade' => true
-  }
 
-  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args, prefs: chrome_prefs).tap do |options|
-    # NOTE: Different Selenium/Chrome versions set download directory differently -- see
-    #       https://github.com/teamcapybara/capybara/blob/3.38.0/spec/selenium_spec_chrome.rb#L15-L20
-    if (download_dir = chrome_prefs['download.default_directory'])
-      options.add_preference(:download, default_directory: download_dir)
-    end
+  # chrome_args = %w[
+  #   --disable-smooth-scrolling
+  #   --window-size=2560,1344
+  #   --log-level FINE
+  # ]
+
+  # chrome_args = %w[
+  #   --disable-smooth-scrolling
+  #   --window-size=2560,1344
+  #   --disable-features=InsecureDownloadWarnings
+  # ]
+
+  chrome_args = %w[
+    --disable-smooth-scrolling
+    --window-size=2560,1344
+    --disable-site-isolation-trials
+  ]
+
+  # chrome_prefs = {
+  #   'download.prompt_for_download' => false,
+  #   'download.default_directory' => '/home/seluser/Downloads',
+  #   # 'download.default_directory' => '/tmp',
+  #   'download.directory_upgrade' => true
+  # }
+
+  # chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args, prefs: chrome_prefs).tap do |options|
+  #   # NOTE: Different Selenium/Chrome versions set download directory differently -- see
+  #   #       https://github.com/teamcapybara/capybara/blob/3.38.0/spec/selenium_spec_chrome.rb#L15-L20
+  #   if (download_dir = chrome_prefs['download.default_directory'])
+  #     options.add_preference(:download, default_directory: download_dir)
+  #   end
+  # end
+
+  # chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args, prefs: chrome_prefs).tap do |options|
+  #   # NOTE: Different Selenium/Chrome versions set download directory differently -- see
+  #   #       https://github.com/teamcapybara/capybara/blob/3.38.0/spec/selenium_spec_chrome.rb#L15-L20
+  #   if (download_dir = chrome_prefs['download.default_directory'])
+  #     options.add_preference(:download, default_directory: download_dir)
+  #   end
+  # end
+  # chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args)
+  # chrome_options.add_preference(:download, prompt_for_download: false, default_directory: '/home/seluser/Downloads', directory_upgrade: true)
+  # chrome_options.add_preference(:browser, set_download_behavior: { behavior: 'allow' })
+
+  chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args).tap do |options|
+    options.add_preference(:download, prompt_for_download: false, default_directory: '/home/seluser/Downloads', directory_upgrade: true)
+    options.add_preference(:browser, set_download_behavior: { behavior: 'allow' })
   end
 
   capabilities = [
