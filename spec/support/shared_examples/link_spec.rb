@@ -23,8 +23,14 @@ RSpec.shared_examples 'export geofile to local' do |file_name, link_name|
   let(:download_dir) { '/opt/app/tmp/cache/downloads' }
   let(:export_file_path) { File.join(download_dir, file_name) }
 
-  after do
+  # after do
+  #   FileUtils.rm_f(export_file_path)
+  # end
+
+  after(:each) do
     FileUtils.rm_f(export_file_path)
+    Capybara.reset_sessions!
+    puts 'After callback executed 22'
   end
 
   it "export geofle: #{file_name}" do

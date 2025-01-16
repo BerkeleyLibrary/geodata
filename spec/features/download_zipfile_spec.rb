@@ -14,8 +14,10 @@ RSpec.describe 'Data.zip File Download' do
     visit 'catalog/berkeley-s7038h'
   end
 
-  after do
+  after(:each) do
     clear_download_files
+    Capybara.reset_sessions!
+    puts 'After callback executed -- dff'
   end
 
   def clear_download_files
