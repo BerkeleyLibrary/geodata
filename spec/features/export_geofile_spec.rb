@@ -2,11 +2,9 @@ require 'rails_helper'
 require 'zip'
 require 'fileutils'
 
-RSpec.describe 'File Download' do
-  let(:download_dir) { CommonHelpers::EXPORT_TMP_PATH }
+RSpec.describe 'Export links from download section' do
 
   before do
-    FileUtils.mkdir_p(download_dir)
     visit_public_record
     click_download_button
   end
