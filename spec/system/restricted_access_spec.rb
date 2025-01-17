@@ -5,14 +5,8 @@ RSpec.describe 'View Restricted Data' do
   let(:cas_url) { "/cas/login?service=http://#{app_hostname}:3000/users/auth/calnet/callback?url=http://#{app_hostname}:3000/catalog/berkeley-s7b12n" }
   before do
     visit_restricted_record
-    # visit '/catalog/berkeley-s7b12n'
-  end
 
-  # def decoded_url(url)
-  #   uri = URI.parse(url)
-  #   decoded_query = URI.decode_www_form_component(uri.query)
-  #   URI.decode_www_form_component("#{uri.path}?#{decoded_query}")
-  # end
+  end
 
   it 'display login to view and download link' do
     expect(page).to have_link('Login to View and Download')

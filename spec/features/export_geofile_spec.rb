@@ -10,15 +10,7 @@ RSpec.describe 'File Download' do
     FileUtils.mkdir_p(download_dir)
     visit_public_record
     click_download_button
-    # visit 'catalog/berkeley-s7038h'
-    # find('#downloads-button').click
   end
-
-  # after(:each) do
-
-  #   Capybara.reset_sessions! # Ensures the browser session is cleared
-  #   puts 'After callback executed'
-  # end
 
   it_behaves_like 'export geofile to local', 'berkeley-s7038h-shapefile.zip', 'Export Shapefile'
   it_behaves_like 'export geofile to local',  'berkeley-s7038h-kmz.kmz', 'Export KMZ'
