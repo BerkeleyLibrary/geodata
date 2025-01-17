@@ -8,7 +8,6 @@ RSpec.shared_examples 'download link visible' do |text, href, css_downloads|
     expect(page).to have_css(css_downloads[:style])
     expect(page).to have_css(css_downloads[:type])
     expect(page).to have_css(css_downloads[:id])
-
   end
 end
 
@@ -20,13 +19,11 @@ RSpec.shared_examples 'download link invisible' do |text|
 end
 
 RSpec.shared_examples 'export geofile to local' do |file_name, link_name|
-  let(:download_dir) { '/opt/app/tmp/cache/downloads' }
+  let(:download_dir) { CommonHelpers::EXPORT_TMP_PATH }
   let(:export_file_path) { File.join(download_dir, file_name) }
 
   after(:each) do
-    FileUtils.rm_f(export_file_path)
-    Capybara.reset_sessions!
-    puts 'After callback executed 22'
+    rm_files([export_file_path])
   end
 
   it "export geofle: #{file_name}" do

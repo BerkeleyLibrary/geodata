@@ -1,12 +1,11 @@
 require 'rails_helper'
-# require_relative '../support/shared_examples/link_spec'
 
 RSpec.describe 'View Search Reslut' do
   before do
-    visit 'catalog/berkeley-s7038h'
+    visit_public_record
   end
 
-  it 'Record title' do
+  it 'has correct record title' do
     within('#document') do
       expect(find('h2')).to have_text('Intersections, San Benito County, California, 2016')
     end

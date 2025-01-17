@@ -1,10 +1,9 @@
 require 'rails_helper'
 require 'zip'
 require 'fileutils'
-# require_relative '../support/link_spec'
 
 RSpec.describe 'File Download' do
-  let(:download_dir) { '/opt/app/tmp/cache/downloads' }
+  let(:download_dir) { CommonHelpers::EXPORT_TMP_PATH }
 
   before do
     FileUtils.mkdir_p(download_dir)

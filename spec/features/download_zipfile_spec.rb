@@ -3,7 +3,7 @@ require 'zip'
 require 'fileutils'
 
 RSpec.describe 'Data.zip File Download' do
-  let(:download_dir) { '/opt/app/tmp/selenium_downloads' }
+  let(:download_dir) { CommonHelpers::DOWNLOAD_TMP_PATH }
   let(:zip_file_name) { 'data.zip' }
   let(:zip_file_path) { File.join(download_dir, zip_file_name) }
   let(:zip_crdownload_file) { "#{zip_file_path}.crdownload" }
@@ -16,15 +16,12 @@ RSpec.describe 'Data.zip File Download' do
   end
 
   after(:each) do
-
     rm_files(all_files)
-
   end
 
   context 'verify original data.zip file' do
     before do
       click_download_button
-
     end
     it 'click link to download original source data zip file' do
       find_link('Original Shapefile').click
