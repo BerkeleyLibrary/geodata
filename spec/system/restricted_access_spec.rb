@@ -4,14 +4,15 @@ RSpec.describe 'View Restricted Data' do
   let(:app_hostname) { IPSocket.getaddress(Socket.gethostname) }
   let(:cas_url) { "/cas/login?service=http://#{app_hostname}:3000/users/auth/calnet/callback?url=http://#{app_hostname}:3000/catalog/berkeley-s7b12n" }
   before do
-    visit '/catalog/berkeley-s7b12n'
+    visit_restricted_record
+    # visit '/catalog/berkeley-s7b12n'
   end
 
-  def decoded_url(url)
-    uri = URI.parse(url)
-    decoded_query = URI.decode_www_form_component(uri.query)
-    URI.decode_www_form_component("#{uri.path}?#{decoded_query}")
-  end
+  # def decoded_url(url)
+  #   uri = URI.parse(url)
+  #   decoded_query = URI.decode_www_form_component(uri.query)
+  #   URI.decode_www_form_component("#{uri.path}?#{decoded_query}")
+  # end
 
   it 'display login to view and download link' do
     expect(page).to have_link('Login to View and Download')

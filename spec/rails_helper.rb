@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'socket'
+require_relative 'support/common_helpers'
 
 Capybara.register_driver(:remote_chrome) do |app|
   # chrome_args = %w[
@@ -102,6 +103,7 @@ Capybara.always_include_port = true
 Capybara.run_server = false
 
 RSpec.configure do |config|
+  config.include CommonHelpers
   config.before(:each, type: :system) do
     driven_by :remote_chrome
   end

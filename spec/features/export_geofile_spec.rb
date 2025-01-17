@@ -8,8 +8,10 @@ RSpec.describe 'File Download' do
 
   before do
     FileUtils.mkdir_p(download_dir)
-    visit 'catalog/berkeley-s7038h'
-    find('#downloads-button').click
+    visit_public_record
+    click_download_button
+    # visit 'catalog/berkeley-s7038h'
+    # find('#downloads-button').click
   end
 
   # after(:each) do
