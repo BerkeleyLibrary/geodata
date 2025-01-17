@@ -34,10 +34,31 @@ module CommonHelpers
     false
   end
 
+  def verify_download(zip_file_path)
+    if wait_for_download(zip_file_path)
+      expect(File.exist?(zip_file_path)).to be_truthy, "Error: Downloaded data.zip file not found: #{zip_file_path}"
+      verify_zip_contents(zip_file_path)
+    else
+      verify_incomplete_download(zip_file_path)
+    end
+  end
+
+  def verify_zip_contents(zip_file_path)
+    Zip::File.open(zip_file_path) do |zip_file|
+      file_names = zip_file.map(&:name)
+      expect(file_names).to include('SanBenito_Intersections_2016.shp'), 'Error: SanBenito_Intersections_2016.shp not found in data.zip'
+    end
+  end
+
+  def verify_incomplete_download(zip_file_path)
+    zip_crdownload_file = "#{zip_file_path}.crdownload"
+    expect(File.exist?(zip_crdownload_file)).to be_truthy, "Error: Download not completed, and incomplete data.zip.crdownload file not found: #{zip_crdownload_file}"
+    expect(File.size(zip_crdownload_file)).to be > 130_000, 'Error: Incomplete data.zip.crdownload file size <= 130,000 bytes'
+  end
+
   def decoded_url(url)
     uri = URI.parse(url)
     decoded_query = URI.decode_www_form_component(uri.query)
     URI.decode_www_form_component("#{uri.path}?#{decoded_query}")
   end
-
 end
