@@ -9,7 +9,8 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'socket'
-require_relative 'support/common_helpers'
+# require_relative 'support/common_helpers'
+Rails.root.glob('spec/support/**/*.rb').sort.each { |file| require file }
 
 Capybara.register_driver(:remote_chrome) do |app|
   # chrome_args = %w[

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'zip'
 require 'fileutils'
-require_relative '../support/shared_examples/link_spec'
+# require_relative '../support/link_spec'
 
 RSpec.describe 'File Download' do
   let(:download_dir) { '/opt/app/tmp/cache/downloads' }

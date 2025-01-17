@@ -1,5 +1,5 @@
 require 'rails_helper'
-require_relative '../support/shared_examples/link_spec'
+# require_relative '../support/shared_examples/link_spec'
 
 RSpec.describe 'View Search Reslut' do
   before do
@@ -33,10 +33,12 @@ RSpec.describe 'View Search Reslut' do
     it 'displays the download button' do
       expect(page).to have_button('downloads-button')
     end
+
     it_behaves_like 'download link invisible', 'Original Shapefile'
     it_behaves_like 'download link invisible', 'Export Shapefile'
     it_behaves_like 'download link invisible', 'Export KMZ'
     it_behaves_like 'download link invisible', 'Export GeoJSON'
+
   end
 
 end
