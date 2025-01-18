@@ -2,11 +2,11 @@ module CommonHelpers
   EXPORT_TMP_PATH = '/opt/app/tmp/cache/downloads'.freeze
   DOWNLOAD_TMP_PATH = '/opt/app/tmp/selenium_downloads'.freeze
 
-  def visit_public_record
+  def view_public_record
     visit 'catalog/berkeley-s7038h'
   end
 
-  def visit_restricted_record
+  def view_restricted_record
     visit '/catalog/berkeley-s7b12n'
   end
 

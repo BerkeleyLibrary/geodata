@@ -1,5 +1,5 @@
 RSpec.shared_examples 'download link invisible' do |text|
-  it "it has no link #{text}" do
+  it "has no link #{text}" do
     expect(page).not_to have_link(text: text)
   end
 

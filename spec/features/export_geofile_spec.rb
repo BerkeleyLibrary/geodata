@@ -5,7 +5,7 @@ require 'fileutils'
 RSpec.describe 'Export links from download section' do
 
   before do
-    visit_public_record
+    view_public_record
     click_download_button
   end
 

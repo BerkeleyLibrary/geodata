@@ -4,7 +4,7 @@ RSpec.describe 'View Restricted Data' do
   let(:app_hostname) { IPSocket.getaddress(Socket.gethostname) }
   let(:cas_url) { "/cas/login?service=http://#{app_hostname}:3000/users/auth/calnet/callback?url=http://#{app_hostname}:3000/catalog/berkeley-s7b12n" }
   before do
-    visit_restricted_record
+    view_restricted_record
   end
 
   it 'display login to view and download link' do
