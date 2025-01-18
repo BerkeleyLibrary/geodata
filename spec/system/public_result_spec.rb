@@ -13,7 +13,7 @@ RSpec.describe 'View Search Reslut' do
 
   context 'metadata link' do
     it 'displays the metadata link' do
-      expect(page).to have_link('Metadata', href: '/catalog/berkeley-s7038h/metadata')
+      expect(page).to have_link('Metadata', href: "/catalog/#{CommonHelpers::PUBLIC_RECORD_ID}/metadata")
     end
 
     it 'clicking the metadata link, triggers the modal', js: true do

@@ -1,13 +1,15 @@
 module CommonHelpers
   EXPORT_TMP_PATH = '/opt/app/tmp/cache/downloads'.freeze
   DOWNLOAD_TMP_PATH = '/opt/app/tmp/selenium_downloads'.freeze
+  PUBLIC_RECORD_ID = 'berkeley-s7038h'.freeze
+  RESTRICTED_RECORD_ID = 'berkeley-s7b12n'.freeze
 
   def view_public_record
-    visit 'catalog/berkeley-s7038h'
+    visit "catalog/#{PUBLIC_RECORD_ID}"
   end
 
   def view_restricted_record
-    visit '/catalog/berkeley-s7b12n'
+    visit "/catalog/#{RESTRICTED_RECORD_ID}"
   end
 
   def click_download_button
