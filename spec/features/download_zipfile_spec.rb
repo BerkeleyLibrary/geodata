@@ -12,7 +12,7 @@ RSpec.describe 'Original Shapefile link from download section' do
     ex.run
     rm_files(all_files)
   end
-  before { view_public_record }
+  before { view_record(CommonHelpers::PUBLIC_RECORD_ID) }
 
   context 'when downloading the original shapefile' do
     before { click_download_button }

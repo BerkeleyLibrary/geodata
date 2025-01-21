@@ -4,13 +4,17 @@ module CommonHelpers
   PUBLIC_RECORD_ID = 'berkeley-s7038h'.freeze
   RESTRICTED_RECORD_ID = 'berkeley-s7b12n'.freeze
 
-  def view_public_record
-    visit "catalog/#{PUBLIC_RECORD_ID}"
+  def view_record(id)
+    visit "catalog/#{id}"
   end
 
-  def view_restricted_record
-    visit "/catalog/#{RESTRICTED_RECORD_ID}"
-  end
+  # def view_public_record
+  #   visit "catalog/#{PUBLIC_RECORD_ID}"
+  # end
+
+  # def view_restricted_record
+  #   visit "/catalog/#{RESTRICTED_RECORD_ID}"
+  # end
 
   def click_download_button
     find('#downloads-button').click

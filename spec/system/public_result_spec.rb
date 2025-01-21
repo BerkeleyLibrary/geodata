@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'View Search Reslut' do
   before do
-    view_public_record
+    view_record(CommonHelpers::PUBLIC_RECORD_ID)
   end
 
   it 'has correct record title' do
