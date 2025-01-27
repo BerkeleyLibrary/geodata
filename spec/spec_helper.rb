@@ -7,7 +7,7 @@ ENV['RAILS_ENV'] = 'test'
 # Dependencies
 
 require 'active_record'
-require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV['COVERAGE'])
+require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV.fetch('COVERAGE', nil))
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
