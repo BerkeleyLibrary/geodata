@@ -1,3 +1,5 @@
+---
+
 services:
   adminer:
     image: adminer
@@ -5,42 +7,36 @@ services:
     ports:
       - 8080:8080
 
-  db:
-    image: postgres:16.4
-    restart: always
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-    ports:
-      - 5432:5432
-
-  solr:
-    image: solr:${SOLR_VERSION:-8.11.1}
-    restart: always
-    ports:
-      - 8983:8983
-    volumes:
-      - ./solr:/var/solr/data/configsets/solr:delegated
-
   app:
     build:
       context: .
       target: development
     depends_on:
       - db
-      - selenium
-    networks:
-      default:
-        aliases:
-          - app.test
+      - solr
     ports:
       - 3000:3000
     restart: always
     environment:
-      DATABASE_URL: postgres://root:root@db/geodata-dev?pool=5
-      SOLR_URL: http://solr:8983/solr/geodata-test
+      - DATABASE_URL=postgres://root:root@db/geodata-dev?pool=5
+      - SOLR_URL=http://solr:8983/solr/geodata-test
     volumes:
       - ./:/opt/app:delegated
+
+  db:
+    image: postgres:16.4
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5432:5432
+
+  solr:
+    build: solr
+    restart: always
+    ports:
+      - 8983:8983
 
   selenium:
     image: selenium/standalone-chrome:latest
