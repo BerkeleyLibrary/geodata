@@ -9,6 +9,8 @@ services:
       - artifacts:/opt/app/artifacts
 
   selenium:
+    depends_on:
+      - app
     image: selenium/standalone-chrome:latest
     ports:
       - 4444:4444
