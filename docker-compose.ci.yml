@@ -22,7 +22,8 @@ services:
           - selenium.test
     shm_size: 2g
     volumes:
-      - ./tmp/selenium_downloads:/home/seluser/Downloads
+      - artifacts:/opt/app/artifacts
+      # - ./tmp/selenium_downloads:/home/seluser/Downloads
 
 volumes:
   artifacts:
