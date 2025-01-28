@@ -8,5 +8,19 @@ services:
     volumes:
       - artifacts:/opt/app/artifacts
 
+  selenium:
+    image: selenium/standalone-chrome:latest
+    ports:
+      - 4444:4444
+      - 7900:7900
+    platform: linux/amd64
+    networks:
+      default:
+        aliases:
+          - selenium.test
+    shm_size: 2g
+    volumes:
+      - ./tmp/selenium_downloads:/home/seluser/Downloads
+
 volumes:
   artifacts:
