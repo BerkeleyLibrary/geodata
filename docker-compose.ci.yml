@@ -7,10 +7,9 @@ services:
     volumes: !reset
     volumes:
       - artifacts:/opt/app/artifacts
+      - selenium_downloads:/home/seluser/Downloads
 
   selenium:
-    depends_on:
-      - app
     image: selenium/standalone-chrome:latest
     ports:
       - 4444:4444
@@ -23,7 +22,9 @@ services:
     shm_size: 2g
     volumes:
       - artifacts:/opt/app/artifacts
-      # - ./tmp/selenium_downloads:/home/seluser/Downloads
+      - selenium_downloads:/home/seluser/Downloads
 
 volumes:
   artifacts:
+  selenium_downloads:
+

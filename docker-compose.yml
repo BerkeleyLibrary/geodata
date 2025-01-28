@@ -22,7 +22,7 @@ services:
       - SOLR_URL=http://solr:8983/solr/geodata-test
     volumes:
       - ./:/opt/app:delegated
-      - downloads:/home/seluser/Downloads
+      - selenium_downloads:/home/seluser/Downloads
       # - artifacts:/opt/app/artifacts
 
   db:
@@ -52,9 +52,10 @@ services:
           - selenium.test
     shm_size: 2g
     volumes:
-      - downloads:/home/seluser/Downloads
-      # - ./tmp/selenium_downloads:/home/seluser/Downloads
+      - selenium_downloads:/home/seluser/Downloads
+      # - artifacts:/opt/app/artifacts
+      # - artifacts:/home/seluser/Downloads
 
 volumes:
   artifacts:
-  downloads:
+  selenium_downloads:
