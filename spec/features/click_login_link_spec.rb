@@ -11,7 +11,6 @@ require 'rails_helper'
 #   end
 # end
 
-
 # describe 'User Util Links' do
 #     it 'has link' do
 #        visit root_path

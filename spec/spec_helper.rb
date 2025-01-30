@@ -7,7 +7,7 @@ ENV['RAILS_ENV'] = 'test'
 # Dependencies
 
 require 'active_record'
-require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV['COVERAGE'])
+require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV.fetch('COVERAGE', nil))
 
 ### testing code ###
 # Capybara.register_driver :remote_selenium_headless do |app|
@@ -37,7 +37,6 @@ require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV['COVERAGE'])
 
 # Capybara.default_driver = Capybara.javascript_driver = :remote_selenium_headless
 ### testing code end ###
-
 
 # ################## from TIND_QA ######################
 
@@ -83,7 +82,6 @@ require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV['COVERAGE'])
 # Capybara.default_driver = Capybara.javascript_driver = :remote
 
 # #############
-
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
