@@ -6,11 +6,8 @@ ENV['RAILS_ENV'] = 'test'
 # ------------------------------------------------------------
 # Dependencies
 
-# require 'colorize'
-require 'simplecov' if ENV['COVERAGE']
-# require 'simplecov'
-# require 'rspec_junit_formatter'
-# SimpleCov.start 'rails'
+require 'active_record'
+require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV['COVERAGE'])
 
 ### testing code ###
 # Capybara.register_driver :remote_selenium_headless do |app|
