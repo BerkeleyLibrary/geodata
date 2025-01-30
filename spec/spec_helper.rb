@@ -7,7 +7,81 @@ ENV['RAILS_ENV'] = 'test'
 # Dependencies
 
 require 'active_record'
-require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV['COVERAGE'])
+require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV.fetch('COVERAGE', nil))
+
+### testing code ###
+# Capybara.register_driver :remote_selenium_headless do |app|
+#   options = Selenium::WebDriver::Chrome::Options.new
+#   options.add_argument('--headless=new')
+#   options.add_argument('--no-sandbox')
+#   # options.add_argument('--disable-dev-shm-usage')
+# #   options.add_argument('--disable-gpu')
+#   options.add_argument('--window-size=2560,1344')
+#   options.add_argument('--disable-smooth-scrolling')
+#   capabilities = [
+#     options,
+#     Selenium::WebDriver::Remote::Capabilities.new(
+#       'goog:loggingPrefs' => {
+#         browser: 'ALL', driver: 'ALL'
+#       }
+#     )
+#   ]
+
+#   Capybara::Selenium::Driver.new(app,
+#     browser: :remote,
+#     capabilities:,
+#     url: "http://#{ENV['SELENIUM_HOST'] || 'selenium'}:4444/",
+#   )
+
+# end
+
+# Capybara.default_driver = Capybara.javascript_driver = :remote_selenium_headless
+### testing code end ###
+
+# ################## from TIND_QA ######################
+
+# require 'rspec'
+# require 'capybara/rspec'
+# require 'selenium-webdriver'
+
+# Capybara.register_driver(:remote) do |app|
+#   chrome_args = %w[
+#     --window-size=2560,1344
+#     --disable-smooth-scrolling
+#   ]
+
+#   chrome_prefs = {
+#     'download.prompt_for_download' => false,
+#     'download.default_directory' => '/tmp',
+#   }
+
+#   chrome_options = ::Selenium::WebDriver::Chrome::Options.new(args: chrome_args, prefs: chrome_prefs).tap do |options|
+#     # NOTE: Different Selenium/Chrome versions set download directory differently -- see
+#     #       https://github.com/teamcapybara/capybara/blob/3.38.0/spec/selenium_spec_chrome.rb#L15-L20
+#     if (download_dir = chrome_prefs['download.default_directory'])
+#       options.add_preference(:download, default_directory: download_dir)
+#     end
+#   end
+
+#   capabilities = [
+#     chrome_options,
+#     Selenium::WebDriver::Remote::Capabilities.new(
+#       'goog:loggingPrefs' => {
+#         browser: 'ALL', driver: 'ALL'
+#       }
+#     )
+#   ]
+
+#   Capybara::Selenium::Driver.new(app,
+#     browser: :remote,
+#     capabilities:,
+#     url: "http://#{ENV['SELENIUM_HOST'] || 'selenium'}:4444/",
+#   )
+# end
+
+# Capybara.default_driver = Capybara.javascript_driver = :remote
+
+# #############
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

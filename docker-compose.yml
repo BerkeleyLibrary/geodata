@@ -37,3 +37,14 @@ services:
     restart: always
     ports:
       - 8983:8983
+  selenium:
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
+      - 7900:7900
+    platform: linux/amd64
+    networks:
+      default:
+        aliases:
+          - selenium.test
+    shm_size: 2g
