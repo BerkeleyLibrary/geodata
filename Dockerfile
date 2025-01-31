@@ -21,17 +21,17 @@ RUN mkdir -p /opt/app \
     && chown -R $APP_USER:$APP_USER /opt/app /usr/local/bundle
 
 # Get list of available packages
-RUN apt-get update -qq 
+RUN apt-get update -qq
 
 # Install standard packages from the Debian repository
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get install -y --no-install-recommends \
     bash \
     curl \
-    gpg \
     default-jre \
     ca-certificates \ 
     libpq-dev \
-    libvips42 
+    libvips42 \
+    &&  rm -rf /var/cache/apk/*
 
 # Install Node.js (using NodeSource to get the latest LTS version, e.g., 20.x)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - \
@@ -110,14 +110,14 @@ RUN rails assets:precompile assets:clean log:clear tmp:clear
 ARG BUILD_TIMESTAMP
 ARG BUILD_URL
 ARG DOCKER_TAG
-ARG GIT_BRANCH
-ARG GIT_COMMIT
-ARG GIT_URL
+ARG GIT_REF_NAME
+ARG GIT_SHA
+ARG GIT_REPOSITORY_URL
 
 # build arguments aren't persisted in the image, but ENV values are
 ENV BUILD_TIMESTAMP="${BUILD_TIMESTAMP}"
 ENV BUILD_URL="${BUILD_URL}"
 ENV DOCKER_TAG="${DOCKER_TAG}"
-ENV GIT_BRANCH="${GIT_BRANCH}"
-ENV GIT_COMMIT="${GIT_COMMIT}"
-ENV GIT_URL="${GIT_URL}"
+ENV GIT_REF_NAME="${GIT_REF_NAME}"
+ENV GIT_SHA="${GIT_SHA}"
+ENV GIT_REPOSITORY_URL="${GIT_REPOSITORY_URL}"

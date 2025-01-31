@@ -12,9 +12,6 @@ class ApplicationController < ActionController::Base
 
   # root will be used as new_session_path
   # Shim because we're not using Devise's :database_authenticatable
-  # def new_session_path(_scope)
-  #   new_user_session_path
-  # end
 
   # @param [String] return_url address that calnet will redirect to post-logout
   # @return [String] uri to the calnet sso page

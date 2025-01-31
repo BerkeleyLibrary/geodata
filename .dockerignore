@@ -1,3 +1,17 @@
+*.rbc
+capybara-*.html
+.bash*
+.rspec
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-[0-9]*
+/public/system
+/coverage/
+/spec/tmp
+*.orig
+rerun.txt
+pickle-email-*.html
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -15,21 +29,29 @@ config/master.key
 # TODO Comment out this rule if environment variables can be committed
 .env
 
-.bash*
-
 ## Environment normalization:
 /.bundle
 /vendor/bundle
-/.local
-/.webdrivers
-/.cache
+
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
 
-# Ignore command history file.
-.byebug_history
-.irb_history
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
 
+# if using bower-rails ignore default bower_components path bower.json files
+/vendor/assets/bower_components
+*.bowerrc
+bower.json
+
+# Ignore pow environment settings
+.powenv
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore Bash history file.
+.bash_history
 
 # Ignore node_modules
 node_modules/
@@ -41,14 +63,12 @@ node_modules/
 
 # Ignore yarn files
 /yarn-error.log
-/.yarnrc
 yarn-debug.log*
-yarn.lock
-.yarn
 .yarn-integrity
 
-# Ignore .npm files
-/.npm
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
 
 # Build/test artifacts
 /artifacts/
@@ -56,8 +76,6 @@ yarn.lock
 # Ignore solr files
 solr/*/data/*
 
-# Vite Ruby
-/public/vite*
-# Vite uses dotenv and suggests to ignore local-only env files. See
-# https://vitejs.dev/guide/env-and-mode.html#env-files
-*.local
+.irb_history
+
+.github
