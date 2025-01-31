@@ -112,7 +112,6 @@ require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV.fetch('COVERAGE'
 # Capybara.default_driver = Capybara.javascript_driver = :remote_selenium_headless
 ### testing code end ###
 
-
 # ################## from TIND_QA ######################
 
 # require 'rspec'
@@ -157,7 +156,6 @@ require 'simplecov' if ActiveRecord::Type::Boolean.new.cast(ENV.fetch('COVERAGE'
 # Capybara.default_driver = Capybara.javascript_driver = :remote
 
 # #############
-
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
