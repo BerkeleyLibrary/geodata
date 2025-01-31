@@ -35,7 +35,8 @@ RUN apt-get install -y --no-install-recommends \
 
 # Install Node.js (using NodeSource to get the latest LTS version, e.g., 20.x)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - \
-    && apt-get install -y --no-install-recommends nodejs
+    && apt-get install -y --no-install-recommends nodejs \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Yarn (using the official Yarn repository)
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
