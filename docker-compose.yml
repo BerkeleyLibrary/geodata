@@ -37,6 +37,7 @@ services:
     restart: always
     ports:
       - 8983:8983
+
   selenium:
     image: selenium/standalone-chrome
     ports:
