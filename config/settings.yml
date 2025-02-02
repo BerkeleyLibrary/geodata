@@ -138,6 +138,8 @@ WEBSERVICES_SHOWN:
   - 'tiled_map_layer'
   - 'dynamic_map_layer'
   - 'image_map_layer'
+  - 'cog'
+  - 'pmtiles'
 
 # Relationships to display
 RELATIONSHIPS_SHOWN:

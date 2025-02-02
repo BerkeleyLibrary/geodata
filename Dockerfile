@@ -25,18 +25,27 @@ RUN apt-get update -qq
 
 # Install standard packages from the Debian repository
 RUN apt-get install -y --no-install-recommends \
-     bash \
-     curl \
-     default-jre \
-     ca-certificates \
-     nodejs \
-     libpq-dev \
-     libvips42 \
-     yarn\
-&&  rm -rf /var/cache/apk/*
+    bash \
+    curl \
+    default-jre \
+    ca-certificates \ 
+    libpq-dev \
+    libvips42 \
+    &&  rm -rf /var/cache/apk/*
+
+# Install Node.js (using NodeSource to get the latest LTS version, e.g., 20.x)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install Yarn (using the official Yarn repository)
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update && apt-get install -y --no-install-recommends yarn \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 # By default, run as the geodata user
-USER geodata
+USER $APP_USER
 
 # All subsequent commands run relative to the app directory.
 WORKDIR /opt/app
@@ -44,13 +53,11 @@ WORKDIR /opt/app
 # Add binstubs to the path.
 ENV PATH="/opt/app/bin:$PATH"
 
-
 # If run with no other arguments, the image will start the rails server by
 # default. Note that we must bind to all interfaces (0.0.0.0) because when
 # running in a docker container, the actual public interface is created
 # dynamically at runtime (we don't know its address in advance).
 CMD ["rails", "server", "-b", "0.0.0.0", "--pid", "/tmp/puma.pid"]
-
 
 # ============================================================================
 # Target: development
@@ -68,7 +75,7 @@ RUN apt-get install -y --no-install-recommends \
     make
 
 # Drop back to the GeoData user
-USER geodata
+USER $APP_USER
 
 # Copy over only the files which are needed to perform a bundle install.
 COPY --chown=geodata .ruby-version Gemfile* ./
@@ -79,8 +86,7 @@ COPY --chown=geodata . .
 
 # Create cache/pids/etc directories.
 RUN bundle exec -- rails log:clear tmp:create \
-&&  rails assets:precompile
-RUN mkdir tmp/cache/downloads
+    &&  rails assets:precompile
 
 # ============================================================================
 # Target: production
@@ -92,7 +98,6 @@ FROM base AS production
 # Copy the built codebase from the dev stage
 COPY --from=development --chown=geodata /opt/app /opt/app
 COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
-
 
 # Sanity-check that the bundle is correctly installed, that the Gemfile
 # and Gemfile.lock are synced, and that assets are able to be compiled.
