@@ -19,7 +19,7 @@ Capybara.register_driver(:remote_chrome) do |app|
   ]
 
   chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args).tap do |options|
-    options.add_preference(:download, prompt_for_download: false, directory_upgrade: true, default_directory: '/home/seluser/Downloads')
+    options.add_preference(:download, prompt_for_download: false, directory_upgrade: true, default_directory: '/tmp')
     options.add_preference(:browser, set_download_behavior: { behavior: 'allow' })
   end
 
@@ -39,8 +39,6 @@ Capybara.register_driver(:remote_chrome) do |app|
 end
 
 Capybara.default_driver = Capybara.javascript_driver = :remote_chrome
-# Capybara.app_host = 'http://app.test:3000'
-# check for CI later
 Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:3000"
 Capybara.server_host = '0.0.0.0'
 Capybara.always_include_port = true
