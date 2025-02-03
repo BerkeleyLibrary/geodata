@@ -22,7 +22,7 @@ services:
       - SOLR_URL=http://solr:8983/solr/geodata-test
     volumes:
       - ./:/opt/app:delegated
-      - selenium_downloads:/home/seluser/Downloads
+      - selenium_downloads:/opt/app/tmp/selenium_downloads
 
   db:
     image: postgres:16.4

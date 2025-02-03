@@ -4,10 +4,12 @@ services:
   app:
     build: !reset
     image: ${DOCKER_APP_IMAGE}
+    depends_on:
+      - selenium
     volumes: !reset
     volumes:
       - artifacts:/opt/app/artifacts
-      - selenium_downloads:/home/seluser/Downloads
+      - selenium_downloads:/opt/app/tmp/selenium_downloads
 
 volumes:
   artifacts:
