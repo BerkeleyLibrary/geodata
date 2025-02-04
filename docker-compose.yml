@@ -22,9 +22,10 @@ services:
       - SOLR_URL=http://solr:8983/solr/geodata-test
     volumes:
       - ./:/opt/app:delegated
+      - selenium_downloads:/opt/app/tmp/selenium_downloads
 
   db:
-    image: postgres:12.2
+    image: postgres:16.4
     restart: always
     environment:
       - POSTGRES_USER=root
@@ -39,7 +40,7 @@ services:
       - 8983:8983
 
   selenium:
-    image: selenium/standalone-chrome
+    image: selenium/standalone-chrome:latest
     ports:
       - 4444:4444
       - 7900:7900
@@ -49,3 +50,8 @@ services:
         aliases:
           - selenium.test
     shm_size: 2g
+    volumes:
+      - selenium_downloads:/home/seluser/Downloads
+
+volumes:
+  selenium_downloads:
