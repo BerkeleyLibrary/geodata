@@ -1,13 +1,13 @@
 <div class="navbar-right">
-  <ul class="nav navbar-nav">
-    <% if signed_in? %>
-    <li>    
-      <%= link_to t('logout'), destroy_user_session_path %>
-    </li>
-    <% else %>
-    <li>
-      <%= link_to t('login'),  user_calnet_omniauth_authorize_path, method: 'post'%>   
-    </li>
-    <% end %>
-  </ul>
+    <ul class="nav navbar-nav">
+        <% if signed_in? %>
+        <li>
+            <%= link_to t('links.logout'), destroy_user_session_path %>
+        </li>
+        <% else %>
+        <li>
+            <%= link_to t('links.login'),  user_calnet_omniauth_authorize_path, method: 'post'%>
+        </li>
+        <% end %>
+    </ul>
 </div>

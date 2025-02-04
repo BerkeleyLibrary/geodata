@@ -1,6 +1,6 @@
 # Geodata
 
-Geodata web portal developed from Geoblacklight 4.1.0
+Geodata web portal developed from Geoblacklight 4.4.2
 [Geodata@UCB](https://geodata.lib.berkeley.edu/)
 
 ## Docker
@@ -8,13 +8,15 @@ Geodata web portal developed from Geoblacklight 4.1.0
 
 ```sh
 # Build container images
-docker-compose build --pull --force-rm
+docker compose build --pull
+# or 
+docker compose build --pull --no-cache
 
 # Start the stack in the background
-docker-compose up --d
+docker compose up --d
 
 # Run setup tasks (create databases, compile assets, etc.)
-docker-compose run --rm --entrypoint=setup app
+docker compose run --rm --entrypoint=setup app
 ```
 
 ### Accessing Services
@@ -42,26 +44,26 @@ If you're curious, the code that does this is in `config/application.rb`.
 View logs:
 
 ```sh
-docker-compose logs -f # tail all logs
-docker-compose logs -f app # tail just the "app" service's logs (etc.)
+docker compose logs -f # tail all logs
+docker compose logs -f app # tail just the "app" service's logs (etc.)
 ```
 
 Shell into a container:
 
 ```sh
-docker-compose run --rm --entrypoint=ash app
+docker compose exec app bash
 ```
 
 Open a Rails console:
 
 ```sh
-docker-compose run --rm app console
+docker compose exec app rails console
 ```
 
 Stop services and clean up volumes:
 
 ```sh
-docker-compose down -v
+docker compose down -v
 ```
 
 
