@@ -9,7 +9,7 @@ Geodata web portal developed from Geoblacklight 4.4.2
 ```sh
 # Build container images
 docker compose build --pull
-or 
+# or 
 docker compose build --pull --no-cache
 
 # Start the stack in the background
