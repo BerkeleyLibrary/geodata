@@ -19,7 +19,7 @@ Capybara.register_driver(:remote_chrome) do |app|
   ]
 
   chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args).tap do |options|
-    options.add_preference(:download, prompt_for_download: false, directory_upgrade: true, default_directory: '/tmp')
+    options.add_preference(:download, prompt_for_download: false, directory_upgrade: true, default_directory: '/home/seluser/Downloads')
     options.add_preference(:browser, set_download_behavior: { behavior: 'allow' })
   end
 
