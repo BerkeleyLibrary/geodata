@@ -25,10 +25,7 @@ Rails.application.routes.draw do
       delete 'clear'
     end
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
   mount Geoblacklight::Engine => 'geoblacklight'
   concern :gbl_exportable, Geoblacklight::Routes::Exportable.new
   resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
