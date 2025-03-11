@@ -274,7 +274,7 @@ Devise.setup do |config|
   config.sign_out_via = :get
   config.omniauth :cas,
                   name: :calnet,
-                  host: "auth#{'-test' unless Rails.env.production?}.berkeley.edu",
+                  host: ENV.fetch('CAS_HOST') { Rails.env.production? ? 'auth.berkeley.edu' : 'auth-test.berkeley.edu' },
                   login_url: '/cas/login',
                   logout_url: '/cas/logout',
                   service_validate_url: '/cas/p3/serviceValidate'
