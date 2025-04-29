@@ -1,0 +1,74 @@
+{
+    "dcat_bbox": "ENVELOPE(-70.084972222222,-69.864188844163,12.67375,12.348347409059)",
+    "dcat_keyword_sm": [
+        "Topographic maps"
+    ],
+    "dcat_theme_sm": [
+        "Farming",
+        "Biota",
+        "Boundaries",
+        "Elevation",
+        "Imagery and Base Maps",
+        "Inland Waters",
+        "Structure",
+        "Transportation",
+        "Utilities and Communication"
+    ],
+    "dct_accessRights_s": "Public",
+    "dct_creator_sm": [
+        "UC Berkeley Library",
+        "Land Info (Firm)",
+        "Netherlands Antilles. Dienst van het Kadaster",
+        "KLM Aerocarto"
+    ],
+    "dct_description_sm": [
+        "This index provides access to a set of digital versions of print source map sheets from the topographic map series Topographic maps of Aruba 1:25,000, 1995. The digital versions have been scanned, cropped to the map area, georeferenced, and published by Land Info. Contour intervals are shown at 10 meters. Text is in English and Dutch. The original print sheets were published as part of the map series Topografische kaart van de Nederlandse Antillen en Aruba 1:25,000, republished in Amsterdam by Rudolf Muller in 1995. The maps are based on fieldwork by the Dienst van het Kadaster (Nederlandse Antillen) and aerial photography flown by KLM Aerocarto."
+    ],
+    "dct_format_s": "Shapefile",
+    "dct_identifier_sm": [
+        "https://search.library.berkeley.edu/permalink/01UCS_BER/1thfj9n/alma991053852989706532"
+    ],
+    "dct_isPartOf_sm": [
+        "berkeley-s7p435"
+    ],
+    "dct_issued_s": "2024",
+    "dct_publisher_sm": [
+        "UC Berkeley Library"
+    ],
+    "dct_references_s": "{\"http://www.opengis.net/def/serviceType/ogc/wfs\":\"https://geoserver-public.ucblib.org/geoserver/wfs\",\"http://www.opengis.net/def/serviceType/ogc/wms\":\"https://geoserver-public.ucblib.org/geoserver/wms\",\"http://www.isotc211.org/schemas/2005/gmd/\":\"https://spatial.ucblib.org/public/berkeley-s7st5r/iso19139.xml\",\"http://schema.org/downloadUrl\":\"https://spatial.ucblib.org/public/berkeley-s7st5r/data.zip\",\"https://openindexmaps.org\":\"https://raw.githubusercontent.com/BerkeleyLibrary/index-map/refs/heads/main/v1/Aruba25k_OIMindex.geojson\"}",
+    "dct_rights_sm": [
+        "The digital maps linked to from this index are copyrighted by Land Info, Inc. and/or its suppliers. Access to these maps is restricted to current UC Berkeley students, staff, and faculty, as well as walk-in users who are physically present on campus at the Earth Sciences & Map Library, who may make all use of the data as is consistent with the Fair Use Provisions of United States and international copyright laws. Authorized Users may transmit to a third party in hard copy or electronically, minimal, insubstantial amounts of the Licensed Materials for personal use or scholarly, educational, or scientific research or professional use but in no case for resale or commercial purposes. Derived works that include the source data must be merged with other value-added data in such a way that the derived work cannot be converted back to the original source data format. Use of this data should include proper source referencing to Land Info, Inc."
+    ],
+    "dct_spatial_sm": [
+        "Aruba"
+    ],
+    "dct_subject_sm": [
+        "Aruba",
+        "Index Map"
+    ],
+    "dct_temporal_sm": [
+        "1995"
+    ],
+    "dct_title_s": "Index to Aruba 1:25,000 topographic maps, 1995",
+    "gbl_displayNote_sm": [
+        "Note: This is an index map, providing access to individual sheet records. Click a feature on the map for more info and to navigate to the individual sheet record to download."
+    ],
+    "gbl_fileSize_s": "0.0 MB",
+    "gbl_indexYear_im": [
+        1995
+    ],
+    "gbl_mdModified_dt": "2024-03-27T00:00:00Z",
+    "gbl_mdVersion_s": "Aardvark",
+    "gbl_resourceClass_sm": [
+        "Maps"
+    ],
+    "gbl_resourceType_sm": [
+        "Topographic maps",
+        "Quadrangle maps",
+        "Digital maps"
+    ],
+    "gbl_wxsIdentifier_s": "s7st5r",
+    "id": "berkeley-s7st5r",
+    "locn_geometry": "ENVELOPE(-70.084972222222,-69.864188844163,12.67375,12.348347409059)",
+    "schema_provider_s": "University of California Berkeley"
+}
