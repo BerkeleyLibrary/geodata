@@ -34,10 +34,12 @@ config/master.key
 # Ignore node_modules
 node_modules/
 
-# Ignore precompiled javascript packs
+# Ignore precompiled javascript packs and sitemap files
 /public/packs
 /public/packs-test
 /public/assets
+/public/sitemaps.*
+/public/robots.txt
 
 # Ignore yarn files
 /yarn-error.log
