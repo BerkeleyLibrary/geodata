@@ -10,7 +10,13 @@ response = solr.get('select', params: { q: '*:*', fl: 'id', rows: 999_999 })
 slugs = response['response']['docs'].pluck('id').sort
 
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = Rails.env.production? ? 'https://geodata.lib.berkeley.edu' : 'http://localhost:3000'
+default_host = {
+  'production' => 'https://geodata.lib.berkeley.edu',
+  'staging' => 'https://geodata.ucblib.org',
+  'development' => 'http://localhost:3000'
+}[Rails.env] || 'https://geodata.ucblib.org'
+
+SitemapGenerator::Sitemap.default_host = default_host
 
 options = { changefreq: 'yearly', priority: 0.5 }
 SitemapGenerator::Sitemap.create do
