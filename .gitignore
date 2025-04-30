@@ -38,7 +38,7 @@ node_modules/
 /public/packs
 /public/packs-test
 /public/assets
-/public/sitemaps.*
+/public/sitemap.*
 /public/robots.txt
 
 # Ignore yarn files
