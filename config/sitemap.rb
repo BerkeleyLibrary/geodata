@@ -7,7 +7,7 @@ solr = RSolr.connect url: Blacklight.connection_config[:url]
 response = solr.get('select', params: { q: '*:*', fl: 'id', rows: 999_999 })
 
 # Build a flat sorted array of all document slugs
-slugs = response['response']['docs'].pluck('id').sort
+slugs = response['response']['docs'].map { |doc| doc['id'] }.sort
 
 # Set the host name for URL creation
 default_host = {
