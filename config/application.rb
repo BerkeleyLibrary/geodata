@@ -20,6 +20,8 @@ module Geodata
     config.action_mailer.default_options = { from: 'fake@berkeley.edu' }
     config.lit_gtag_id = ENV.fetch('LIT_GTAG_ID', nil)
 
+    # The Base URL for the generated sitemap
+    config.x.sitemap.base_url = ENV['GEODATA_BASE_URL'] || 'http://localhost:3000'
     # Silenced by default to minimize log noise
     # @see https://ucblib.atlassian.net/browse/DEV-517
     Deprecation.default_deprecation_behavior = ENV.fetch('LIT_DEPRECATION_BEHAVIOR', 'silence').to_sym

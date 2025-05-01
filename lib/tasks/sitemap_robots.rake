@@ -1,15 +1,8 @@
 namespace :sitemap do
   desc 'Generate robots.txt including sitemap link'
   task robots: :environment do
-    # Use a dynamic sitemap URL based on environment: propduction or localhost (need staging?)
-
-    default_host = {
-      'production' => 'https://geodata.lib.berkeley.edu',
-      'staging' => 'https://geodata.ucblib.org',
-      'development' => 'http://localhost:3000'
-    }[Rails.env] || 'https://geodata.ucblib.org'
-
-    sitemap_url = "#{default_host}/sitemap.xml.gz"
+    # Use a dynamic sitemap URL based on environment: production or localhost (need staging?)
+    sitemap_url = "#{Rails.configuration.x.sitemap.base_url}/sitemap.xml.gz"
 
     # Robots.txt content
     robots_content = <<~ROBOTS
