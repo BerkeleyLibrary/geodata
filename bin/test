@@ -8,8 +8,8 @@ ENV['COVERAGE'] = '1'
 
 # Test commands (to be exec'd in order)
 TESTS = [
-  %w(rspec -f html --out artifacts/rspec.html),
-  %w(rubocop -f html --out artifacts/rubocop.html),
+  %w(bundle exec rspec -f html --out artifacts/rspec.html),
+  %w(bundle exec rubocop -f html --out artifacts/rubocop.html),
 ]
 
 FileUtils.chdir APP_ROOT do
