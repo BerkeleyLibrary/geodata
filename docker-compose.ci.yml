@@ -6,8 +6,7 @@ services:
     image: ${DOCKER_APP_IMAGE}
     depends_on:
       - selenium
-    volumes: !reset
-    volumes:
+    volumes: !override
       - artifacts:/opt/app/artifacts
       - selenium_downloads:/opt/app/tmp/selenium_downloads
 
