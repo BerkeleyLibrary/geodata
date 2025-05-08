@@ -6,3 +6,8 @@ SimpleCov.start 'rails' do
   formatter SimpleCov::Formatter::RcovFormatter
   minimum_coverage 70
 end
+
+SimpleCov.at_exit do
+  SimpleCov.result.format!
+  puts '------ SimpleCov completed ------'
+end
