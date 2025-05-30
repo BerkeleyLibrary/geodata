@@ -1,7 +1,6 @@
-
-.ucb_container{
+.ucb_container {
   min-height: 100%;
-  width: 100%;  
+  width: 100%;
   margin-bottom: 90px;
 }
 
@@ -9,6 +8,12 @@
   height: 90px;
 }
 
-.navbar {  
-  height: 6em;  
+.navbar {
+  height: 6em;
+}
+
+// Fixing: AAD-232 
+.btn-primary {
+  background-color: #0073EB;
+  color: #ffffff;
 }
