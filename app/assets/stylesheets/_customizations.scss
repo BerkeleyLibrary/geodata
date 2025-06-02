@@ -12,14 +12,35 @@
   height: 6em;
 }
 
-// Fixing: AAD-232 
 .btn-primary {
-  background-color: #0073EB;
+  background-color: $link-color;
   color: #ffffff;
 }
 
 span.facet-label {
   span.selected {
     color: #208836 !important;
+  }
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link,
+.nav-pills .no-js .btn-group:focus-within .dropdown-menu>.nav-link,
+.nav-pills .no-js .btn-group:focus-within .twitter-typeahead .tt-menu>.nav-link,
+.twitter-typeahead .nav-pills .no-js .btn-group:focus-within .tt-menu>.nav-link,
+.no-js .btn-group:focus-within .nav-pills .dropdown-menu>.nav-link,
+.no-js .btn-group:focus-within .nav-pills .twitter-typeahead .tt-menu>.nav-link,
+.twitter-typeahead .no-js .btn-group:focus-within .nav-pills .tt-menu>.nav-link {
+  background-color: $link-color;
+}
+
+#metadata-container {
+  a {
+    color: #006FD6;
+
+    &:hover {
+      color: #0044B3;
+      text-decoration: underline;
+    }
   }
 }
