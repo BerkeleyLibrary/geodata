@@ -6,5 +6,8 @@
     "vite": "^5.4.11",
     "vite-plugin-rails": "^0.5.0",
     "vite-plugin-ruby": "^5.1.1"
+  },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node@4.27.4"
   }
 }
