@@ -44,3 +44,9 @@ ul.facet-values {
     }
   }
 }
+
+.element-focusable:hover,
+.element-focusable:focus {
+  color: #0051AD;
+  text-decoration: underline;
+}
