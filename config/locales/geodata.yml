@@ -1,6 +1,6 @@
 en:
   blacklight:
-    application_name: 'UCB GeoData'
+    application_name: 'UC Berkeley GeoData'
   links:
     login: 'Login'
     logout: 'Logout'
