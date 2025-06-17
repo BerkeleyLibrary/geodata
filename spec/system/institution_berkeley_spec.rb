@@ -6,7 +6,7 @@ RSpec.describe 'View Institution Catalog' do
   end
 
   it 'view home page title' do
-    expect(page).to have_title('UC Berkeley GeoData Repository')
+    expect(page).to have_title('UC Berkeley GeoData')
   end
 
   it 'display UC Berkeley collection link' do
