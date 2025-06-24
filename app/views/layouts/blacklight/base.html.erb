@@ -38,12 +38,6 @@
 </head>
 
 <body class="<%= render_body_class %>">
-    <%
-=begin%>
-    <h1> Main Content </h1>
-    <%
-=end%>
-    <h1> <%= render_page_title %> </h1>
     <nav id="skip-link" aria-label="<%= t('blacklight.skip_links.label') %>">
         <%= link_to t('blacklight.skip_links.search_field'), '#search_field', class: 'element-invisible element-focusable rounded-bottom py-2 px-3', data: { turbolinks: 'false' } %>
         <%= link_to t('blacklight.skip_links.main_content'), '#main-container', class: 'element-invisible element-focusable rounded-bottom py-2 px-3', data: { turbolinks: 'false' } %>
@@ -52,7 +46,8 @@
     <div class="ucb_container">
         <%= render partial: 'shared/header_navbar' %>
         <main id="main-container" class="<%= container_classes %>" role="main" aria-label="<%= t('blacklight.main.aria.main_container') %>">
-            <%= content_for(:container_header) %>
+            <span class="constraints-label sr-only visually-hidden"><%= t('blacklight.search.filters.title') %></span>
+            <%= content_for(:container_header)? content_for(:container_header) : "<div class='sr-only visually-hidden-focusable'> <h1> Main Content </h1><h2> Content Section </h2></div>".html_safe %>
             <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
 
             <div class="row">
