@@ -47,7 +47,7 @@
         <%= render partial: 'shared/header_navbar' %>
         <main id="main-container" class="<%= container_classes %>" role="main" aria-label="<%= t('blacklight.main.aria.main_container') %>">
             <span class="constraints-label sr-only visually-hidden"><%= t('blacklight.search.filters.title') %></span>
-            <%= content_tag(:div, class: "sr-only visually-hidden-focusable") do
+            <%= content_for(:container_header) || content_tag(:div, class: "sr-only visually-hidden-focusable") do
                 content_tag(:h1, "Main Content") +
                 content_tag(:h2, "Section Content")
             end %>
