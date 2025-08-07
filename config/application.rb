@@ -26,6 +26,9 @@ module Geodata
     # @see https://ucblib.atlassian.net/browse/DEV-517
     Deprecation.default_deprecation_behavior = ENV.fetch('LIT_DEPRECATION_BEHAVIOR', 'silence').to_sym
 
+    config.i18n.load_path += Rails.root.glob('config/locales/**/*.{rb,yml}')
+    config.i18n.default_locale = :en
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
