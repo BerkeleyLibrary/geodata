@@ -76,6 +76,9 @@ yarn-debug.log*
 # Ignore solr files
 solr/*/data/*
 
+.ruby-lsp
+.cache
 .irb_history
-
+.local
+.git
 .github

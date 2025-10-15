@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'View Restricted Data' do
   let(:app_hostname) { IPSocket.getaddress(Socket.gethostname) }
-  let(:cas_url) { "/cas/login?service=http://#{app_hostname}:3000/users/auth/calnet/callback?url=http://#{app_hostname}:3000/catalog/berkeley-s7b12n" }
+  let(:cas_url) { "/cas/login?service=http://#{app_hostname}:3000/users/auth/calnet/callback?url=http://#{app_hostname}:3000/catalog/#{CommonHelpers::RESTRICTED_RECORD_ID}" }
   before do
     view_record(CommonHelpers::RESTRICTED_RECORD_ID)
   end
@@ -13,6 +13,8 @@ RSpec.describe 'View Restricted Data' do
 
   it 'open calnet login page when clicking login to view and download link' do
     find('.btn.btn-default').click
+    puts page
+    puts page.current_url
     decoded_path_and_query = decoded_url(page.current_url)
     expect(decoded_path_and_query).to eq(cas_url)
   end
