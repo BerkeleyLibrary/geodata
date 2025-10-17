@@ -43,6 +43,7 @@ Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:3000"
 Capybara.server_host = '0.0.0.0'
 Capybara.always_include_port = true
 Capybara.run_server = false
+Capybara.save_path = ENV['CAPYBARA_SAVE_PATH'] if ENV['CAPYBARA_SAVE_PATH']
 
 RSpec.configure do |config|
   config.include CommonHelpers
