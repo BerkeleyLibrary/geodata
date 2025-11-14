@@ -1,6 +1,8 @@
 ---
 
 services:
+  adminer: !reset
+
   app:
     build: !reset
     environment:
