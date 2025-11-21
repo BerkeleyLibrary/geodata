@@ -1,3 +1,5 @@
+require 'okcomputer'
+
 Rails.application.routes.draw do
   mount Blacklight::Engine => '/'
   root to: 'catalog#index'
@@ -40,4 +42,7 @@ Rails.application.routes.draw do
     concerns :gbl_downloadable
   end
   resources :download, only: [:show]
+
+  # Map OkComputer's /health/all.json to /health
+  get '/health', to: 'ok_computer/ok_computer#index', defaults: { format: :json }
 end
