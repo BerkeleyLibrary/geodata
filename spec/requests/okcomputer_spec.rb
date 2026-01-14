@@ -14,6 +14,10 @@ RSpec.describe 'OKComputer', type: :request do
       database
       database-migrations
       solr
+      geoserver
+      secure_geoserver
+      public_spatial_server
+      ucb_spatial_server
     ]
   end
 end

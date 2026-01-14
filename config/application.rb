@@ -25,6 +25,12 @@ module Geodata
 
     config.x.servers ||= {}
 
+    # These will be removed before merging code
+    config.x.servers[:geoserver] = ENV.fetch('GEOSERVER_URL', 'https://geoserver-public.ucblib.org/geoserver')
+    config.x.servers[:secure_geoserver] = ENV.fetch('GEOSERVER_URL', 'https://geoserver-secure.ucblib.org/geoserver')
+    config.x.servers[:spatial_server] = ENV.fetch('SPATIAL_URL', 'https://spatial.ucblib.org')
+
+    # These comments will be removed before merging code
     # config.x.servers[:geoserver] = ENV.fetch('GEOSERVER_URL', nil)
     # config.x.servers[:secure_geoserver] = ENV.fetch('GEOSERVER_URL', nil)
     # config.x.servers[:spatial_server] = ENV.fetch('SPATIAL_URL', nil)
