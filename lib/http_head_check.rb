@@ -2,10 +2,12 @@ module GeoDataHealthCheck
   class HttpHeadCheck < OkComputer::Check
     attr_accessor :url, :request_timeout
 
+    # rubocop:disable Lint/MissingSuper
     def initialize(url, request_timeout = 5)
       self.url = url
       self.request_timeout = request_timeout
     end
+    # rubocop:enable Lint/MissingSuper
 
     def check
       return skip_check unless url
