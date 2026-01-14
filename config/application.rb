@@ -20,9 +20,6 @@ module Geodata
     config.action_mailer.default_options = { from: 'fake@berkeley.edu' }
     config.lit_gtag_id = ENV.fetch('LIT_GTAG_ID', nil)
 
-    config.geoserver_url = ENV.fetch('GEOSERVER_URL', 'https://geoserver-public.ucblib.org/geoserver')
-    config.spatialserver_url = ENV.fetch('SPATIAL_URL', 'https://spatial.ucblib.org')
-
     config.x.servers ||= {}
 
     # These will be removed before merging code
