@@ -10,7 +10,7 @@ module GeoDataHealthCheck
     # rubocop:enable Lint/MissingSuper
 
     def check
-      return skip_check if url.strip.empty?
+      return skip_check if url.blank?
 
       response = HttpClient.request(
         :head,
