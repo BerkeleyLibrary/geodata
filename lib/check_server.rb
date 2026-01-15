@@ -5,7 +5,8 @@ class CheckServer
 
   class << self
     def geoserver(type)
-      check_type(type)
+      return wrong_type(type) unless %w[public UCB].include? type
+
       server_name = type == 'public' ? GEOSERVER_NAME : SECURE_GEOSERVER_NAME
       url = host_url(server_name)
       geoserver_url = url && "#{url.chomp('/')}/wms?service=WMS&request=GetCapabilities"
@@ -13,7 +14,8 @@ class CheckServer
     end
 
     def spatial_server(type)
-      check_type(type)
+      return wrong_type(type) unless %w[public UCB].include? type
+
       msg = "#{type} #{SPATIAL_SERVER_NAME}"
       url = host_url(SPATIAL_SERVER_NAME)
       spatial_url = url && "#{url.chomp('/')}/#{type}/berkeley-status/data.zip"
@@ -28,8 +30,9 @@ class CheckServer
       msg.downcase.strip.gsub(/\s+/, '_')
     end
 
-    def check_type(type)
-      raise StandardError, "Incorrect server type #{type}, expect either 'public' or 'UCB'" unless %w[public UCB].include? type
+    def wrong_type(type)
+      msg = "Incorrect Geoserver or Spatial server type '#{type}', expect either 'public' or 'UCB"
+      OkComputer::Registry.register msg, GeoDataHealthCheck::HttpHeadCheck.new(' ')
     end
   end
 end
