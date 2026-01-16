@@ -16,8 +16,7 @@ RSpec.describe 'OKComputer', type: :request do
       solr
       geoserver
       secure_geoserver
-      public_spatial_server
-      ucb_spatial_server
+      spatial_server
     ]
   end
 end

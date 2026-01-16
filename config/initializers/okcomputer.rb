@@ -24,9 +24,5 @@ secure_geoserver_url = EndpointUrl.geoserver(:secure_geoserver)
 OkComputer::Registry.register 'secure_geoserver', GeoDataHealthCheck::HttpHeadCheck.new(secure_geoserver_url)
 
 # Perform a Head request to check spatial server endpoint
-spatial_server_url = EndpointUrl.spatial_server(:spatial_server, 'public')
-OkComputer::Registry.register 'public_spatial_server', GeoDataHealthCheck::HttpHeadCheck.new(spatial_server_url)
-
-# Perform a Head request to check UCB spatial server endpoint
-ucb_spatial_server_url = EndpointUrl.spatial_server(:spatial_server, 'UCB')
-OkComputer::Registry.register 'ucb_spatial_server', GeoDataHealthCheck::HttpHeadCheck.new(ucb_spatial_server_url)
+spatial_server_url = EndpointUrl.spatial_server(:spatial_server)
+OkComputer::Registry.register 'spatial_server', GeoDataHealthCheck::HttpHeadCheck.new(spatial_server_url)
