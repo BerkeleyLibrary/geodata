@@ -22,15 +22,9 @@ module Geodata
 
     config.x.servers ||= {}
 
-    # These will be removed before merging code
-    config.x.servers[:geoserver] = ENV.fetch('GEOSERVER_URL', 'https://geoserver-public.ucblib.org/geoserver')
-    config.x.servers[:secure_geoserver] = ENV.fetch('GEOSERVER_URL', 'https://geoserver-secure.ucblib.org/geoserver')
-    config.x.servers[:spatial_server] = ENV.fetch('SPATIAL_URL', 'https://spatial.ucblib.org')
-
-    # These comments will be removed before merging code
-    # config.x.servers[:geoserver] = ENV.fetch('GEOSERVER_URL', nil)
-    # config.x.servers[:secure_geoserver] = ENV.fetch('GEOSERVER_URL', nil)
-    # config.x.servers[:spatial_server] = ENV.fetch('SPATIAL_URL', nil)
+    config.x.servers[:geoserver] = ENV.fetch('GEOSERVER_URL_FILE', nil)
+    config.x.servers[:geoserver_secure] = ENV.fetch('GEOSERVER_SECURE_URL_FILE', nil)
+    config.x.servers[:spatial_server] = ENV.fetch('SPATIAL_URL', nil)
 
     # The Base URL for the generated sitemap
     config.x.sitemap.base_url = ENV.fetch('GEODATA_BASE_URL', 'http://localhost:3000')
