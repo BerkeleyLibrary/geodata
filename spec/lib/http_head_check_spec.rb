@@ -1,81 +1,89 @@
-require 'spec_helper'
+require 'rails_helper'
 require_relative '../../lib/http_head_check'
 
 RSpec.describe GeoDataHealthCheck::HttpHeadCheck do
-  let(:test_url) { URI('http://example.com/endpoint') }
-  let(:check) { described_class.new(test_url) }
+  let(:url) { 'https://example.com/endpoint' }
+  subject(:check) { described_class.new(url) }
 
-  describe '#check' do
-    it 'succeeds when response is 200 OK' do
-      response = Net::HTTPOK.new('1.1', '200', 'OK')
-      allow(check).to receive(:perform_request).and_return(response)
-
-      check.check
-
-      expect(check.message).to include('Http head check successful.')
+  describe 'initialization' do
+    it 'sets the URL' do
+      expect(check.url).to eq url
     end
 
-    it 'succeeds when response is a redirect' do
-      response = Net::HTTPFound.new('1.1', '302', 'Found')
-      allow(check).to receive(:perform_request).and_return(response)
-
-      check.check
-
-      expect(check.message).to include('Http head check successful.')
+    it 'sets default timeout to 5 seconds' do
+      expect(check.request_timeout).to eq 5
     end
 
-    it 'fails when response is 404' do
-      response = Net::HTTPNotFound.new('1.1', '404', 'Not Found')
-      allow(check).to receive(:perform_request).and_return(response)
-
-      check.check
-
-      expect(check.message).to include('http head check responded, but returned unexpeced HTTP status: 404 Net::HTTPNotFound')
-    end
-
-    it 'fails when request raises an error' do
-      error = StandardError.new('Connection error')
-      allow(check).to receive(:perform_request).and_raise(error)
-
-      check.check
-
-      expect(check.message).to include('Error:')
-      expect(check.message).to include('Connection error')
+    it 'allows custom timeout' do
+      check = described_class.new(url, 10)
+      expect(check.request_timeout).to eq 10
     end
   end
 
+  describe '#check' do
+    context 'when request returns 200 OK' do
+      it 'marks check as successful' do
+        response = Net::HTTPOK.new('1.1', 200, 'OK')
+        allow(check).to receive(:perform_request).and_return(response)
+
+        check.check
+
+        expect(check.message).to include('Http head check successful.')
+      end
+    end
+
+    context 'when request returns 500 error' do
+      it 'marks check as failed' do
+        response = Net::HTTPInternalServerError.new('1.1', 500, 'Error')
+        allow(check).to receive(:perform_request).and_return(response)
+
+        check.check
+
+        expect(check.message).to include('Error')
+      end
+    end
+
+  end
+
   describe '#perform_request' do
-    it 'calls head_request' do
-      response = Net::HTTPOK.new('1.1', '200', 'OK')
-      allow(check).to receive(:head_request).and_return(response)
+    it 'Net::OpenTimeout with ConnectionFailed and formated message' do
+      check_with_timeout = described_class.new(url, 7)
+      allow(check_with_timeout).to receive(:head_request).and_raise(Net::OpenTimeout.new('open timeout'))
 
-      result = check.perform_request
-
-      expect(result).to eq response
+      expect { check_with_timeout.perform_request }.to raise_error(
+        GeoDataHealthCheck::HttpHeadCheck::ConnectionFailed,
+        a_string_including('did not respond within 7 seconds: open timeout')
+      )
     end
 
-    it 'raises ConnectionFailed on OpenTimeout' do
-      allow(check).to receive(:head_request).and_raise(Net::OpenTimeout.new)
+    it 'Net::ReadTimeout with ConnectionFailed and formated message' do
+      check_with_timeout = described_class.new(url, 9)
+      allow(check_with_timeout).to receive(:head_request).and_raise(Net::ReadTimeout.new('read timeout'))
 
-      expect do
-        check.perform_request
-      end.to raise_error(OkComputer::HttpCheck::ConnectionFailed)
+      expect { check_with_timeout.perform_request }.to raise_error(
+        GeoDataHealthCheck::HttpHeadCheck::ConnectionFailed,
+        a_string_including('did not respond within 9 seconds: Net::ReadTimeout')
+      )
     end
 
-    it 'raises ConnectionFailed on ReadTimeout' do
-      allow(check).to receive(:head_request).and_raise(Net::ReadTimeout.new)
+    it 'StandardError and passes through the message' do
+      err_msg = 'generic failure'
+      allow(check).to receive(:head_request).and_raise(StandardError, err_msg)
 
-      expect do
-        check.perform_request
-      end.to raise_error(OkComputer::HttpCheck::ConnectionFailed)
+      expect { check.perform_request }.to raise_error(
+        GeoDataHealthCheck::HttpHeadCheck::ConnectionFailed,
+        err_msg
+      )
     end
 
-    it 'raises ConnectionFailed on StandardError' do
-      allow(check).to receive(:head_request).and_raise(StandardError.new)
+    it 'wraps ArgumentError with ConnectionFailed and includes URL and error class' do
+      bad_check = described_class.new(url)
+      allow(bad_check).to receive(:head_request).and_raise(ArgumentError, 'invalid URI')
 
-      expect do
-        check.perform_request
-      end.to raise_error(OkComputer::HttpCheck::ConnectionFailed)
+      expect { bad_check.perform_request }.to raise_error(
+        GeoDataHealthCheck::HttpHeadCheck::ConnectionFailed,
+        a_string_including("Invalid URL format for '#{url}'", 'ArgumentError', 'invalid URI')
+      )
     end
   end
 end
