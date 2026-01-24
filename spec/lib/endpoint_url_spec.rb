@@ -26,7 +26,7 @@ describe EndpointUrl do
       end
 
       it 'logs error and returns nil' do
-        expect(Rails.logger).to receive(:error).with(/Failed to read GEOSERVER_URL_FILE/)
+        expect(Rails.logger).to receive(:error).with("[EndpointUrl] Failed to read test_server's URL from secrets file.No such file or directory @ rb_sysopen - nonexistent_file.txt")
         result = EndpointUrl.geoserver('test_server')
         expect(result).to be_nil
       end
