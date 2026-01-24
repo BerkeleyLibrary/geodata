@@ -19,8 +19,8 @@ class EndpointUrl
 
       url = File.read(secret_file).chomp
       safe_url(url)
-    rescue Errno::ENOENT, Errno::EACCES
-      Rails.logger.error 'Failed to read GEOSERVER_URL_FILE'
+    rescue StandardError => e
+      Rails.logger.error "[EndpointUrl] Failed to read #{server_name}'s URL from secrets file.#{e.message}"
       nil
     end
 
