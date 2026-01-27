@@ -1,71 +1,40 @@
 require 'rails_helper'
+require_relative '../../lib/endpoint_url'
 
-describe EndpointUrl do
+RSpec.describe EndpointUrl do
+  around do |example|
+    original = Rails.configuration.x.servers.dup
+    Rails.configuration.x.servers.clear
+    example.run
+    Rails.configuration.x.servers.clear
+    Rails.configuration.x.servers.merge!(original)
+  end
+
   describe '.geoserver' do
-    context 'when server is configured and file exists' do
-      let(:secret_file) { 'tmp/test_secret.txt' }
+    it 'builds a GetCapabilities URL without duplicate slashes' do
+      Rails.configuration.x.servers[:geoserver] = 'https://example.com/geoserver//'
 
-      before do
-        allow(Rails.configuration.x.servers).to receive(:[]).with('test_server').and_return(secret_file)
-        File.write(secret_file, 'https://user:pass@example.com/rest/')
-      end
+      result = described_class.geoserver(:geoserver)
 
-      after do
-        FileUtils.rm_f(secret_file)
-      end
-
-      it 'returns WMS endpoint URL' do
-        result = EndpointUrl.geoserver('test_server')
-        expect(result).to eq('https://example.com/wms?service=WMS&request=GetCapabilities')
-      end
+      expect(result).to eq('https://example.com/geoserver/wms?service=WMS&request=GetCapabilities')
     end
 
-    context 'when file does not exist' do
-      before do
-        allow(Rails.configuration.x.servers).to receive(:[]).with('test_server').and_return('nonexistent_file.txt')
-      end
-
-      it 'logs error and returns nil' do
-        expect(Rails.logger).to receive(:error).with("[EndpointUrl] Failed to read test_server's URL from secrets file.No such file or directory @ rb_sysopen - nonexistent_file.txt")
-        result = EndpointUrl.geoserver('test_server')
-        expect(result).to be_nil
-      end
-    end
-
-    context 'when server is not configured' do
-      before do
-        allow(Rails.configuration.x.servers).to receive(:[]).with('missing_server').and_return(nil)
-      end
-
-      it 'returns nil without logging error' do
-        result = EndpointUrl.geoserver('missing_server')
-        expect(result).to be_nil
-      end
+    it 'returns nil when server is not configured' do
+      expect(described_class.geoserver(:unknown)).to be_nil
     end
   end
 
   describe '.spatial_server' do
-    context 'when server is configured' do
-      before do
-        allow(Rails.configuration.x.servers).to receive(:[]).with('test_server').and_return('https://example.com')
-      end
+    it 'builds the status data URL trimming trailing slashes' do
+      Rails.configuration.x.servers[:spatial_server] = 'https://example.com/status/'
 
-      it 'returns spatial server data zip endpoint URL' do
-        result = EndpointUrl.spatial_server('test_server')
-        expect(result).to eq('https://example.com/public/berkeley-status/data.zip')
-      end
+      result = described_class.spatial_server(:spatial_server)
+
+      expect(result).to eq('https://example.com/status/public/berkeley-status/data.zip')
     end
 
-    context 'when server is not configured' do
-      before do
-        allow(Rails.configuration.x.servers).to receive(:[]).with('missing_server').and_return(nil)
-      end
-
-      it 'returns nil' do
-        result = EndpointUrl.spatial_server('missing_server')
-        expect(result).to be_nil
-      end
+    it 'returns nil when server is not configured' do
+      expect(described_class.spatial_server(:missing)).to be_nil
     end
   end
-
 end

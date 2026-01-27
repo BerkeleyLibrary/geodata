@@ -29,7 +29,7 @@ module GeoDataHealthCheck
     rescue Net::OpenTimeout, Net::ReadTimeout => e
       raise ConnectionFailed, "#{url} did not respond within #{request_timeout} seconds: #{e.message}"
     rescue ArgumentError => e
-      raise ConnectionFailed, "Invalid URL format for '#{url}', please check log; #{e.class}: #{e.message}"
+      raise ConnectionFailed, "Invalid URL format for '#{url}': #{e.class}: #{e.message}"
     rescue StandardError => e
       raise ConnectionFailed, e.message
     end
