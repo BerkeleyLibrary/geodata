@@ -24,18 +24,15 @@ gem 'puma-plugin-delayed_stop', '~> 0.1.2'
 gem 'rack-timeout', '~> 0.6.3'
 gem 'rails', '~> 8.1.3'
 gem 'rsolr', '>= 1.0', '< 3'
-# gem 'sitemap_generator', '~> 6.3'
+gem 'sitemap_generator', '~> 6.3'
 gem 'solid_cable'
 gem 'solid_cache'
 gem 'solid_queue'
-# gem 'sprockets', '< 4.0'
-# gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'thruster', require: false
 gem 'turbo-rails'
 gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 gem 'tzinfo-data', platforms: %i[windows jruby]
-# gem 'vite_rails', '~> 3.0'
 
 group :development, :test do
   gem 'brakeman'

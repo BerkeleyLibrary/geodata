@@ -33,19 +33,7 @@ RUN apt-get install -y --no-install-recommends \
     libvips42 \
     &&  rm -rf /var/cache/apk/*
 
-# # Install Node.js (using NodeSource to get the latest LTS version, e.g., 20.x)
-# RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - \
-#     && apt-get install -y --no-install-recommends nodejs \
-#     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# # Install Yarn (using the official Yarn repository)
-# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-#     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-#     && apt-get update && apt-get install -y --no-install-recommends yarn \
-#     && apt-get clean && rm -rf /var/lib/apt/lists/* 
-
 #Install Node.js and Yarn from their own repositories
-
 # Add Node.js package repository (version 16 LTS release) & install Node.js
 # -- note that the Node.js setup script takes care of updating the package list
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
