@@ -1,11 +1,5 @@
-# Configurable Logo Used for CartoDB export
-APPLICATION_LOGO_URL: 'http://geoblacklight.org/images/geoblacklight-logo.png'
-
-# Carto OneClick Service https://carto.com/engine/open-in-carto/
-CARTO_ONECLICK_LINK: 'http://oneclick.carto.com/'
-
 # ArcGIS Online Base URL
-ARCGIS_BASE_URL: 'https://www.arcgis.com/home/webmap/viewer.html'
+ARCGIS_BASE_URL: 'https://www.arcgis.com/apps/mapviewer/index.html'
 
 # Download path can be configured using this setting
 #DOWNLOAD_PATH: "./tmp/cache/downloads"
@@ -88,7 +82,7 @@ FIELDS:
   :WXS_IDENTIFIER: 'gbl_wxsIdentifier_s'
 
 # Institution deployed at
-INSTITUTION: 'University of California Berkeley'
+INSTITUTION: 'Stanford'
 
 # Metadata shown in tool panel
 METADATA_SHOWN:
@@ -98,13 +92,29 @@ METADATA_SHOWN:
   - 'html'
 
 # (For external Download) timeout and open_timeout parameters for Faraday
-TIMEOUT_DOWNLOAD: 16
+TIMEOUT_DOWNLOAD: 180
 
 # (For WMS inspection) timeout and open_timeout parameters for Faraday
 TIMEOUT_WMS: 4
 
 # Use the geometry type for the data relations icon
 USE_GEOM_FOR_RELATIONS_ICON: false
+
+# Web services shown in tool panel
+WEBSERVICES_SHOWN:
+  - 'wms'
+  - 'tms'
+  - 'wfs'
+  - 'xyz'
+  - 'wmts'
+  - 'tilejson'
+  - 'iiif'
+  - 'feature_layer'
+  - 'tiled_map_layer'
+  - 'dynamic_map_layer'
+  - 'image_map_layer'
+  - 'cog'
+  - 'pmtiles'
 
 # Display Notes to display / Non-prefixed default bootstrap class is alert-secondary
 DISPLAY_NOTES_SHOWN:
@@ -125,69 +135,88 @@ DISPLAY_NOTES_SHOWN:
     icon: triangle-exclamation-solid
     note_prefix: "Warning: "
 
-# Web services shown in tool panel
-WEBSERVICES_SHOWN:
-  # - 'wms'
-  - 'tms'
-  # - 'wfs'
-  - 'xyz'
-  - 'wmts'
-  - 'tilejson'
-  - 'iiif'
-  - 'feature_layer'
-  - 'tiled_map_layer'
-  - 'dynamic_map_layer'
-  - 'image_map_layer'
-  - 'cog'
-  - 'pmtiles'
-
 # Relationships to display
 RELATIONSHIPS_SHOWN:
-  MEMBER_OF:
+  MEMBER_OF_ANCESTORS:
     field: pcdm_memberOf_sm
+    icon: parent-item
+    inverse: :MEMBER_OF_DESCENDANTS
+    label: geoblacklight.relations.member_of_ancestors
     query_type: ancestors
-    icon: nil
-    label: geoblacklight.relations.member_of
+  MEMBER_OF_DESCENDANTS:
+    field: pcdm_memberOf_sm
+    icon: child-item
+    inverse: :MEMBER_OF_ANCESTORS
+    label: geoblacklight.relations.member_of_descendants
+    query_type: descendants
   PART_OF_ANCESTORS:
     field: dct_isPartOf_sm
-    query_type: ancestors
-    icon: nil
+    icon: parent-item
+    inverse: :PART_OF_DESCENDANTS
     label: geoblacklight.relations.part_of_ancestors
+    query_type: ancestors
   PART_OF_DESCENDANTS:
     field: dct_isPartOf_sm
-    query_type: descendants
     icon: child-item
+    inverse: :PART_OF_ANCESTORS
     label: geoblacklight.relations.part_of_descendants
-  RELATION:
-    field: dct_relation_sm
-    query_type: ancestors
-    icon: nil
-    label: geoblacklight.relations.relation
-  REPLACES:
-    field: dct_replaces_sm
-    query_type: ancestors
-    icon: nil
-    label: geoblacklight.relations.replaces
-  REPLACED_BY:
-    field: dct_isReplacedBy_sm
     query_type: descendants
+  RELATION_ANCESTORS:
+    field: dct_relation_sm
     icon: nil
-    label: geoblacklight.relations.replaced_by
+    inverse: :RELATION_DESCENDANTS
+    label: geoblacklight.relations.relation_ancestors
+    query_type: ancestors
+  RELATION_DESCENDANTS:
+    field: dct_relation_sm
+    icon: nil
+    inverse: :RELATION_ANCESTORS
+    label: geoblacklight.relations.relation_descendants
+    query_type: descendants
+  REPLACES_ANCESTORS:
+    field: dct_replaces_sm
+    icon: nil
+    inverse: :REPLACES_DESCENDANTS
+    label: geoblacklight.relations.replaces_ancestors
+    query_type: ancestors
+  REPLACES_DESCENDANTS:
+    field: dct_replaces_sm
+    icon: nil
+    inverse: :REPLACES_ANCESTORS
+    label: geoblacklight.relations.replaces_descendants
+    query_type: descendants
   SOURCE_ANCESTORS:
     field: dct_source_sm
-    query_type: ancestors
     icon: parent-item
-    label: geoblacklight.relations.ancestor
+    inverse: :SOURCE_DESCENDANTS
+    label: geoblacklight.relations.source_ancestors
+    query_type: ancestors
   SOURCE_DESCENDANTS:
     field: dct_source_sm
-    query_type: descendants
     icon: child-item
-    label: geoblacklight.relations.descendant
-  VERSION_OF:
-    field: dct_isVersionOf_sm
+    inverse: :SOURCE_ANCESTORS
+    label: geoblacklight.relations.source_descendants
     query_type: descendants
-    icon: nil
-    label: geoblacklight.relations.version_of
+  VERSION_OF_ANCESTORS:
+    field: dct_isVersionOf_sm
+    icon: parent-item
+    inverse: :VERSION_OF_DESCENDANTS
+    label: geoblacklight.relations.version_of_ancestors
+    query_type: ancestors
+  VERSION_OF_DESCENDANTS:
+    field: dct_isVersionOf_sm
+    icon: child-item
+    inverse: :VERSION_OF_ANCESTORS
+    label: geoblacklight.relations.version_of_descendants
+    query_type: descendants
+
+# Vector data download formats to be displayed
+DOWNLOAD_FORMATS:
+  VECTOR:
+    - 'Shapefile'
+    - 'KMZ'
+    - 'GeoJSON'
+    - 'CSV'
 
 # WMS Parameters
 WMS_PARAMS:
@@ -197,62 +226,81 @@ WMS_PARAMS:
   :STYLES: ''
   :SRS: 'EPSG:4326'
   :EXCEPTIONS: 'application/json'
-  :INFO_FORMAT: 'text/html'
+  :INFO_FORMAT: 'application/json'
 
 # Settings for leaflet
 LEAFLET:
   MAP:
+  BOUNDSOVERLAY:
+    INDEX:
+      color: '#3388ff'
+    SHOW:
+      color: '#3388ff'
+    STATIC_MAP:
+      color: '#3388ff'
+  SELECTED_COLOR: "#2C7FB8"
+  SLEEP:
+    SLEEP: true # set to false to disable
+    MARGIN_DISTANCE: 100 # set to zero / false if you want to disable this check
+    SLEEPTIME: 750
+    WAKETIME: 750
+    HOVERTOWAKE: false
+    MESSAGE: 'Click to Wake'
+    BACKGROUND: 'rgba(214, 214, 214, .7)'
+  SIDEBAR: false # set to true to display attribute table as sidebar on map
   LAYERS:
     DETECT_RETINA: true
     INDEX:
       DEFAULT: &default
         color: "#7FCDBB"
-        weight: "1"
-        radius: "4"
+        weight: 1
+        radius: 4
+        sr_color_name: "Green"
       UNAVAILABLE:
         <<: *default
         color: "#EDF8B1"
+        sr_color_name: "Yellow"
       SELECTED:
         <<: *default
         color: "#2C7FB8"
-  VIEWERS:
-    DYNAMICMAPLAYER:
-      CONTROLS:
-        - 'Opacity'
-        - 'Fullscreen'
-    FEATURELAYER:
-      CONTROLS:
-        - 'Opacity'
-        - 'Fullscreen'
-    IIIF:
-      CONTROLS:
-        - 'Fullscreen'
-    IMAGEMAPLAYER:
-      CONTROLS:
-        - 'Opacity'
-        - 'Fullscreen'
-    INDEXMAP:
-      CONTROLS:
-        - 'Fullscreen'
-    TILEDMAPLAYER:
-      CONTROLS:
-        - 'Opacity'
-        - 'Fullscreen'
-    WMS:
-      CONTROLS:
-        - 'Opacity'
-        - 'Fullscreen'
+        sr_color_name: "Blue"
 
 # Toggle the help text feature that offers users context
 HELP_TEXT:
   viewer_protocol:
+      - 'cog'
       - 'dynamic_map_layer'
       - 'feature_layer'
       - 'iiif'
       - 'iiif_manifest'
       - 'image_map_layer'
       - 'index_map'
-      - 'tiled_map_layer'
-      - 'wms'
-      - 'tms'
       - 'oembed'
+      - 'pmtiles'
+      - 'tiled_map_layer'
+      - 'tilejson'
+      - 'tms'
+      - 'wms'
+      - 'wmts'
+      - 'xyz'
+
+# Enable catalog#show sidebar static map for items with the following viewer protocols
+SIDEBAR_STATIC_MAP:
+  - 'iiif'
+  - 'iiif_manifest'
+
+IIIF_DRAG_DROP_LINK: '@manifest?manifest=@manifest'
+
+ICON_MAPPING:
+  chicago: university-of-chicago
+  illinois: university-of-illinois-urbana-champaign
+  iowa: university-of-iowa
+  maryland: university-of-maryland
+  michigan-state: michigan-state-university
+  michigan: university-of-michigan
+  minnesota: university-of-minnesota
+  nebraska: university-of-nebraska-lincoln
+  ohio-state: the-ohio-state-university
+  penn-state: pennsylvania-state-university
+  purdue: purdue-university
+  wisconsin: university-of-wisconsin-madison
