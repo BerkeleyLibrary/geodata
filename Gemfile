@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.5'
+ruby '3.4.9'
 
 gem 'berkeley_library-logging', '~> 0.2.7'
 gem 'bootsnap', require: false
