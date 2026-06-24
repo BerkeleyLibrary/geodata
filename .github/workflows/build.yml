@@ -24,7 +24,6 @@ jobs:
       COMPOSE_FILE: docker-compose.yml:docker-compose.ci.yml
       DOCKER_APP_IMAGE: ${{ needs.docker-build.outputs.image }}
       RUN_TESTS: "false"
-      RUN_RUBOCOP: "false"
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -52,7 +51,7 @@ jobs:
           docker compose exec -e RAILS_ENV=test app rspec --format progress --format html --out artifacts/rspec.html
 
       - name: Run Rubocop
-        if: ${{ always() && env.RUN_RUBOCOP == 'true' }}
+        if: ${{ always()}}
         run: |
           docker compose exec -e RAILS_ENV=test app rubocop --format progress --format html --out artifacts/rubocop.html
 
