@@ -8,7 +8,6 @@ gem 'blacklight', '~> 7.0'
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 4.0'
 gem 'devise'
-gem 'devise-guests', '~> 0.8'
 gem 'geoblacklight', '~> 4.4.2'
 gem 'importmap-rails'
 gem 'jbuilder'
