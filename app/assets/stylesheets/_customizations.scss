@@ -1,52 +1,23 @@
-.ucb_container {
-  min-height: 100%;
-  width: 100%;
-  margin-bottom: 90px;
-}
+// Local Application Customizations
 
-.spacer {
-  height: 90px;
-}
+// Set Header Logo
+$logo-image: url("images/blacklight/logo.svg");
 
-.navbar {
-  height: 6em;
-}
+// Optional
+// Override default Bootstrap variables here
 
-.btn-primary {
-  background-color: $link-color;
-  color: #ffffff;
-}
+// Example: Bootstrap Colors
+// $blue:    #0d6efd !default;
+// $indigo:  #6610f2 !default;
+// $purple:  #6f42c1 !default;
+// $pink:    #d63384 !default;
+// $red:     #dc3545 !default;
+// $orange:  #fd7e14 !default;
+// $yellow:  #ffc107 !default;
+// $green:   #198754 !default;
+// $teal:    #20c997 !default;
+// $cyan:    #0dcaf0 !default;
+// $dark:    #212529 !default; // $gray-900
 
-ul.facet-values {
-  span.selected {
-    color: #208836 !important;
-  }
-}
-
-.nav-pills .nav-link.active,
-.nav-pills .show>.nav-link,
-.nav-pills .no-js .btn-group:focus-within .dropdown-menu>.nav-link,
-.nav-pills .no-js .btn-group:focus-within .twitter-typeahead .tt-menu>.nav-link,
-.twitter-typeahead .nav-pills .no-js .btn-group:focus-within .tt-menu>.nav-link,
-.no-js .btn-group:focus-within .nav-pills .dropdown-menu>.nav-link,
-.no-js .btn-group:focus-within .nav-pills .twitter-typeahead .tt-menu>.nav-link,
-.twitter-typeahead .no-js .btn-group:focus-within .nav-pills .tt-menu>.nav-link {
-  background-color: $link-color;
-}
-
-#metadata-container {
-  a {
-    color: #006FD6;
-
-    &:hover {
-      color: #0044B3;
-      text-decoration: underline;
-    }
-  }
-}
-
-.element-focusable:hover,
-.element-focusable:focus {
-  color: #0051AD;
-  text-decoration: underline;
-}
+// Example: Bootstrap Link color
+// $link-color: $blue;

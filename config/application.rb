@@ -16,7 +16,13 @@ Bundler.require(*Rails.groups)
 module Geodata
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 8.1
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
+
     config.action_mailer.default_options = { from: 'fake@berkeley.edu' }
     config.lit_gtag_id = ENV.fetch('LIT_GTAG_ID', nil)
 
@@ -30,7 +36,8 @@ module Geodata
     config.x.sitemap.base_url = ENV.fetch('GEODATA_BASE_URL', 'http://localhost:3000')
     # Silenced by default to minimize log noise
     # @see https://ucblib.atlassian.net/browse/DEV-517
-    Deprecation.default_deprecation_behavior = ENV.fetch('LIT_DEPRECATION_BEHAVIOR', 'silence').to_sym
+    # Deprecation.default_deprecation_behavior = ENV.fetch('LIT_DEPRECATION_BEHAVIOR', 'silence').to_sym
+    config.active_support.deprecation = ENV.fetch('LIT_DEPRECATION_BEHAVIOR', 'silence').to_sym
 
     config.i18n.load_path += Rails.root.glob('config/locales/**/*.{rb,yml}')
     config.i18n.default_locale = :en

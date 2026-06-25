@@ -2,7 +2,7 @@
 # Target: base
 # Includes system dependencies common to both dev and production.
 
-FROM ruby:3.2.2 AS base
+FROM ruby:3.4 AS base
 
 # This is just metadata and doesn't actually "expose" this port. Rather, it
 # tells other tools (e.g. Traefik) what port the service in this image is
@@ -33,16 +33,16 @@ RUN apt-get install -y --no-install-recommends \
     libvips42 \
     &&  rm -rf /var/cache/apk/*
 
-# Install Node.js (using NodeSource to get the latest LTS version, e.g., 20.x)
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - \
-    && apt-get install -y --no-install-recommends nodejs \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+#Install Node.js and Yarn from their own repositories
+# Add Node.js package repository (version 16 LTS release) & install Node.js
+# -- note that the Node.js setup script takes care of updating the package list
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs
 
-# Install Yarn (using the official Yarn repository)
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update && apt-get install -y --no-install-recommends yarn \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* 
+# Use Yarn via Corepack to avoids using reops and GPG keys
+RUN corepack enable \
+    && corepack prepare yarn@stable --activate \
+    && yarn -v
 
 # By default, run as the geodata user
 USER $APP_USER
@@ -84,6 +84,9 @@ RUN bundle install
 # Copy the rest of the codebase.
 COPY --chown=geodata . .
 
+# Install JavaScript dependencies required by cssbundling-rails.
+RUN yarn install
+
 # Create cache/pids/etc directories.
 RUN bundle exec -- rails log:clear tmp:create \
     &&  rails assets:precompile
@@ -122,3 +125,4 @@ ENV DOCKER_TAG="${DOCKER_TAG}"
 ENV GIT_REF_NAME="${GIT_REF_NAME}"
 ENV GIT_SHA="${GIT_SHA}"
 ENV GIT_REPOSITORY_URL="${GIT_REPOSITORY_URL}"
+
