@@ -144,8 +144,6 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-guests (0.8.3)
-      devise
     diff-lcs (1.5.1)
     docile (1.4.1)
     drb (2.2.1)
@@ -543,7 +541,6 @@ DEPENDENCIES
   capybara
   debug
   devise
-  devise-guests (~> 0.8)
   geoblacklight (~> 4.4.2)
   importmap-rails
   jbuilder
