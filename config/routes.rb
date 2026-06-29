@@ -5,14 +5,11 @@ Rails.application.routes.draw do
   root to: 'catalog#index'
   concern :searchable, Blacklight::Routes::Searchable.new
 
-  resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+  resource :catalog, only: [], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :searchable
   end
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
-  devise_scope :user do
-    get 'users/sign_out', to: 'sessions#destroy', as: :destroy_user_session
-  end
 
   concern :exportable, Blacklight::Routes::Exportable.new
 

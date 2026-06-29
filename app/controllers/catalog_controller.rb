@@ -1,11 +1,7 @@
-require 'blacklight/catalog'
-
 class CatalogController < ApplicationController
-
   include Blacklight::Catalog
 
   configure_blacklight do |config|
-
     # Ensures that JSON representations of Solr Documents can be retrieved using
     # the path /catalog/:id/raw
     # Please see https://github.com/projectblacklight/blacklight/pull/2006/
@@ -15,7 +11,7 @@ class CatalogController < ApplicationController
     ## @see https://lucene.apache.org/solr/guide/6_6/common-query-parameters.html
     ## @see https://lucene.apache.org/solr/guide/6_6/the-dismax-query-parser.html#TheDisMaxQueryParser-Theq.altParameter
     config.default_solr_params = {
-      start: 0,
+      :start => 0,
       'q.alt' => '*:*'
     }
 
@@ -39,7 +35,7 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     # config.index.show_link = 'title_display'
     # config.index.record_display_type = 'format'
-
+    config.index.document_component = Geoblacklight::SearchResultComponent
     config.index.title_field = Settings.FIELDS.TITLE
 
     # solr field configuration for document/show views
@@ -47,16 +43,9 @@ class CatalogController < ApplicationController
     # To move metadata above the map viewer,
     # remove the lines deleting and re-adding the :show partial
     config.show.display_type_field = 'format'
-    config.show.partials.delete(:show)
-    config.show.partials << 'show_default_display_note'
-    config.show.partials << 'show_default_viewer_container'
-    config.show.partials << 'show_default_attribute_table'
-    config.show.partials << 'show_default_viewer_information'
-    config.show.partials << :show
-
-    ##
-    # Configure the index document presenter.
-    config.index.document_presenter_class = Geoblacklight::DocumentPresenter
+    config.show.document_component = Geoblacklight::DocumentComponent
+    config.show.sidebar_component = Geoblacklight::Document::SidebarComponent
+    config.header_component = Geoblacklight::HeaderComponent
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -77,6 +66,20 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
+    # config.add_facet_field 'format', :label => 'Format'
+    # config.add_facet_field 'pub_date', :label => 'Publication Year', :single => true
+    # config.add_facet_field 'subject_topic_facet', :label => 'Topic', :limit => 20
+    # config.add_facet_field 'language_facet', :label => 'Language', :limit => true
+    # config.add_facet_field 'lc_1letter_facet', :label => 'Call Number'
+    # config.add_facet_field 'subject_geo_facet', :label => 'Region'
+    # config.add_facet_field 'solr_bbox', :fq => "solr_bbox:IsWithin(-88,26,-79,36)", :label => 'Spatial'
+    # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
+
+    # config.add_facet_field 'example_query_facet_field', :label => 'Publish Date', :query => {
+    #    :years_5 => { :label => 'within 5 Years', :fq => "pub_date:[#{Time.now.year - 5 } TO *]" },
+    #    :years_10 => { :label => 'within 10 Years', :fq => "pub_date:[#{Time.now.year - 10 } TO *]" },
+    #    :years_25 => { :label => 'within 25 Years', :fq => "pub_date:[#{Time.now.year - 25 } TO *]" }
+    # }
 
     # FACETS
 
@@ -102,8 +105,8 @@ class CatalogController < ApplicationController
     # filter_query_builder - Defines the query generated for Solr
     # filter_class         - Defines how to add/remove facet from query
     # label                - Defines the label used in contstraints container
-    config.add_facet_field Settings.FIELDS.GEOMETRY, item_presenter: Geoblacklight::BboxItemPresenter, filter_class: Geoblacklight::BboxFilterField,
-                                                     filter_query_builder: Geoblacklight::BboxFilterQuery, within_boost: Settings.BBOX_WITHIN_BOOST, overlap_boost: Settings.OVERLAP_RATIO_BOOST, overlap_field: Settings.FIELDS.OVERLAP_FIELD, label: 'Bounding Box'
+    config.add_facet_field Settings.FIELDS.GEOMETRY, item_presenter: Geoblacklight::BboxItemPresenter, filter_class: Geoblacklight::BboxFilterField, filter_query_builder: Geoblacklight::BboxFilterQuery, within_boost: Settings.BBOX_WITHIN_BOOST, overlap_boost: Settings.OVERLAP_RATIO_BOOST, overlap_field: Settings.FIELDS.OVERLAP_FIELD,
+                                                     label: 'Bounding Box'
 
     # Item Relationship Facets
     # * Not displayed to end user (show: false)
@@ -126,6 +129,10 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
+    # config.add_index_field Settings.FIELDS.PROVIDER, :label => 'Institution:'
+    # config.add_index_field Settings.FIELDS.RIGHTS, :label => 'Access:'
+    # # config.add_index_field 'Area', :label => 'Area:'
+    # config.add_index_field Settings.FIELDS.SUBJECT, :label => 'Keywords:'
     config.add_index_field Settings.FIELDS.INDEX_YEAR
     config.add_index_field Settings.FIELDS.CREATOR
     config.add_index_field Settings.FIELDS.DESCRIPTION, helper_method: :snippit
@@ -144,8 +151,7 @@ class CatalogController < ApplicationController
     # The labels and order can be customed. Comment out fields to hide them.
 
     config.add_show_field Settings.FIELDS.ALTERNATIVE_TITLE, label: 'Alternative Title', itemprop: 'alt_title'
-    config.add_show_field Settings.FIELDS.DESCRIPTION, label: 'Description', itemprop: 'description',
-                                                       helper_method: :render_value_as_truncate_abstract
+    config.add_show_field Settings.FIELDS.DESCRIPTION, label: 'Description', itemprop: 'description', helper_method: :render_value_as_truncate_abstract
     config.add_show_field Settings.FIELDS.CREATOR, label: 'Creator', itemprop: 'creator'
     config.add_show_field Settings.FIELDS.PUBLISHER, label: 'Publisher', itemprop: 'publisher'
     config.add_show_field Settings.FIELDS.PROVIDER, label: 'Provider', link_to_facet: true
@@ -171,11 +177,55 @@ class CatalogController < ApplicationController
       helper_method: :render_references_url
     )
 
+    # ADDITIONAL FIELDS
+    # The following fields are not user friendly and are not set to appear on the item show page. They contain non-literal values, codes, URIs, or are otherwise designed to power features in the interface.
+    # These values might need a translations to be readable by users.
+
+    # config.add_show_field Settings.FIELDS.LANGUAGE, label: 'Language', itemprop: 'language'
+    # config.add_show_field Settings.FIELDS.KEYWORD, label: 'Keyword(s)', itemprop: 'keyword'
+
+    # config.add_show_field Settings.FIELDS.INDEX_YEAR, label: 'Year', itemprop: 'year'
+    # config.add_show_field Settings.FIELDS.DATE_RANGE, label: 'Date Range', itemprop: 'date_range'
+
+    # config.add_show_field Settings.FIELDS.CENTROID, label: 'Centroid', itemprop: 'centroid'
+    # config.add_show_field Settings.FIELDS.OVERLAP_FIELD, label: 'Overlap BBox', itemprop: 'overlap_field'
+
+    # config.add_show_field Settings.FIELDS.RELATION, label: 'Relation', itemprop: 'relation'
+    # config.add_show_field Settings.FIELDS.MEMBER_OF, label: 'Member Of', itemprop: 'member_of'
+    # config.add_show_field Settings.FIELDS.IS_PART_OF, label: 'Is Part Of', itemprop: 'is_part_of'
+    # config.add_show_field Settings.FIELDS.VERSION, label: 'Version', itemprop: 'version'
+    # config.add_show_field Settings.FIELDS.REPLACES, label: 'Replaces', itemprop: 'replaces'
+    # config.add_show_field Settings.FIELDS.IS_REPLACED_BY, label: 'Is Replaced By', itemprop: 'is_replaced_by'
+
+    # config.add_show_field Settings.FIELDS.WXS_IDENTIFIER, label: 'Web Service Layer', itemprop: 'wxs_identifier'
+    # config.add_show_field Settings.FIELDS.ID, label: 'ID', itemprop: 'id'
+    # config.add_show_field Settings.FIELDS.IDENTIFIER, label: 'Identifier', itemprop: 'identifier'
+
+    # config.add_show_field Settings.FIELDS.MODIFIED, label: 'Date Modified', itemprop: 'modified'
+    # config.add_show_field Settings.FIELDS.METADATA_VERSION, label: 'Metadata Version', itemprop: 'metadata_version'
+    # config.add_show_field Settings.FIELDS.SUPPRESSED, label: 'Suppressed', itemprop: 'suppresed'
+
+    # "fielded" search configuration. Used by pulldown among other places.
+    # For supported keys in hash, see rdoc for Blacklight::SearchFields
+    #
+    # Search fields will inherit the :qt solr request handler from
+    # config[:default_solr_parameters], OR can specify a different one
+    # with a :qt key/value. Below examples inherit, except for subject
+    # that specifies the same :qt as default for our own internal
+    # testing purposes.
+    #
+    # The :key is what will be used to identify this BL search field internally,
+    # as well as in URLs -- so changing it after deployment may break bookmarked
+    # urls.  A display label will be automatically calculated from the :key,
+    # or can be specified manually to be different.
+
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
 
     config.add_search_field 'all_fields', label: 'All Fields'
+    # config.add_search_field 'dct_title_ti', :label => 'Title'
+    # config.add_search_field 'dct_description_ti', :label => 'Description'
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
@@ -244,18 +294,15 @@ class CatalogController < ApplicationController
     # Tools from Blacklight
     config.add_results_collection_tool(:sort_widget)
     config.add_results_collection_tool(:per_page_widget)
+    config.add_show_tools_partial(:bookmark, partial: 'bookmark_control', if: :render_bookmarks_control?)
     config.add_show_tools_partial(:citation)
+    config.add_show_tools_partial(:email, callback: :email_action, validator: :validate_email_params)
+    config.add_show_tools_partial(:sms, if: :render_sms_action?, callback: :sms_action, validator: :validate_sms_params)
 
     # Custom tools for GeoBlacklight
-    config.add_show_tools_partial :metadata, if: proc { |_context, _config, options|
-                                                   options[:document] && (Settings.METADATA_SHOWN & options[:document].references.refs.map(&:type).map(&:to_s)).any?
-                                                 }
-    config.add_show_tools_partial :arcgis, partial: 'arcgis', if: proc { |_context, _config, options|
-                                                                    options[:document] && options[:document].arcgis_urls.present?
-                                                                  }
-    config.add_show_tools_partial :data_dictionary, partial: 'data_dictionary', if: proc { |_context, _config, options|
-                                                                                      options[:document] && options[:document].data_dictionary_download.present?
-                                                                                    }
+    config.add_show_tools_partial :metadata, if: proc { |_context, _config, options| options[:document] && (Settings.METADATA_SHOWN & options[:document].references.refs.map(&:type).map(&:to_s)).any? }
+    config.add_show_tools_partial :arcgis, component: Geoblacklight::ArcgisComponent, if: proc { |_context, _config, options| options[:document] && options[:document].arcgis_urls.present? }
+    config.add_show_tools_partial :data_dictionary, component: Geoblacklight::DataDictionaryDownloadComponent, if: proc { |_context, _config, options| options[:document] && options[:document].data_dictionary_download.present? }
 
     # Configure basemap provider for GeoBlacklight maps (uses https only basemap
     # providers with open licenses)
@@ -278,7 +325,7 @@ class CatalogController < ApplicationController
   end
 
   def web_services
-    @response, @documents = action_documents
+    @docs = action_documents
 
     respond_to do |format|
       format.html do

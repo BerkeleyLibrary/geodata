@@ -1,6 +1,7 @@
 module GeoDataHealthCheck
   class HttpHeadCheck < OkComputer::Check
-    ConnectionFailed = Class.new(StandardError)
+    class ConnectionFailed < StandardError
+    end
     attr_accessor :url, :request_timeout
 
     # rubocop:disable Lint/MissingSuper

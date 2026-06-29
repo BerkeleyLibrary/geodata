@@ -11,8 +11,18 @@ OkComputer::Registry.register 'database-migrations', OkComputer::ActiveRecordMig
 
 # Check the Solr connection
 # Requires the ping handler on the solr core (<core>/admin/ping).
-core_baseurl = Blacklight.default_index.connection.uri.to_s.chomp('/')
-OkComputer::Registry.register 'solr', OkComputer::SolrCheck.new(core_baseurl)
+solr_url = ENV['SOLR_URL'].presence
+if solr_url.blank?
+  blacklight_config = Rails.application.config_for(:blacklight)
+  solr_url = blacklight_config['url'] || blacklight_config[:url]
+end
+
+if solr_url.present?
+  core_baseurl = solr_url.to_s.chomp('/')
+  OkComputer::Registry.register 'solr', OkComputer::SolrCheck.new(core_baseurl)
+else
+  Rails.logger.warn('OkComputer Solr check skipped: no SOLR_URL configured')
+end
 
 # Perform a Head request to check geoserver endpoint
 geoserver_url = Rails.configuration.x.servers[:geoserver]
