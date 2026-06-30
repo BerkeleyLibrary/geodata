@@ -11,6 +11,8 @@ services:
     ports:
       - 3000:3000
     restart: always
+    stop_signal: SIGQUIT
+    stop_grace_period: 15s
     environment:
       - DATABASE_URL=postgres://root:root@db/geodata-dev?pool=5
       - SOLR_URL=http://solr:8983/solr/geodata-test
