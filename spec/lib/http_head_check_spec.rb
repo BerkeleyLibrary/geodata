@@ -51,7 +51,7 @@ RSpec.describe GeoDataHealthCheck::HttpHeadCheck do
       allow(check_with_timeout).to receive(:head_request).and_raise(Net::OpenTimeout.new('open timeout'))
 
       expect { check_with_timeout.perform_request }.to raise_error(
-        GeoDataHealthCheck::HttpHeadCheck::ConnectionFailed,
+        GeoDataHealthCheck::ConnectionFailedError,
         a_string_including('did not respond within 7 seconds: open timeout')
       )
     end
@@ -61,7 +61,7 @@ RSpec.describe GeoDataHealthCheck::HttpHeadCheck do
       allow(check_with_timeout).to receive(:head_request).and_raise(Net::ReadTimeout.new('read timeout'))
 
       expect { check_with_timeout.perform_request }.to raise_error(
-        GeoDataHealthCheck::HttpHeadCheck::ConnectionFailed,
+        GeoDataHealthCheck::ConnectionFailedError,
         a_string_including('did not respond within 9 seconds: Net::ReadTimeout')
       )
     end
@@ -71,7 +71,7 @@ RSpec.describe GeoDataHealthCheck::HttpHeadCheck do
       allow(check).to receive(:head_request).and_raise(StandardError, err_msg)
 
       expect { check.perform_request }.to raise_error(
-        GeoDataHealthCheck::HttpHeadCheck::ConnectionFailed,
+        GeoDataHealthCheck::ConnectionFailedError,
         err_msg
       )
     end
@@ -81,7 +81,7 @@ RSpec.describe GeoDataHealthCheck::HttpHeadCheck do
       allow(bad_check).to receive(:head_request).and_raise(ArgumentError, 'invalid URI')
 
       expect { bad_check.perform_request }.to raise_error(
-        GeoDataHealthCheck::HttpHeadCheck::ConnectionFailed,
+        GeoDataHealthCheck::ConnectionFailedError,
         a_string_including("Invalid URL format for '#{url}'", 'ArgumentError', 'invalid URI')
       )
     end
