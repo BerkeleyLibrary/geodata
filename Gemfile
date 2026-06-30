@@ -3,35 +3,30 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.4.9'
 
-gem 'berkeley_library-logging', '~> 0.2.7'
+gem 'berkeley_library-logging', '~> 0.3.0'
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.3'
 gem 'cssbundling-rails'
 gem 'devise'
 gem 'devise-guests', '~> 0.8'
-gem 'geoblacklight'
+gem 'geoblacklight', '~> 5.3.0'
 gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'okcomputer', '~> 1.19'
 gem 'omniauth'
-gem 'omniauth-cas', '3.0.0'
+gem 'omniauth-cas', '~> 3.0.0'
 gem 'omniauth-rails_csrf_protection', '~> 1.0'
-gem 'pg', '~> 1.4.6'
+gem 'pg', '~> 1.6'
 gem 'propshaft'
-gem 'puma', '~> 6.4.1'
+gem 'puma', '~> 7.0'
 gem 'puma-plugin-delayed_stop', '~> 0.1.2'
-gem 'rack-timeout', '~> 0.6.3'
+gem 'rack-timeout', '~> 0.7.0'
 gem 'rails', '~> 8.1.3'
 gem 'rsolr', '>= 1.0', '< 3'
 gem 'sitemap_generator', '~> 6.3'
-gem 'solid_cable'
-gem 'solid_cache'
-gem 'solid_queue'
 gem 'stimulus-rails'
-gem 'thruster', require: false
 gem 'turbo-rails'
-gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 
 group :development, :test do
@@ -40,8 +35,8 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
   gem 'rspec-rails'
   gem 'rubocop', require: false
-  gem 'rubocop-rails', '~> 2.19', '>= 2.19.1', require: false
-  gem 'rubocop-rspec', '~> 2.20', require: false
+  gem 'rubocop-rails', '~> 2.35.0', require: false
+  gem 'rubocop-rspec', '~> 2.31.0', require: false
   gem 'solr_wrapper', '>= 0.3'
 end
 
