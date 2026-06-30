@@ -1,6 +1,5 @@
 module GeoDataHealthCheck
   class HttpHeadCheck < OkComputer::Check
-    ConnectionFailed = Class.new(StandardError)
     attr_accessor :url, :request_timeout
 
     # rubocop:disable Lint/MissingSuper
@@ -27,11 +26,11 @@ module GeoDataHealthCheck
     def perform_request
       head_request
     rescue Net::OpenTimeout, Net::ReadTimeout => e
-      raise ConnectionFailed, "#{url} did not respond within #{request_timeout} seconds: #{e.message}"
+      raise ConnectionFailedError, "#{url} did not respond within #{request_timeout} seconds: #{e.message}"
     rescue ArgumentError => e
-      raise ConnectionFailed, "Invalid URL format for '#{url}': #{e.class}: #{e.message}"
+      raise ConnectionFailedError, "Invalid URL format for '#{url}': #{e.class}: #{e.message}"
     rescue StandardError => e
-      raise ConnectionFailed, e.message
+      raise ConnectionFailedError, e.message
     end
 
     private
@@ -49,6 +48,7 @@ module GeoDataHealthCheck
         http.head(uri.request_uri)
       end
     end
-
   end
+
+  class ConnectionFailedError < StandardError; end
 end
