@@ -52,7 +52,7 @@
                                 termVectors="true" termPositions="true" termOffsets="true"/>
     <dynamicField name="*_tmi"  type="text_en" stored="false" indexed="true" multiValued="true"
                                 termVectors="true" termPositions="true" termOffsets="true"/>
-    <dynamicField name="*_sort" type="text_sort" stored="false" indexed="true" multiValued="false"/>
+    <dynamicField name="*_sort" type="text_sort" stored="false" indexed="true" docValues="true" multiValued="false"/>
 
     <dynamicField name="*spell" type="textSpell" indexed="true" stored="false" multiValued="true" />
 
@@ -66,15 +66,15 @@
     <fieldType name="string"  class="solr.StrField"  sortMissingLast="true" />
     <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
 
-    <fieldType name="int"    class="solr.TrieIntField"     precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="float"  class="solr.TrieFloatField"   precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="long"   class="solr.TrieLongField"    precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="double" class="solr.TrieDoubleField"  precisionStep="8" positionIncrementGap="0"/>
+    <fieldType name="int"    class="solr.IntPointField"/>
+    <fieldType name="float"  class="solr.FloatPointField"/>
+    <fieldType name="long"   class="solr.LongPointField"/>
+    <fieldType name="double" class="solr.DoublePointField"/>
 
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z.
          The trailing "Z" designates UTC time and is mandatory.
          A Trie based date field for faster date range queries and date faceting. -->
-    <fieldType name="date" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+    <fieldType name="date" class="solr.DatePointField"/>
 
     <!-- A DateRange based date field for truly faster date range queries. -->
     <fieldType name="dateRange" class="solr.DateRangeField"/>
@@ -107,12 +107,12 @@
       </analyzer>
     </fieldType>
 
-    <!-- for alpha sorting as a single token -->
-    <fieldType name="text_sort" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+    <!-- Solr 9-compatible sortable text with normalization -->
+    <fieldType name="text_sort" class="solr.SortableTextField" sortMissingLast="true">
       <analyzer>
         <tokenizer class="solr.KeywordTokenizerFactory"/>
-        <filter class="solr.LowerCaseFilterFactory" />
-        <filter class="solr.TrimFilterFactory" />
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.TrimFilterFactory"/>
         <filter class="solr.PatternReplaceFilterFactory" pattern="([^a-z0-9 ])" replacement="" replace="all"/>
       </analyzer>
     </fieldType>
