@@ -71,9 +71,9 @@
     <fieldType name="long"   class="solr.LongPointField"/>
     <fieldType name="double" class="solr.DoublePointField"/>
 
-    <!-- The format for this date field is of the form 1995-12-31T23:59:59Z.
-         The trailing "Z" designates UTC time and is mandatory.
-         A Trie based date field for faster date range queries and date faceting. -->
+        <!-- The format for this date field is of the form 1995-12-31T23:59:59Z.
+          The trailing "Z" designates UTC time and is mandatory.
+          A Point-based date field for fast date range queries and date faceting. -->
     <fieldType name="date" class="solr.DatePointField"/>
 
     <!-- A DateRange based date field for truly faster date range queries. -->
