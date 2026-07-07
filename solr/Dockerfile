@@ -1,3 +1,3 @@
-FROM solr:8
+FROM solr:9
 
 COPY --chown=solr . /var/solr/data/
