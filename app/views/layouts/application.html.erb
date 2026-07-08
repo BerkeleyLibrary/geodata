@@ -38,17 +38,25 @@
             <%= content_for(:skip_links) %>
         <% end %>
 
-        <%= render partial: 'shared/header_navbar' %>
+        <div class="ucb_container">
+          <%= render partial: 'shared/header_navbar' %>
+          <main id="main-container" class="<%= container_classes %>" role="main" aria-label="<%= t('blacklight.main.aria.main_container') %>">
+              <%= content_for(:container_header) || content_tag(:div, class: "sr-only visually-hidden") do
+                if render_page_title == t('blacklight.application_name')
+                    content_tag(:h1, render_page_title) + content_tag(:h2, render_page_title + " Categories")
+                else 
+                    content_tag(:h1, render_page_title)
+                end 
+              end %>
 
-        <main id="main-container" class="<%= container_classes %>" role="main" aria-label="<%= t('blacklight.main.aria.main_container') %>">
-            <%= content_for(:container_header) %>
+              <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
 
-            <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
-
-            <div class="row">
-                <%= content_for?(:content) ? yield(:content) : yield %>
-            </div>
-        </main>
+              <div class="row">
+                  <%= content_for?(:content) ? yield(:content) : yield %>
+              </div>
+          </main>
+        <div class="ucb_container">
+        <div class="spacer"></div>
 
         <%= render partial: 'shared/footer' %>
         <%= render partial: 'shared/modal' %>
