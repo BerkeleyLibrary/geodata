@@ -11,8 +11,4 @@
     </div>
 </nav>
 
-<div class="navbar-search navbar navbar-light bg-light">
-    <div class="container">
-        <%= render_search_bar  %>
-    </div>
-</div>
+<%= render Blacklight::SearchNavbarComponent.new(blacklight_config: blacklight_config) %>
