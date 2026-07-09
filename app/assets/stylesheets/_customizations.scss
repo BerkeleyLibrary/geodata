@@ -1,7 +1,7 @@
 // Local Application Customizations
 
 // Set Header Logo
-$logo-image: url("images/blacklight/logo.svg");
+// $logo-image: url("images/blacklight/logo.svg");
 
 // Optional
 // Override default Bootstrap variables here
@@ -21,6 +21,60 @@ $logo-image: url("images/blacklight/logo.svg");
 
 // Example: Bootstrap Link color
 // $link-color: $blue;
+
+.ucb_container {
+    min-height: 100%;
+    width: 100%;
+    margin-bottom: 90px;
+}
+
+.spacer {
+    height: 90px;
+}
+
+.navbar {
+    height: 6em;
+}
+
+.btn-primary {
+    background-color: $link-color;
+    color: #ffffff;
+}
+
+ul.facet-values {
+    span.selected {
+        color: #208836 !important;
+    }
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link,
+.nav-pills .no-js .btn-group:focus-within .dropdown-menu>.nav-link,
+.nav-pills .no-js .btn-group:focus-within .twitter-typeahead .tt-menu>.nav-link,
+.twitter-typeahead .nav-pills .no-js .btn-group:focus-within .tt-menu>.nav-link,
+.no-js .btn-group:focus-within .nav-pills .dropdown-menu>.nav-link,
+.no-js .btn-group:focus-within .nav-pills .twitter-typeahead .tt-menu>.nav-link,
+.twitter-typeahead .no-js .btn-group:focus-within .nav-pills .tt-menu>.nav-link {
+    background-color: $link-color;
+}
+
+#metadata-container {
+    a {
+        color: #006FD6;
+
+        &:hover {
+            color: #0044B3;
+            text-decoration: underline;
+        }
+    }
+}
+
+.element-focusable:hover,
+.element-focusable:focus {
+    color: #0051AD;
+    text-decoration: underline;
+}
+
 
 #footer-container {
     background-color: #003262;
