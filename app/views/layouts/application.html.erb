@@ -55,10 +55,9 @@
                   <%= content_for?(:content) ? yield(:content) : yield %>
               </div>
           </main>
-        <div class="ucb_container">
-        <div class="spacer"></div>
 
         <%= render partial: 'shared/footer' %>
         <%= render partial: 'shared/modal' %>
+        </div>
     </body>
 <% end %>
