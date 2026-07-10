@@ -118,10 +118,12 @@ ul.facet-values {
         font-weight: bold;
         font-size: 16px;
         cursor: pointer;
+        text-decoration: none;
 
         &:hover,
         &:focus {
             color: #fdb515;
+            text-decoration: underline;
         }
     }
 }
