@@ -4,6 +4,21 @@ class CatalogController < ApplicationController
 
   include Blacklight::Catalog
 
+  SEARCH_FACET_FIELDS = [
+    Settings.FIELDS.INDEX_YEAR,
+    Settings.FIELDS.SPATIAL_COVERAGE,
+    Settings.FIELDS.ACCESS_RIGHTS,
+    Settings.FIELDS.RESOURCE_CLASS,
+    Settings.FIELDS.RESOURCE_TYPE,
+    Settings.FIELDS.FORMAT,
+    Settings.FIELDS.SUBJECT,
+    Settings.FIELDS.THEME,
+    Settings.FIELDS.CREATOR,
+    Settings.FIELDS.PUBLISHER,
+    Settings.FIELDS.PROVIDER,
+    Settings.FIELDS.GEOREFERENCED
+  ].freeze
+
   configure_blacklight do |config|
 
     # Ensures that JSON representations of Solr Documents can be retrieved using
@@ -117,10 +132,10 @@ class CatalogController < ApplicationController
     config.add_facet_field Settings.FIELDS.SOURCE, label: 'Source', show: false
     config.add_facet_field Settings.FIELDS.VERSION, label: 'Is Version Of', show: false
 
-    # Have BL send all facet field names to Solr, which has been the default
-    # previously. Simply remove these lines if you'd rather use Solr request
-    # handler defaults, or have no facets.
-    config.add_facet_fields_to_solr_request!
+    # Only request facets displayed in the sidebar. The remaining configured
+    # facets are internal filter fields; faceting them on every search is
+    # expensive on production-sized Solr indexes, especially locn_geometry.
+    config.add_facet_fields_to_solr_request!(*SEARCH_FACET_FIELDS)
 
     # SEARCH RESULTS FIELDS
 
@@ -286,5 +301,10 @@ class CatalogController < ApplicationController
         # Otherwise draw the full page
       end
     end
+  end
+
+  def track_no_content
+    response.set_header('X-Robots-Tag', 'noindex, nofollow')
+    head :no_content
   end
 end

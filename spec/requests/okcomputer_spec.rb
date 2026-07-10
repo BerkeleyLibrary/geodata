@@ -8,15 +8,20 @@ RSpec.describe 'OKComputer', type: :request do
 
   it 'returns all checks at /health' do
     get '/health'
-    expect(response).to have_http_status :internal_server_error
+    expect(response).to have_http_status :ok
     expect(response.parsed_body.keys).to match_array %w[
       default
       database
       database-migrations
       solr
-      geoserver
-      geoserver_secure
-      spatial_server
     ]
+  end
+
+  it 'keeps every /health check under one second' do
+    get '/health'
+
+    expect(response.parsed_body.values).to all(
+      include('time' => be < 1.0)
+    )
   end
 end

@@ -1,0 +1,6 @@
+require_relative 'geo_data_health_check/connection_failed_error'
+require_relative 'geo_data_health_check/http_head_check'
+require_relative 'geo_data_health_check/timed_health_check'
+
+module GeoDataHealthCheck
+end

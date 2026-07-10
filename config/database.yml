@@ -1,10 +1,13 @@
 ---
 
 development:
-  url: postgres://root:root@db/geodata-dev?pool=5
+  url: <%= ENV['DATABASE_URL'] || 'postgres://root:root@db/geodata-dev' %>
+  pool: <%= ENV.fetch('DATABASE_POOL', ENV.fetch('RAILS_MAX_THREADS', 5)) %>
 
 test:
-  url: postgres://root:root@db/geodata-test?pool=5
+  url: <%= ENV['DATABASE_URL'] || 'postgres://root:root@db/geodata-test' %>
+  pool: <%= ENV.fetch('DATABASE_POOL', ENV.fetch('RAILS_MAX_THREADS', 5)) %>
 
 production:
   url: <%= ENV['DATABASE_URL'] || 'postgres://root:root@db/geodata-prod' %>
+  pool: <%= ENV.fetch('DATABASE_POOL', ENV.fetch('RAILS_MAX_THREADS', 5)) %>

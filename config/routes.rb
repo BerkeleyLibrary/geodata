@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :searchable
+    get ':id/track', action: :track_no_content, as: :track_no_content
   end
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
