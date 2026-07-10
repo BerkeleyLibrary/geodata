@@ -27,7 +27,7 @@ RUN apt-get update -qq
 RUN apt-get install -y --no-install-recommends \
     bash \
     curl \
-    default-jre \
+    default-jre-headless \
     ca-certificates \ 
     libpq-dev \
     libvips42 \
@@ -39,9 +39,12 @@ RUN apt-get install -y --no-install-recommends \
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y --no-install-recommends nodejs
 
+# Set the path for node modules so we can copy them from dev to prod.
+ENV NODE_PATH=/usr/local/yarn/node_modules
+
 # Use Yarn via Corepack to avoids using reops and GPG keys
 RUN corepack enable \
-    && corepack prepare yarn@stable --activate \
+    && corepack prepare yarn@1.22.22 --activate \
     && yarn -v
 
 # By default, run as the geodata user
@@ -51,7 +54,7 @@ USER $APP_USER
 WORKDIR /opt/app
 
 # Add binstubs to the path.
-ENV PATH="/opt/app/bin:$PATH"
+ENV PATH="/opt/app/bin:$NODE_PATH/.bin:$PATH"
 
 # If run with no other arguments, the image will start the rails server by
 # default. Note that we must bind to all interfaces (0.0.0.0) because when
@@ -74,6 +77,8 @@ RUN apt-get install -y --no-install-recommends \
     g++ \
     make
 
+RUN mkdir -p /usr/local/yarn && chown $APP_USER:$APP_USER /usr/local/yarn
+
 # Drop back to the GeoData user
 USER $APP_USER
 
@@ -85,7 +90,10 @@ RUN bundle install
 COPY --chown=geodata . .
 
 # Install JavaScript dependencies required by cssbundling-rails.
-RUN yarn install
+COPY ./package.json /usr/local/yarn
+RUN yarn install --cwd /usr/local/yarn
+RUN cp /usr/local/yarn/yarn.lock /opt/app/
+RUN ln -s /usr/local/yarn/node_modules /opt/app/node_modules
 
 # Create cache/pids/etc directories.
 RUN bundle exec -- rails log:clear tmp:create \
@@ -101,6 +109,9 @@ FROM base AS production
 # Copy the built codebase from the dev stage
 COPY --from=development --chown=geodata /opt/app /opt/app
 COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
+COPY --from=development --chown=geodata /usr/local/yarn /usr/local/yarn
+RUN cp /usr/local/yarn/yarn.lock /opt/app/
+RUN ln -s /usr/local/yarn/node_modules /opt/app/node_modules
 
 # Sanity-check that the bundle is correctly installed, that the Gemfile
 # and Gemfile.lock are synced, and that assets are able to be compiled.
