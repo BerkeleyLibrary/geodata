@@ -31,6 +31,7 @@
         <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
         <%= javascript_importmap_tags %>
         <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
         <%= content_for(:head) %>
     </head>
     <body class="<%= render_body_class %>">
