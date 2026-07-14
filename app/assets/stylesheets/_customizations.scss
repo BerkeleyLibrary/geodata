@@ -1,23 +1,118 @@
-// Local Application Customizations
+html,
+body {
+    min-height: 100%;
+}
 
-// Set Header Logo
-$logo-image: url("images/blacklight/logo.svg");
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-// Optional
-// Override default Bootstrap variables here
+.ucb_container {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    width: 100%;
+}
 
-// Example: Bootstrap Colors
-// $blue:    #0d6efd !default;
-// $indigo:  #6610f2 !default;
-// $purple:  #6f42c1 !default;
-// $pink:    #d63384 !default;
-// $red:     #dc3545 !default;
-// $orange:  #fd7e14 !default;
-// $yellow:  #ffc107 !default;
-// $green:   #198754 !default;
-// $teal:    #20c997 !default;
-// $cyan:    #0dcaf0 !default;
-// $dark:    #212529 !default; // $gray-900
+main#main-container {
+    flex: 1 0 auto;
+}
 
-// Example: Bootstrap Link color
-// $link-color: $blue;
+.navbar {
+    height: 6em;
+}
+
+.btn-primary {
+    background-color: $link-color;
+    color: #ffffff;
+}
+
+.nav-link.login,
+.nav-link.logout {
+    color: $link-color;
+}
+
+ul.facet-values {
+    span.selected {
+        color: #208836 !important;
+    }
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link,
+.nav-pills .no-js .btn-group:focus-within .dropdown-menu>.nav-link,
+.nav-pills .no-js .btn-group:focus-within .twitter-typeahead .tt-menu>.nav-link,
+.twitter-typeahead .nav-pills .no-js .btn-group:focus-within .tt-menu>.nav-link,
+.no-js .btn-group:focus-within .nav-pills .dropdown-menu>.nav-link,
+.no-js .btn-group:focus-within .nav-pills .twitter-typeahead .tt-menu>.nav-link,
+.twitter-typeahead .no-js .btn-group:focus-within .nav-pills .tt-menu>.nav-link {
+    background-color: $link-color;
+}
+
+#metadata-container {
+    a {
+        color: #006FD6;
+
+        &:hover {
+            color: #0044B3;
+            text-decoration: underline;
+        }
+    }
+}
+
+.element-focusable:hover,
+.element-focusable:focus {
+    color: #0051AD;
+    text-decoration: underline;
+}
+
+
+#footer-container {
+    background-color: #003262;
+    clear: both;
+    margin-top: auto;
+    width: 100%;
+}
+
+#footer {
+    @extend .container-fluid;
+    min-height: 90px;
+    padding-top: 30px;
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: inline;
+            margin: 0 12px 4px 0;
+            padding: 0 50px 0 0;
+        }
+    }
+
+    li a {
+        white-space: nowrap;
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: #fdb515;
+            text-decoration: underline;
+        }
+    }
+}
+
+#footer-links {
+    text-align: right;
+}
+
+.footer-img {
+    padding: 2px 0 2px 20px;
+}
