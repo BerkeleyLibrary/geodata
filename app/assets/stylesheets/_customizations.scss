@@ -29,6 +29,11 @@ main#main-container {
     color: #ffffff;
 }
 
+.nav-link.login,
+.nav-link.logout {
+    color: $link-color;
+}
+
 ul.facet-values {
     span.selected {
         color: #208836 !important;
