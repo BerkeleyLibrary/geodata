@@ -102,9 +102,9 @@ USE_GEOM_FOR_RELATIONS_ICON: false
 
 # Web services shown in tool panel
 WEBSERVICES_SHOWN:
-  - 'wms'
+  # - 'wms'
   - 'tms'
-  - 'wfs'
+  # - 'wfs'
   - 'xyz'
   - 'wmts'
   - 'tilejson'
