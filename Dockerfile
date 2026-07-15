@@ -53,6 +53,8 @@ WORKDIR /opt/app
 # Add binstubs to the path.
 ENV PATH="/opt/app/bin:$PATH"
 
+ENTRYPOINT ["bin/docker-entrypoint.sh"]
+
 # If run with no other arguments, the image will start the rails server by
 # default. Note that we must bind to all interfaces (0.0.0.0) because when
 # running in a docker container, the actual public interface is created

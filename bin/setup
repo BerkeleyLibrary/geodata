@@ -8,6 +8,12 @@ def system!(*args)
 end
 
 FileUtils.chdir APP_ROOT do
+  puts "\n== Installing JavaScript dependencies =="
+  system! "yarn install"
+
+  puts "\n== Building CSS =="
+  system! "yarn build:css"
+
   puts "\n== Preparing database =="
   system! "bin/rails db:prepare RAILS_ENV=test"
   system! "bin/rails db:prepare"
