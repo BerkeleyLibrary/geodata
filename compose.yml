@@ -1,0 +1,80 @@
+---
+
+x-app: &app
+  build:
+    context: .
+    target: development
+  environment:
+    - DATABASE_URL=postgres://root:root@db/geodata-dev?pool=5
+    - RAILS_ENV=${RAILS_ENV:-development}
+    - SOLR_URL=http://solr:8983/solr/geodata-test
+  volumes:
+    - ./:/opt/app:delegated
+
+services:
+  app:
+    <<: *app
+    depends_on:
+      updater:
+        condition: service_completed_successfully
+    ports:
+      - 3000:3000
+    restart: always
+    volumes:
+      - ./:/opt/app:delegated
+      - selenium_downloads:/opt/app/tmp/selenium_downloads
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+    ports:
+      - 5432:5432
+
+  solr:
+    build: solr
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8983/solr/geodata-test/admin/ping > /dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    ports:
+      - 8983:8983
+
+  updater:
+    <<: *app
+    command: ["rails", "db:prepare", "css:build", "geoblacklight:index:seed"]
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+    entrypoint: []
+    restart: "no"
+
+  selenium:
+    image: selenium/standalone-chrome:latest
+    # image: selenium/standalone-chrome:4.10.0
+    ports:
+      - 4444:4444
+      - 7900:7900
+    platform: linux/amd64
+    networks:
+      default:
+        aliases:
+          - selenium.test
+    shm_size: 2g
+    volumes:
+      - selenium_downloads:/home/seluser/Downloads
+
+volumes:
+  selenium_downloads:

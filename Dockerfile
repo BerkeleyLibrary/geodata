@@ -14,24 +14,20 @@ EXPOSE 3000
 ENV APP_USER=geodata
 ENV APP_UID=40012
 
-RUN groupadd --system --gid $APP_UID $APP_USER \
-    && useradd --home-dir /opt/app --system --uid $APP_UID --gid $APP_USER $APP_USER
-
-RUN mkdir -p /opt/app \
-    && chown -R $APP_USER:$APP_USER /opt/app /usr/local/bundle
-
-# Get list of available packages
-RUN apt-get update -qq
+RUN groupadd --system --gid $APP_UID $APP_USER && \
+    useradd --home-dir /opt/app --system --uid $APP_UID --gid $APP_USER $APP_USER && \
+    install -d -o $APP_USER -g $APP_USER /opt/app /usr/local/bundle
 
 # Install standard packages from the Debian repository
-RUN apt-get install -y --no-install-recommends \
-    bash \
-    curl \
-    default-jre \
-    ca-certificates \ 
-    libpq-dev \
-    libvips42 \
-    &&  rm -rf /var/cache/apk/*
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends \
+        bash \
+        curl \
+        default-jre-headless \
+        ca-certificates \
+        libpq-dev \
+        libvips42 && \
+    rm -rf /var/lib/apt/lists/*
 
 #Install Node.js and Yarn from their own repositories
 # Add Node.js package repository (version 16 LTS release) & install Node.js
@@ -41,7 +37,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
 
 # Use Yarn via Corepack to avoids using reops and GPG keys
 RUN corepack enable \
-    && corepack prepare yarn@stable --activate \
+    && corepack prepare yarn@1.22.22 --activate \
     && yarn -v
 
 # By default, run as the geodata user
@@ -62,7 +58,7 @@ CMD ["rails", "server", "-b", "0.0.0.0", "--pid", "/tmp/puma.pid"]
 # ============================================================================
 # Target: development
 # Installs all dependencies, requiring the (large) build-base package. Build
-# artifacts are copied out in the final stage.
+# artifacts are copied out in the production stage.
 FROM base AS development
 
 # Install system packages needed to build gems with C extensions.
@@ -84,12 +80,10 @@ RUN bundle install
 # Copy the rest of the codebase.
 COPY --chown=geodata . .
 
-# Install JavaScript dependencies required by cssbundling-rails.
-RUN yarn install
-
-# Create cache/pids/etc directories.
-RUN bundle exec -- rails log:clear tmp:create \
-    &&  rails assets:precompile
+# Run setup / scaffolding tasks
+RUN yarn install --frozen-lockfile && \
+    RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 SKIP_YARN_INSTALL=1 \
+        rails assets:precompile log:clear tmp:create
 
 # ============================================================================
 # Target: production
@@ -102,13 +96,11 @@ FROM base AS production
 COPY --from=development --chown=geodata /opt/app /opt/app
 COPY --from=development --chown=geodata /usr/local/bundle /usr/local/bundle
 
-# Sanity-check that the bundle is correctly installed, that the Gemfile
-# and Gemfile.lock are synced, and that assets are able to be compiled.
-# no need to run bundle install
-
-RUN rails assets:precompile assets:clean log:clear tmp:clear
-
-# Preserve build arguments - from galc
+# Smoke-test the production image in the environment used for deployment.
+RUN bundle check && \
+    test -s app/assets/builds/application.css && \
+    test -s public/assets/.manifest.json && \
+    RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 rails zeitwerk:check
 
 # passed in by CI
 ARG BUILD_TIMESTAMP
@@ -125,4 +117,3 @@ ENV DOCKER_TAG="${DOCKER_TAG}"
 ENV GIT_REF_NAME="${GIT_REF_NAME}"
 ENV GIT_SHA="${GIT_SHA}"
 ENV GIT_REPOSITORY_URL="${GIT_REPOSITORY_URL}"
-

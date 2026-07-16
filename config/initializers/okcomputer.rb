@@ -1,7 +1,7 @@
 # initializers/okcomputer.rb
 # Health checks configuration
 
-require_relative '../../lib/http_head_check'
+require_relative '../../lib/geo_data_health_check/http_head_check'
 
 OkComputer.logger = Rails.logger
 OkComputer.check_in_parallel = true

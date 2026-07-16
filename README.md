@@ -1,71 +1,99 @@
-# Geodata
+# GeoData
 
-Geodata web portal developed from Geoblacklight 4.4.2
+GeoData is UC Berkeley Library's geospatial data portal, built with GeoBlacklight 5.3.
+
 [Geodata@UCB](https://geodata.lib.berkeley.edu/)
 
-## Docker
+## Docker development
 
+Install Docker with the Compose plugin before starting. Docker Compose automatically
+uses `compose.yml` for local development; `compose.ci.yml` is an overlay used by the
+GitHub Actions workflow.
+
+### Start the stack
 
 ```sh
 # Build container images
 docker compose build --pull
-# or 
-docker compose build --pull --no-cache
 
 # Start the stack in the background
-docker compose up --d
-
-# Run setup tasks (create databases, compile assets, etc.)
-docker compose run --rm --entrypoint=setup app
+docker compose up -d
 ```
 
-### Accessing Services
+On startup, the one-shot `updater` service waits for PostgreSQL and Solr, prepares
+the development database, builds CSS, and seeds Solr. The `app` service starts only
+after the updater exits successfully.
 
-- web: http://localhost:3000
-- Solr: http://solr:solr@localhost:8983
-- DB Admin: http://localhost:8080
+Check startup status and troubleshoot initialization with:
+
+```sh
+docker compose ps
+docker compose logs updater db solr
+
+# Rerun initialization when needed
+docker compose run --rm updater
+```
+
+### Accessing services
+
+- GeoData: http://localhost:3000
+- Solr Admin: http://localhost:8983/solr/
+- PostgreSQL: `localhost:5432` (`root` / `root`)
 
 ### Configuration
 
-Sensitive settings like the DATABASE_URL, SOLR_URL, and SECRET_KEY_BASE are provided to the application by Docker "secrets". In development, these are stored in `secrets/dev` and you don't have to worry about them. In production, they're provided by the production infrastructure.
+Local database, Solr, and Rails environment settings are defined in `compose.yml`.
+`RAILS_ENV` defaults to `development` and can be overridden from the shell.
 
-Just know that they're there.
+The application also supports secrets mounted as files under `/run/secrets`. At
+startup, each nonempty file is loaded into an environment variable named after the
+file, but only when that variable is not already set. Explicit environment variables
+therefore take precedence over mounted secrets.
 
-The mechanics of loading them into the application are fairly simple:
+### CSS development
 
-- Docker puts those in read-only files under `/run/secrets` within the container.
-- On startup, the application reads all files in that directory and overrides their corresponding ENV variables. For example, the file `/run/secrets/DATABASE_URL` clobbers the ENV['DATABASE_URL'] environment variable.
-- This is preferable to storing that in the _actual_ environment because it ensures _only the Rails process can see that config value_. It's also convenient, though, because you can use ENV to access the value.
-
-If you're curious, the code that does this is in `config/application.rb`.
-
-### Helpful Commands
-
-View logs:
+The updater performs the initial CSS build. Rebuild after changing stylesheets, or
+run the watcher while actively developing CSS:
 
 ```sh
-docker compose logs -f # tail all logs
-docker compose logs -f app # tail just the "app" service's logs (etc.)
+# One-time rebuild
+docker compose exec app rails css:build
+
+# Continuous rebuilds; stop with Ctrl-C
+docker compose exec app yarn watch:css
 ```
 
-Shell into a container:
+### Helpful commands
 
 ```sh
+# Follow logs for every service or only the Rails application
+docker compose logs -f
+docker compose logs -f app
+
+# Open a shell or Rails console
 docker compose exec app bash
-```
-
-Open a Rails console:
-
-```sh
 docker compose exec app rails console
 ```
 
-Stop services and clean up volumes:
+Build the deployable `final` image. Production asset compilation and smoke tests run
+as part of this build:
+
+```sh
+docker build --target final -t geodata .
+```
+
+Stop and resume the existing containers while preserving their local state:
+
+```sh
+docker compose stop
+docker compose start
+```
+
+Stop the stack and delete its local database, Solr data, and other volumes:
 
 ```sh
 docker compose down -v
 ```
-
 
 ## Deployment
 
@@ -76,11 +104,7 @@ docker compose down -v
 - GeoServer Public (not in stack): https://geoserver-public.ucblib.org/
 - GeoServer Secure (not in stack): https://geoserver-secure.ucblib.org/
 
-
-
-
 ### Production
-
 
 - GeoData: https://geodata.lib.berkeley.edu/
 - Solr: https://solr.swarm-ewh-prod.devlib.berkeley.edu/
