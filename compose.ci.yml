@@ -12,5 +12,11 @@ services:
       - artifacts:/opt/app/artifacts
       - selenium_downloads:/opt/app/tmp/selenium_downloads
 
+  updater:
+    build: !reset
+    image: ${DOCKER_APP_IMAGE}
+    command: ["rails", "db:prepare"]
+    volumes: !reset []
+
 volumes:
   artifacts:
