@@ -2,7 +2,7 @@
 # Target: base
 # Includes system dependencies common to both dev and production.
 
-FROM ruby:3.2.2 AS base
+FROM ruby:3.4.10 AS base
 
 # This is just metadata and doesn't actually "expose" this port. Rather, it
 # tells other tools (e.g. Traefik) what port the service in this image is
@@ -28,7 +28,7 @@ RUN apt-get install -y --no-install-recommends \
     bash \
     curl \
     default-jre \
-    ca-certificates \ 
+    ca-certificates \
     libpq-dev \
     libvips42 \
     &&  rm -rf /var/cache/apk/*
@@ -39,10 +39,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x| bash - \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Yarn (using the official Yarn repository)
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+RUN curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg -o /etc/apt/keyrings/yarn.asc \
+    && echo "deb [signed-by=/etc/apt/keyrings/yarn.asc] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update && apt-get install -y --no-install-recommends yarn \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* 
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # By default, run as the geodata user
 USER $APP_USER
