@@ -8,6 +8,7 @@ x-app: &app
     - DATABASE_URL=postgres://root:root@db/geodata-dev?pool=5
     - RAILS_ENV=${RAILS_ENV:-development}
     - SOLR_URL=http://solr:8983/solr/geodata-test
+    - LIT_GTAG_ID=lit-gta-id-2
   volumes:
     - ./:/opt/app:delegated
 
