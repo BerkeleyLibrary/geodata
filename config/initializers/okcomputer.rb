@@ -1,7 +1,7 @@
 # initializers/okcomputer.rb
 # Health checks configuration
 
-require_relative '../../lib/geo_data_health_check/http_head_check'
+require_relative '../../lib/geo_data_health_check'
 
 if ENV['SKIP_OKCOMPUTER_INIT'] == '1'
   Rails.logger.info('Skipping OkComputer initializer during build-time tasks')
@@ -17,8 +17,15 @@ else
 
   # Check the Solr connection
   # Requires the ping handler on the solr core (<core>/admin/ping).
-  core_baseurl = Blacklight.default_index.connection.uri.to_s.chomp('/')
-  OkComputer::Registry.register 'solr', OkComputer::SolrCheck.new(core_baseurl, 1)
+  blacklight_config = Rails.application.config_for(:blacklight)
+  solr_url = blacklight_config['url'] || blacklight_config[:url]
+
+  if solr_url.present?
+    core_baseurl = solr_url.to_s.chomp('/')
+    OkComputer::Registry.register 'solr', OkComputer::SolrCheck.new(core_baseurl)
+  else
+    Rails.logger.warn('OkComputer Solr check skipped: no SOLR_URL configured')
+  end
 
   {
     geoserver: Rails.configuration.x.servers[:geoserver],
