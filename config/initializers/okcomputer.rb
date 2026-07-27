@@ -4,7 +4,7 @@
 require_relative '../../lib/geo_data_health_check'
 
 OkComputer.logger = Rails.logger
-OkComputer.check_in_parallel = true
+OkComputer.check_in_parallel = ActiveModel::Type::Boolean.new.cast(ENV.fetch('OKCOMPUTER_CHECK_IN_PARALLEL', false))
 
 OkComputer::Registry.register 'default', OkComputer::Registry.fetch('default')
 OkComputer::Registry.register 'database', OkComputer::Registry.fetch('database')
