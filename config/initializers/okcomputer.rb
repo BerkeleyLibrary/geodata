@@ -22,7 +22,7 @@ else
 
   if solr_url.present?
     core_baseurl = solr_url.to_s.chomp('/')
-    OkComputer::Registry.register 'solr', OkComputer::SolrCheck.new(core_baseurl)
+    OkComputer::Registry.register 'solr', OkComputer::SolrCheck.new(core_baseurl, 1)
   else
     Rails.logger.warn('OkComputer Solr check skipped: no SOLR_URL configured')
   end
