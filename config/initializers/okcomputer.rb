@@ -3,9 +3,7 @@
 
 require_relative '../../lib/geo_data_health_check'
 
-if ENV['SKIP_OKCOMPUTER_INIT'] == '1'
-  Rails.logger.info('Skipping OkComputer initializer during build-time tasks')
-else
+unless ENV['SKIP_OKCOMPUTER_INIT'] == '1'
   OkComputer.logger = Rails.logger
   OkComputer.check_in_parallel = ActiveModel::Type::Boolean.new.cast(ENV.fetch('OKCOMPUTER_CHECK_IN_PARALLEL', false))
 
