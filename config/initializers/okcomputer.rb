@@ -31,5 +31,5 @@ end
 }.each do |name, url|
   next if url.blank?
 
-  OkComputer::Registry.register name.to_s, BerkeleyLibrary::Util::HeadCheck.new(url, 0.9)
+  OkComputer::Registry.register name.to_s, BerkeleyLibrary::Util::HeadCheck.new(url, 1)
 end
