@@ -82,7 +82,7 @@ COPY --chown=geodata . .
 
 # Run setup / scaffolding tasks
 RUN yarn install --frozen-lockfile && \
-    RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 SKIP_YARN_INSTALL=1 SKIP_OKCOMPUTER_INIT=1 \
+    RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 SKIP_YARN_INSTALL=1 \
     rails assets:precompile log:clear tmp:create
 
 # ============================================================================
