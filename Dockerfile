@@ -2,7 +2,7 @@
 # Target: base
 # Includes system dependencies common to both dev and production.
 
-FROM ruby:3.4.9 AS base
+FROM ruby:3.4.10 AS base
 
 # This is just metadata and doesn't actually "expose" this port. Rather, it
 # tells other tools (e.g. Traefik) what port the service in this image is
@@ -21,12 +21,12 @@ RUN groupadd --system --gid $APP_UID $APP_USER && \
 # Install standard packages from the Debian repository
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
-        bash \
-        curl \
-        default-jre-headless \
-        ca-certificates \
-        libpq-dev \
-        libvips42 && \
+    bash \
+    curl \
+    default-jre-headless \
+    ca-certificates \
+    libpq-dev \
+    libvips42 && \
     rm -rf /var/lib/apt/lists/*
 
 #Install Node.js and Yarn from their own repositories
@@ -83,7 +83,7 @@ COPY --chown=geodata . .
 # Run setup / scaffolding tasks
 RUN yarn install --frozen-lockfile && \
     RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 SKIP_YARN_INSTALL=1 \
-        rails assets:precompile log:clear tmp:create
+    rails assets:precompile log:clear tmp:create
 
 # ============================================================================
 # Target: production
