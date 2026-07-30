@@ -1,5 +1,5 @@
 require 'rails_helper'
-require_relative '../../lib/http_head_check'
+require_relative '../../lib/geo_data_health_check/http_head_check'
 
 RSpec.describe GeoDataHealthCheck::HttpHeadCheck do
   let(:url) { 'https://example.com/endpoint' }

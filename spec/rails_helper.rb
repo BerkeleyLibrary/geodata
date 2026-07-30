@@ -15,7 +15,9 @@ Capybara.register_driver(:remote_chrome) do |app|
   chrome_args = %w[
     --disable-smooth-scrolling
     --window-size=2560,1344
-    --disable-site-isolation-trials
+    --disable-gpu
+    --disable-dev-shm-usage
+    --no-sandbox
   ]
 
   chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args).tap do |options|

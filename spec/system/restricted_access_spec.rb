@@ -12,7 +12,7 @@ RSpec.describe 'View Restricted Data' do
   end
 
   it 'open calnet login page when clicking login to view and download link' do
-    find('.btn.btn-default').click
+    find('.btn.btn-secondary').click
     puts page
     puts page.current_url
     decoded_path_and_query = decoded_url(page.current_url)

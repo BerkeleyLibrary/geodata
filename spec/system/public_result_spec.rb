@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'View Search Reslut' do
+RSpec.describe 'View Search Result' do
   before do
     view_record(CommonHelpers::PUBLIC_RECORD_ID)
   end
 
   it 'has correct record title' do
     within('#document') do
-      expect(find('h2')).to have_text('Intersections, San Benito County, California, 2016')
+      expect(page).to have_css('h1', text: 'Intersections, San Benito County, California, 2016')
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe 'View Search Reslut' do
                                visible: true)
 
       expect(page).to have_css('a.pill-metadata.nav-link.active[data-ref-endpoint="https://spatial.lib.berkeley.edu/metadata/berkeley-s7038h/iso19139.xml"]')
-      expect(page).to have_css('a.pill-metadata.nav-link.active[data-toggle="pill"]')
+      expect(page).to have_css('a.pill-metadata.nav-link.active[data-bs-toggle="pill"]')
     end
   end
 
