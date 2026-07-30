@@ -21,7 +21,7 @@ if solr_url.present?
   core_baseurl = solr_url.to_s.chomp('/')
   OkComputer::Registry.register 'solr', OkComputer::SolrCheck.new(core_baseurl, 1)
 else
-  OkComputer.logger.warn('OkComputer Solr check skipped: no SOLR_URL configured')
+  OkComputer.logger.warn('OkComputer Solr check skipped: no Solr URL configured in Blacklight')
 end
 
 {
