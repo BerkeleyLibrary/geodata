@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.10'
 
 gem 'berkeley_library-logging', '~> 0.3.0'
+gem 'berkeley_library-util', '~> 0.3'
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.3'
 gem 'cssbundling-rails'
