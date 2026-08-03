@@ -82,6 +82,7 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.22)
     benchmark (0.5.0)
+    benchmark-ips (2.15.1)
     berkeley_library-logging (0.3.0)
       activesupport (>= 7)
       amazing_print (~> 1.1)
@@ -136,6 +137,24 @@ GEM
     deep_merge (1.2.2)
     deprecation (1.1.0)
       activesupport
+    derailed_benchmarks (2.2.1)
+      base64
+      benchmark-ips (~> 2)
+      bigdecimal
+      drb
+      get_process_mem
+      heapy (~> 0)
+      logger
+      memory_profiler (>= 0, < 2)
+      mini_histogram (>= 0.3.0)
+      mutex_m
+      ostruct
+      rack (>= 1)
+      rack-test
+      rake (> 10, < 14)
+      ruby-statistics (>= 4.0.1)
+      ruby2_keywords
+      thor (>= 0.19, < 2)
     devise (5.0.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -195,6 +214,9 @@ GEM
       rsolr
       vite_rails (~> 3.0)
       zeitwerk
+    get_process_mem (1.0.0)
+      bigdecimal (>= 2.0)
+      ffi (~> 1.0)
     git (5.0.0)
       activesupport (>= 5.0)
       addressable (~> 2.8)
@@ -204,6 +226,8 @@ GEM
       activesupport (>= 6.1)
     hashie (5.1.0)
       logger
+    heapy (0.2.0)
+      thor
     http-accept (1.7.0)
     http-cookie (1.1.6)
       domain_name (~> 0.5)
@@ -260,10 +284,12 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
+    memory_profiler (1.1.0)
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
     mime-types-data (3.2026.0701)
+    mini_histogram (0.3.1)
     mini_magick (5.3.2)
       logger
     mini_mime (1.1.5)
@@ -356,6 +382,8 @@ GEM
       puma (>= 5.0, < 8)
     racc (1.8.1)
     rack (3.2.6)
+    rack-mini-profiler (4.0.1)
+      rack (>= 1.2.0)
     rack-protection (4.2.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -491,9 +519,11 @@ GEM
     rubocop-rspec_rails (2.29.1)
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
+    ruby-statistics (4.1.1)
     ruby-vips (2.3.0)
       ffi (~> 1.12)
       logger
+    ruby2_keywords (0.0.5)
     rubyzip (3.4.1)
     sanitize (7.0.0)
       crass (~> 1.0.2)
@@ -522,6 +552,7 @@ GEM
       ostruct
       retriable
       ruby-progressbar
+    stackprof (0.2.28)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     thor (1.5.0)
@@ -588,12 +619,14 @@ DEPENDENCIES
   capybara
   cssbundling-rails
   debug
+  derailed_benchmarks
   devise
   devise-guests (~> 0.8)
   geoblacklight (~> 5.3.0)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  memory_profiler
   okcomputer (~> 1.19)
   omniauth
   omniauth-cas (~> 3.0.0)
@@ -602,6 +635,7 @@ DEPENDENCIES
   propshaft
   puma (~> 7.0)
   puma-plugin-delayed_stop (~> 0.1.2)
+  rack-mini-profiler
   rack-timeout (~> 0.7.0)
   rails (~> 8.1.3)
   rsolr (>= 1.0, < 3)
@@ -616,6 +650,7 @@ DEPENDENCIES
   simplecov-rcov (~> 0.2)
   sitemap_generator (~> 6.3)
   solr_wrapper (>= 0.3)
+  stackprof
   stimulus-rails
   turbo-rails
   tzinfo-data
@@ -640,6 +675,7 @@ CHECKSUMS
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bcrypt (3.1.22) sha256=1f0072e88c2d705d94aff7f2c5cb02eb3f1ec4b8368671e19112527489f29032
   benchmark (0.5.0) sha256=465df122341aedcb81a2a24b4d3bd19b6c67c1530713fd533f3ff034e419236c
+  benchmark-ips (2.15.1) sha256=07a1a9f3c6105ecaf68c174fc3fbcddd71a0e9ada6236ae03093a0dcfd812d59
   berkeley_library-logging (0.3.0) sha256=35122b8db77b730dbc95e7b1b683c5b3b28f0225cda0d04d62cfd3b0ef9a9e18
   berkeley_library-util (0.3.0)
   bigdecimal (4.1.2) sha256=53d217666027eab4280346fba98e7d5b66baaae1b9c3c1c0ffe89d48188a3fbd
@@ -662,6 +698,7 @@ CHECKSUMS
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
   deep_merge (1.2.2) sha256=83ced3a3d7f95f67de958d2ce41b1874e83c8d94fe2ddbff50c8b4b82323563a
   deprecation (1.1.0) sha256=01707cea9a6ed2d7270377457941f43394a345e6dd8048e1be6d18ff2f2a01e1
+  derailed_benchmarks (2.2.1) sha256=654280664fded41c9cd8fc27fc0fcfaf096023afab90eb4ac1185ba70c5d4439
   devise (5.0.4) sha256=d605f2b85854e74e56ee789e2d398702bc2d06e6bcd894717a670a3199c74cc1
   devise-guests (0.8.3) sha256=3df086c2adad4ad66661020483c16de142a487eddf2672834a7345269b7f9fa4
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
@@ -686,9 +723,11 @@ CHECKSUMS
   ffi (1.17.4-x86_64-linux-musl) sha256=3fdf9888483de005f8ef8d1cf2d3b20d86626af206cbf780f6a6a12439a9c49e
   geo_combine (0.11.0) sha256=6e112cd09ca6961b9d21a59e278496b27f5ee8f031b4748ef4ff55c9c1089a51
   geoblacklight (5.3.0) sha256=08828244f1e9d2f90be28ca665f521d412dd342cb97deeca3d12dca786cbb9d9
+  get_process_mem (1.0.0) sha256=d54024f3bcbf776a4d6e0155ec2b21bc3ba44e2fd158c4c00c80aa8a36e0b4aa
   git (5.0.0) sha256=25930983acf19a9ecf6dc7e62b9916e7e20d7c9cc4e287e5beaf259acd85cbe2
   globalid (1.4.0) sha256=037f12fbf1d9d7a014d501c2d5c77356fd4ddd96d7a7991d6700bba96706f427
   hashie (5.1.0) sha256=c266471896f323c446ea8207f8ffac985d2718df0a0ba98651a3057096ca3870
+  heapy (0.2.0) sha256=74141e845d61ffc7c1e8bf8b127c8cf94544ec7a1181aec613288682543585ea
   http-accept (1.7.0)
   http-cookie (1.1.6)
   i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
@@ -711,8 +750,10 @@ CHECKSUMS
   mail (2.9.1) sha256=06574eca475253d6c18145dd70af80d0eb970182d55053497c5f4d797ea160e8
   marcel (1.2.1) sha256=1678e9360e32f9eafa917c80029e2f6d10b2715c66a4b87b6d0da9b9cd1f859f
   matrix (0.4.3) sha256=a0d5ab7ddcc1973ff690ab361b67f359acbb16958d1dc072b8b956a286564c5b
+  memory_profiler (1.1.0) sha256=79a17df7980a140c83c469785905409d3027ca614c42c086089d128b805aa8f8
   mime-types (3.7.0) sha256=dcebf61c246f08e15a4de34e386ebe8233791e868564a470c3fe77c00eed5e56
   mime-types-data (3.2026.0701) sha256=cd8811e1fb89d836499ba0582368a10ee74cef929ba956d1d5ddca045e6a730f
+  mini_histogram (0.3.1) sha256=6a114b504e4618b0e076cc672996036870f7cc6f16b8e5c25c0c637726d2dd94
   mini_magick (5.3.2) sha256=a7ef54b480b15283c396eb8343d9e088471f54b31d9974cb7e523cc57598609f
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitar (1.1.0) sha256=38db0cfb6f3801017946cdcd8dc53f2cf3fd41ff752892312bf9a1639c9ea23e
@@ -764,6 +805,7 @@ CHECKSUMS
   puma-plugin-delayed_stop (0.1.2) sha256=cb30cd2ba10a59e330f38e9ece2a298fecce79b46a9f90c57da9f7d3e5731171
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (3.2.6) sha256=5ed78e1f73b2e25679bec7d45ee2d4483cc4146eb1be0264fc4d94cb5ef212c2
+  rack-mini-profiler (4.0.1) sha256=485810c23211f908196c896ea10cad72ed68780ee2998bec1f1dfd7558263d78
   rack-protection (4.2.1) sha256=cf6e2842df8c55f5e4d1a4be015e603e19e9bc3a7178bae58949ccbb58558bac
   rack-proxy (0.8.3) sha256=1e446a37be6d9c59647e710d2df7d23e3b0b4e1b982dab4f188a0354aa1fff0b
   rack-session (2.1.2) sha256=595434f8c0c3473ae7d7ac56ecda6cc6dfd9d37c0b2b5255330aa1576967ffe8
@@ -804,7 +846,9 @@ CHECKSUMS
   rubocop-rspec (2.31.0) sha256=2bae19388d78e1ceace44cd95fd34f3209f4ef20cac1b168d0a1325cbba3d672
   rubocop-rspec_rails (2.29.1) sha256=4ae95abbe9ca5a9b6d8be14e50d230fb5b6ba033b05d4c0981b5b76fc44988e4
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
+  ruby-statistics (4.1.1) sha256=a9923db9bc4b1bda685fac2c47a9fadcc9a93cfd36465f5782a68dfbdf43c171
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
+  ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
   rubyzip (3.4.1) sha256=0a79e745b5c25872ebd148457df5665da8530ed8626c993b01457128f173ca02
   sanitize (7.0.0) sha256=269d1b9d7326e69307723af5643ec032ff86ad616e72a3b36d301ac75a273984
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
@@ -815,6 +859,7 @@ CHECKSUMS
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
   sitemap_generator (6.3.0) sha256=1d803cbf03c44736bea05b9e3363d3523fec4e24f3abedad294d9c57cab994f3
   solr_wrapper (4.4.0) sha256=1eaf0667611a90c623d05c3c2c765d7a2e4174427d03580396cc2124b10430bb
+  stackprof (0.2.28) sha256=4ec2ace02f386012b40ca20ef80c030ad711831f59511da12e83b34efb0f9a04
   stimulus-rails (1.3.4) sha256=765676ffa1f33af64ce026d26b48e8ffb2e0b94e0f50e9119e11d6107d67cb06
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   timeout (0.6.1) sha256=78f57368a7e7bbadec56971f78a3f5ecbcfb59b7fcbb0a3ed6ddc08a5094accb
