@@ -142,8 +142,6 @@ GEM
       railties (>= 7.0)
       responders
       warden (~> 1.2.3)
-    devise-guests (0.8.3)
-      devise
     diff-lcs (1.6.2)
     docile (1.4.1)
     domain_name (0.6.20240107)
@@ -589,7 +587,6 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise
-  devise-guests (~> 0.8)
   geoblacklight (~> 5.3.0)
   image_processing (~> 1.2)
   importmap-rails
@@ -663,7 +660,6 @@ CHECKSUMS
   deep_merge (1.2.2) sha256=83ced3a3d7f95f67de958d2ce41b1874e83c8d94fe2ddbff50c8b4b82323563a
   deprecation (1.1.0) sha256=01707cea9a6ed2d7270377457941f43394a345e6dd8048e1be6d18ff2f2a01e1
   devise (5.0.4) sha256=d605f2b85854e74e56ee789e2d398702bc2d06e6bcd894717a670a3199c74cc1
-  devise-guests (0.8.3) sha256=3df086c2adad4ad66661020483c16de142a487eddf2672834a7345269b7f9fa4
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
   domain_name (0.6.20240107)

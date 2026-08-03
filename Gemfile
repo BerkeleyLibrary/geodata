@@ -9,7 +9,6 @@ gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.3'
 gem 'cssbundling-rails'
 gem 'devise'
-gem 'devise-guests', '~> 0.8'
 gem 'geoblacklight', '~> 5.3.0'
 gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
