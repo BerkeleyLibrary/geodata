@@ -8,6 +8,9 @@ x-app: &app
     - DATABASE_URL=postgres://root:root@db/geodata-dev?pool=5
     - RAILS_ENV=${RAILS_ENV:-development}
     - SOLR_URL=http://solr:8983/solr/geodata-test
+    - GEODATA_SPATIAL_HEALTHCHECK_URL=https://spatial.lib.berkeley.edu/public/berkeley-status/data.zip
+    - GEODATA_GEOSERVER_PUBLIC_HEALTHCHECK_URL=https://geoservices.lib.berkeley.edu/geoserver/wms?service=WMS&request=GetCapabilities
+    - GEODATA_GEOSERVER_SECURE_HEALTHCHECK_URL=https://geoservices.lib.berkeley.edu/geoserver/wms?service=WMS&request=GetCapabilities
   volumes:
     - ./:/opt/app:delegated
 
@@ -23,6 +26,9 @@ services:
     volumes:
       - ./:/opt/app:delegated
       - selenium_downloads:/opt/app/tmp/selenium_downloads
+    extra_hosts:
+      - geoservices.lib.berkeley.edu:128.32.10.252
+      - spatial.lib.berkeley.edu:128.32.10.252
 
   db:
     image: postgres:16

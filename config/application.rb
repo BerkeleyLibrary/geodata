@@ -1,5 +1,7 @@
 # Read Docker secrets into the environment
 Dir['/run/secrets/*'].each do |filepath|
+  next unless File.file?(filepath)
+
   secret = File.read(filepath)
   secret_name = File.basename(filepath)
   ENV[secret_name] ||= secret unless secret.empty?
