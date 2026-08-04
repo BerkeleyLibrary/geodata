@@ -51,6 +51,7 @@ module CommonHelpers
 
   def decoded_url(url)
     uri = URI.parse(url)
+    return uri.path if uri.query.nil?
     decoded_query = URI.decode_www_form_component(uri.query)
     URI.decode_www_form_component("#{uri.path}?#{decoded_query}")
   end
