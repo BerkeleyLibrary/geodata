@@ -12,9 +12,9 @@ RSpec.describe 'OKComputer', type: :request do
     expected_keys = %w[default database database-migrations solr]
 
     {
-      'geoserver'        => Rails.configuration.x.servers[:geoserver],
+      'geoserver' => Rails.configuration.x.servers[:geoserver],
       'geoserver_secure' => Rails.configuration.x.servers[:geoserver_secure],
-      'spatial_server'   => Rails.configuration.x.servers[:spatial_server]
+      'spatial_server' => Rails.configuration.x.servers[:spatial_server]
     }.each { |name, url| expected_keys << name if url.present? }
 
     expect(response.parsed_body.keys).to match_array expected_keys
