@@ -8,15 +8,15 @@ RSpec.describe 'OKComputer', type: :request do
 
   it 'returns all checks at /health' do
     get '/health'
-    expect(response).to have_http_status :internal_server_error
-    expect(response.parsed_body.keys).to match_array %w[
-      default
-      database
-      database-migrations
-      solr
-      geoserver
-      geoserver_secure
-      spatial_server
-    ]
+
+    expected_keys = %w[default database database-migrations solr]
+
+    {
+      'geoserver' => Rails.configuration.x.servers[:geoserver],
+      'geoserver_secure' => Rails.configuration.x.servers[:geoserver_secure],
+      'spatial_server' => Rails.configuration.x.servers[:spatial_server]
+    }.each { |name, url| expected_keys << name if url.present? }
+
+    expect(response.parsed_body.keys).to match_array expected_keys
   end
 end

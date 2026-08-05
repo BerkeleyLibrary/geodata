@@ -16,7 +16,7 @@ RSpec.shared_examples 'export geofile to local' do |file_name, link_name|
     rm_files([export_file_path])
   end
 
-  it "export geofle: #{file_name}" do
+  it "export geofile: #{file_name}" do
     find_link(link_name).click
     sleep 5
     expect(File.exist?(export_file_path)).to be_truthy, "Error: no exported geofile not found - #{export_file_path}"
