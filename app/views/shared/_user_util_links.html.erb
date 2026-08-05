@@ -6,7 +6,7 @@
         </li>
         <% else %>
         <li class="nav-item">
-            <%= link_to t('links.login'),  user_calnet_omniauth_authorize_path, data: { turbo_method: :post}, class: 'nav-link login' %>
+            <%= button_to t('links.login'),  user_calnet_omniauth_authorize_path, data: { turbo_method: :post}, class: 'nav-link login' %>
         </li>
         <% end %>
     </ul>

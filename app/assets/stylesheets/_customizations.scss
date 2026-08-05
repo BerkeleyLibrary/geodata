@@ -32,6 +32,11 @@ main#main-container {
 .nav-link.login,
 .nav-link.logout {
     color: $link-color;
+
+    &:hover {
+            color: #004e9f;
+            text-decoration: underline;
+        }
 }
 
 ul.facet-values {
@@ -56,7 +61,22 @@ ul.facet-values {
         color: #006FD6;
 
         &:hover {
-            color: #0044B3;
+            color: #004e9f;
+            text-decoration: underline;
+        }
+    }
+}
+
+.sidebar-buttons .authentication .card-header form.button_to {
+    display: inline;
+
+    button.sidebar-btn {
+        color: $link-color;
+        background-color: transparent;
+        cursor: pointer;
+
+        &:hover {
+            color: #004e9f;
             text-decoration: underline;
         }
     }
