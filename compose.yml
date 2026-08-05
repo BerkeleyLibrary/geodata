@@ -63,12 +63,9 @@ services:
 
   selenium:
     image: selenium/standalone-chromium:latest
-    # image: selenium/standalone-chrome:latest
-    # image: selenium/standalone-chrome:4.10.0
     ports:
       - 4444:4444
       - 7900:7900
-    # platform: linux/amd64
     networks:
       default:
         aliases:

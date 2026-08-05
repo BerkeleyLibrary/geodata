@@ -23,7 +23,6 @@ jobs:
     env:
       COMPOSE_FILE: compose.yml:compose.ci.yml
       DOCKER_APP_IMAGE: ${{ needs.docker-build.outputs.image }}
-      RUN_TESTS: "true"
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
