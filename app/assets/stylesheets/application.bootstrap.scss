@@ -9,3 +9,13 @@ $link-color: #0073EB;
 @import "blacklight-frontend/app/assets/stylesheets/blacklight/blacklight";
 @import '@geoblacklight/frontend/app/assets/stylesheets/geoblacklight/geoblacklight';
 @import 'customizations';
+
+.list-group-item-action {
+  a.nav-link {
+    color: var(--bs-link-color, #006FD6) !important;
+
+    &:hover {
+      color: var(--bs-link-hover-color, #0044B3) !important;
+    }
+  }
+}
