@@ -7,7 +7,7 @@ RSpec.describe 'View Search Result' do
 
   it 'has correct record title' do
     within('#document') do
-      expect(page).to have_css('h1', text: 'Intersections, San Benito County, California, 2016')
+      expect(page).to have_selector('h1', text: 'Intersections, San Benito County, California, 2016')
     end
   end
 
