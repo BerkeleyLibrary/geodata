@@ -75,7 +75,7 @@ USER $APP_USER
 
 # Copy over only the files which are needed to perform a bundle install.
 COPY --chown=geodata .ruby-version Gemfile* ./
-RUN bundle install
+RUN gem install bundler:4.0.17 && bundle install
 
 # Copy the rest of the codebase.
 COPY --chown=geodata . .

@@ -15,8 +15,11 @@ Capybara.register_driver(:remote_chrome) do |app|
   chrome_args = %w[
     --disable-smooth-scrolling
     --window-size=2560,1344
-    --disable-site-isolation-trials
+    --disable-gpu
+    --disable-dev-shm-usage
+    --no-sandbox
   ]
+  chrome_args << '--host-resolver-rules=MAP localhost app'
 
   chrome_options = Selenium::WebDriver::Chrome::Options.new(args: chrome_args).tap do |options|
     options.add_preference(:download, prompt_for_download: false, directory_upgrade: true, default_directory: '/home/seluser/Downloads')
@@ -39,7 +42,7 @@ Capybara.register_driver(:remote_chrome) do |app|
 end
 
 Capybara.default_driver = Capybara.javascript_driver = :remote_chrome
-Capybara.app_host = "http://#{IPSocket.getaddress(Socket.gethostname)}:3000"
+Capybara.app_host = 'http://localhost:3000'
 Capybara.server_host = '0.0.0.0'
 Capybara.always_include_port = true
 Capybara.run_server = false

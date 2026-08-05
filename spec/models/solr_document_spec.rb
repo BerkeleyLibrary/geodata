@@ -8,13 +8,14 @@ RSpec.describe SolrDocument do
   describe 'extensions' do
     let(:extensions) { SolrDocument.registered_extensions.pluck :module_obj }
 
-    it 'uses the email extension' do
-      expect(extensions).to include Blacklight::Document::Email
-    end
+    # commented out because these blacklight extensions have been removed locally
+    # it 'uses the email extension' do
+    #   expect(extensions).to include Blacklight::Document::Email
+    # end
 
-    it 'uses the sms extension' do
-      expect(extensions).to include Blacklight::Document::Sms
-    end
+    # it 'uses the sms extension' do
+    #   expect(extensions).to include Blacklight::Document::Sms
+    # end
 
     it 'uses the dublin core extension' do
       expect(extensions).to include Blacklight::Document::DublinCore
