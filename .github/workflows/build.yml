@@ -23,7 +23,6 @@ jobs:
     env:
       COMPOSE_FILE: compose.yml:compose.ci.yml
       DOCKER_APP_IMAGE: ${{ needs.docker-build.outputs.image }}
-      RUN_TESTS: "false"
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -46,7 +45,7 @@ jobs:
           docker compose exec -u root app chown -R geodata:geodata artifacts
 
       - name: Run RSpec
-        if: ${{ always() && env.RUN_TESTS == 'true' }}
+        if: ${{ always() }}
         run: |
           docker compose exec -e RAILS_ENV=test app rspec --format progress --format html --out artifacts/rspec.html
 
