@@ -6,7 +6,6 @@
 
 require File.expand_path('config/application', __dir__)
 Rails.application.load_tasks
-require 'solr_wrapper' unless Rails.env.production?
 
 # ------------------------------------------------------------
 # Setup
