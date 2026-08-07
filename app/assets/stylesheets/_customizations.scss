@@ -67,18 +67,14 @@ ul.facet-values {
     }
 }
 
-.sidebar-buttons .authentication .card-header form.button_to {
-    display: inline;
+.sidebar-buttons .authentication .card-header form.button_to button.sidebar-btn {
+    background-color: $link-color;
+    color: #ffffff;
 
-    button.sidebar-btn {
-        color: $link-color;
-        background-color: transparent;
-        cursor: pointer;
-
-        &:hover {
-            color: #004e9f;
-            text-decoration: underline;
-        }
+    &:hover {
+        background-color: #0069d9;
+        color: #ffffff;
+        border-color: #0062cc;
     }
 }
 
