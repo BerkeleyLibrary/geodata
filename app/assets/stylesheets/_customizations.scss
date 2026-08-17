@@ -22,7 +22,7 @@ main#main-container {
 }
 
 .navbar {
-    height: 6em;
+    min-height: 6em;
 }
 
 .btn-primary {
@@ -35,9 +35,9 @@ main#main-container {
     color: $link-color;
 
     &:hover {
-            color: #004e9f;
-            text-decoration: underline;
-        }
+        color: #004e9f;
+        text-decoration: underline;
+    }
 }
 
 ul.facet-values {
