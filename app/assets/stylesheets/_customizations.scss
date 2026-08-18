@@ -21,8 +21,24 @@ main#main-container {
     flex: 1 0 auto;
 }
 
-.navbar {
-    height: 6em;
+.topbar {
+    min-height: 6em;
+}
+
+@media (max-width: 768px) {
+    .topbar {
+        min-height: 0;
+    }
+
+    .topbar .navbar-brand {
+        max-width: calc(100% - 5rem);
+    }
+
+    .topbar .navbar-brand img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+    }
 }
 
 .btn-primary {
@@ -35,9 +51,9 @@ main#main-container {
     color: $link-color;
 
     &:hover {
-            color: #004e9f;
-            text-decoration: underline;
-        }
+        color: #004e9f;
+        text-decoration: underline;
+    }
 }
 
 ul.facet-values {

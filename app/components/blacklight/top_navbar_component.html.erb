@@ -1,0 +1,12 @@
+<nav class="navbar navbar-expand-md border-bottom topbar" aria-label="<%= aria_label %>">
+    <div class="container">
+        <%= link_to image_tag('geodata_logo_color.svg', alt: 'GeoData @ UC Berkeley'), blacklight_config.logo_link, class: 'navbar-brand' %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#user-util-collapse" aria-controls="user-util-collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-md-end" id="user-util-collapse">
+            <%= render 'shared/user_util_links' %>
+        </div>
+    </div>
+</nav>
