@@ -1,20 +1,33 @@
 export default function initializeMetadataDownload() {
     const modal = document.getElementById("blacklight-modal")
 
-    modal.addEventListener("click", (event) => {
-        if (event.target.closest("#btn-metadata-download")) {
-            event.preventDefault();
-            event.stopPropagation();
+    const updateDownloadLink = (metadata) => {
+        const download = modal.querySelector("#btn-metadata-download")
+        const refUrl = metadata?.getAttribute("data-ref-endpoint")
 
-            const metadata = modal.querySelector(".pill-metadata.active[data-ref-endpoint]") ||
-                modal.querySelector(".pill-metadata[data-ref-endpoint]");
-            const refUrl = metadata?.getAttribute("data-ref-endpoint");
-
-            if (refUrl) {
-                window.open(refUrl, "_blank");
-            }
+        if (!download || !refUrl) {
+            return
         }
-    }, true);
+
+        download.setAttribute("href", refUrl)
+        download.setAttribute("target", "_blank")
+        download.setAttribute("rel", "noopener noreferrer")
+        download.setAttribute("aria-label", "Download metadata (opens in a new tab)")
+    }
+
+    modal.addEventListener("click", (event) => {
+        const metadata = event.target.closest(".pill-metadata[data-ref-endpoint]")
+        const download = event.target.closest("#btn-metadata-download")
+
+        if (metadata) {
+            updateDownloadLink(metadata)
+        } else if (download) {
+            updateDownloadLink(
+                modal.querySelector(".pill-metadata.active[data-ref-endpoint]") ||
+                modal.querySelector(".pill-metadata[data-ref-endpoint]")
+            )
+        }
+    }, true)
 
     modal.addEventListener("focus", (e) => {
         if (!Array.from(e.target.classList).includes("show")) {
