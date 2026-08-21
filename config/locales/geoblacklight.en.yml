@@ -1,5 +1,7 @@
 en:
   geoblacklight:
+    download:
+      download_metadata_new_tab: 'Download metadata (opens in a new tab)'
     home:
       headline: 'Explore and discover...'
       search_heading: 'Find the maps and data you need'

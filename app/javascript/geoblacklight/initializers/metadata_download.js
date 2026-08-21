@@ -10,9 +10,6 @@ export default function initializeMetadataDownload() {
         }
 
         download.setAttribute("href", refUrl)
-        download.setAttribute("target", "_blank")
-        download.setAttribute("rel", "noopener noreferrer")
-        download.setAttribute("aria-label", "Download metadata (opens in a new tab)")
     }
 
     modal.addEventListener("click", (event) => {
@@ -22,10 +19,13 @@ export default function initializeMetadataDownload() {
         if (metadata) {
             updateDownloadLink(metadata)
         } else if (download) {
-            updateDownloadLink(
-                modal.querySelector(".pill-metadata.active[data-ref-endpoint]") ||
-                modal.querySelector(".pill-metadata[data-ref-endpoint]")
-            )
+            const activeMetadata = modal.querySelector(".pill-metadata.active[data-ref-endpoint]")
+
+            if (activeMetadata) {
+                updateDownloadLink(activeMetadata)
+            } else {
+                event.preventDefault()
+            }
         }
     }, true)
 
