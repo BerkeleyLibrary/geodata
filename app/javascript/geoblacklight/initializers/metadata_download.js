@@ -1,47 +1,46 @@
+export class GeoBlacklightMetadataDownloadButton {
+    constructor(el, i, options = {}) {
+        this.options = options
+        this.el = typeof el === "string" ? document.querySelector(el) : el
+        this.download = document.querySelector(this.options.target || this.el.getAttribute("data-ref-download"))
+        // On initialization only do this for the first one.
+        if (i === 0) {
+            this.setRefUrl()
+        }
+        this.configureHandler()
+    }
+
+    configureHandler() {
+        this.el.addEventListener("click", () => this.setRefUrl())
+    }
+
+    setRefUrl() {
+        const refUrl = this.el.getAttribute("data-ref-endpoint")
+        if (!refUrl) {
+            this.download.style.display = "none"
+        } else {
+            this.download.style.display = ""
+            this.download.setAttribute("href", refUrl)
+        }
+    }
+}
+
 export default function initializeMetadataDownload() {
     const modal = document.getElementById("blacklight-modal")
 
-    const updateDownloadLink = (metadata) => {
-        const download = modal.querySelector("#btn-metadata-download")
-        const refUrl = metadata?.getAttribute("data-ref-endpoint")
-
-        if (!download || !refUrl) {
-            return
-        }
-
-        download.setAttribute("href", refUrl)
-    }
-
-    modal.addEventListener("click", (event) => {
-        const metadata = event.target.closest(".pill-metadata[data-ref-endpoint]")
-        const download = event.target.closest("#btn-metadata-download")
-
-        if (metadata) {
-            updateDownloadLink(metadata)
-        } else if (download) {
-            const activeMetadata = modal.querySelector(".pill-metadata.active[data-ref-endpoint]")
-
-            if (activeMetadata) {
-                updateDownloadLink(activeMetadata)
-            } else {
-                event.preventDefault()
-            }
-        }
-    }, true)
-
-    modal.addEventListener("focus", (e) => {
-        if (!Array.from(e.target.classList).includes("show")) {
-            return
-        }
+    // Use Blacklight's dialog-based modal dispatches these custom events
+    modal.addEventListener("show.blacklight.blacklight-modal", (e) => {
         e.target.querySelectorAll(".metadata-body").forEach((el) => {
             el.closest(".modal-content").classList.add("metadata-modal")
         })
+
+        e.target.querySelectorAll(".pill-metadata").forEach((element, i) => {
+            console.log(element)
+            new GeoBlacklightMetadataDownloadButton(element, i)
+        })
     })
 
-    modal.addEventListener("blur", (e) => {
-        if (Array.from(e.target.classList).includes("show")) {
-            return
-        }
+    modal.addEventListener("hide.blacklight.blacklight-modal", (e) => {
         e.target.querySelectorAll(".metadata-body").forEach((el) => {
             el.closest(".modal-content").classList.remove("metadata-modal")
         })
