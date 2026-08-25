@@ -19,10 +19,12 @@ RSpec.describe 'View Search Result' do
     it 'clicking the metadata link, triggers the modal', js: true do
       find('#metadataLink').click
 
+      expect(page).to have_css('.metadata-view a.pill-metadata.nav-link', visible: true)
+      find('a.pill-metadata.nav-link', text: 'ISO 19139', visible: true).click
+
       expect(page).to have_css('a.pill-metadata.nav-link.active',
                                text: 'ISO 19139',
                                visible: true)
-
       expect(page).to have_css('a.pill-metadata.nav-link.active[data-ref-endpoint="https://spatial.lib.berkeley.edu/metadata/berkeley-s7038h/iso19139.xml"]')
       expect(page).to have_css('a.pill-metadata.nav-link.active[data-bs-toggle="pill"]')
     end
