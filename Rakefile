@@ -17,6 +17,7 @@ task setup: %w[db:setup]
 # Check (setup + coverage)
 
 desc 'Set up, check test coverage'
+task check: %w[setup geodata:index:seed spec]
 task check: %w[setup geoblacklight:index:seed spec]
 
 # clear rspec/rails default :spec task
