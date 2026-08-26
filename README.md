@@ -32,6 +32,9 @@ docker compose logs updater db solr
 
 # Rerun initialization when needed
 docker compose run --rm updater
+
+# Run db setup in test ENV
+docker compose run --rm -e RAILS_ENV=test app rails db:setup
 ```
 
 ### Accessing services
