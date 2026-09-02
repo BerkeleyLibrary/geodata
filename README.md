@@ -9,7 +9,7 @@ Geodata web portal developed from Geoblacklight 4.4.2
 ```sh
 # Build container images
 docker compose build --pull
-# or 
+# or
 docker compose build --pull --no-cache
 
 # Start the stack in the background
@@ -38,6 +38,22 @@ The mechanics of loading them into the application are fairly simple:
 - This is preferable to storing that in the _actual_ environment because it ensures _only the Rails process can see that config value_. It's also convenient, though, because you can use ENV to access the value.
 
 If you're curious, the code that does this is in `config/application.rb`.
+
+#### ENV["GEOBLACKLIGHT_BASEMAP_PROVIDER"]
+
+Configure the basemap provider by setting the `GEOBLACKLIGHT_BASEMAP_PROVIDER` environment variable. See [GeoBlacklight V4's catalog_controller](https://github.com/geoblacklight/geoblacklight/blob/v4.6.0/lib/generators/geoblacklight/templates/catalog_controller.rb#L314) for the list of supported values.
+
+As of the time of writing, valid values are:
+
+- `"positron"` (default)
+- `"darkMatter"`
+- `"positronLite"`
+- `"worldAntique"`
+- `"worldEco"`
+- `"flatBlue"`
+- `"midnightCommander"`
+- `"openstreetmapHot"`
+- `"openstreetmapStandard"`
 
 ### Helpful Commands
 
