@@ -285,7 +285,7 @@ class CatalogController < ApplicationController
     # 'openstreetmapHot'
     # 'openstreetmapStandard'
 
-    config.basemap_provider = 'openstreetmapStandard'
+    config.basemap_provider = ENV.fetch('GEOBLACKLIGHT_BASEMAP_PROVIDER') { 'positron' }
 
     # Configuration for autocomplete suggestor
     config.autocomplete_enabled = true
