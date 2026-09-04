@@ -53,6 +53,10 @@ startup, each nonempty file is loaded into an environment variable named after t
 file, but only when that variable is not already set. Explicit environment variables
 therefore take precedence over mounted secrets.
 
+The GeoBlacklight map basemap provider defaults to `openstreetmapStandard` and can be
+overridden by setting the `GEOBLACKLIGHT_BASEMAP_PROVIDER` environment variable (see
+`app/controllers/catalog_controller.rb` for the list of providers).
+
 ### CSS development
 
 The updater performs the initial CSS build. Rebuild after changing stylesheets, or
