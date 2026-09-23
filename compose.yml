@@ -52,7 +52,7 @@ services:
 
   updater:
     <<: *app
-    command: ["rails", "db:prepare", "css:build", "geodata:index:seed", "geoblacklight:index:seed"]
+    command: ["rails", "db:prepare", "assets:clobber", "css:build",  "assets:precompile", "geodata:index:seed", "geoblacklight:index:seed"]
     depends_on:
       db:
         condition: service_healthy
