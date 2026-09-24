@@ -230,9 +230,12 @@ WMS_PARAMS:
 
 # Settings for leaflet
 LEAFLET:
+  # Tiles are proxied through BasemapTilesController so the CARTO API key
+  # stays server-side. TODO: or should we proxy thought Nginx?
   BASEMAPS:
     positron:
-      url: 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png?key=<%= ENV.fetch("CARTO_API_KEY", "YOUR_KEY") %>'
+    # url: 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png?key=<%= ENV.fetch("CARTO_API_KEY", "YOUR_KEY") %>'
+    url: '/carto/light_all/{z}/{x}/{y}{retina}.png'
   MAP:
   BOUNDSOVERLAY:
     INDEX:

@@ -43,6 +43,8 @@ Rails.application.routes.draw do
   end
   resources :download, only: [:show]
 
+  get 'carto/light_all/:z/:x/:y', to: 'basemap_tiles#carto', format: false, constraints: { y: %r{[^/]+} }
+
   # Map OkComputer's /health/all.json to /health
   get '/health', to: 'ok_computer/ok_computer#index', defaults: { format: :json }
 end
