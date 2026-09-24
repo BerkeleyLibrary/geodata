@@ -230,6 +230,9 @@ WMS_PARAMS:
 
 # Settings for leaflet
 LEAFLET:
+  BASEMAPS:
+    positron:
+      url: 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}{retina}.png?key=<%= ENV.fetch("CARTO_API_KEY", "YOUR_KEY") %>'
   MAP:
   BOUNDSOVERLAY:
     INDEX:
