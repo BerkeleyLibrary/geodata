@@ -318,7 +318,7 @@ class CatalogController < ApplicationController
     # 'openstreetmapStandard'
     #
     # Can be overridden via the GEOBLACKLIGHT_BASEMAP_PROVIDER environment variable.
-    config.basemap_provider = ENV.fetch('GEOBLACKLIGHT_BASEMAP_PROVIDER', 'openstreetmapStandard')
+    config.basemap_provider = ENV.fetch('GEOBLACKLIGHT_BASEMAP_PROVIDER', 'positron')
 
     # Configuration for autocomplete suggestor
     config.autocomplete_enabled = true

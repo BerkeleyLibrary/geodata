@@ -8,6 +8,7 @@ x-app: &app
     - DATABASE_URL=postgres://root:root@db/geodata-dev?pool=5
     - RAILS_ENV=${RAILS_ENV:-development}
     - SOLR_URL=http://solr:8983/solr/geodata-test
+    - CARTO_API_KEY=${CARTO_API_KEY:-}
   volumes:
     - ./:/opt/app:delegated
 
@@ -52,7 +53,7 @@ services:
 
   updater:
     <<: *app
-    command: ["rails", "db:prepare", "css:build", "geodata:index:seed", "geoblacklight:index:seed"]
+    command: ["rails", "db:prepare", "assets:clobber", "css:build",  "assets:precompile", "geodata:index:seed", "geoblacklight:index:seed"]
     depends_on:
       db:
         condition: service_healthy

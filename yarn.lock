@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@geoblacklight/frontend@5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@geoblacklight/frontend/-/frontend-5.3.0.tgz#0f67ec58c18c990eb81c75d0882f60ab558c1483"
-  integrity sha512-rxJi/SSfIMtQUdi1D2ekc55BIgdjvaFJAe3drU1JRNQ/6UskZJ+rafaNUkqura1v2q9e5cUdemR4ZEtYrwYYbg==
+"@geoblacklight/frontend@5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@geoblacklight/frontend/-/frontend-5.4.0.tgz#380434cfbe170bbb17b5a98e311f2f92bab572ab"
+  integrity sha512-mm6OokESopUelt6PW4ZhcmdyRkWt39Tld3+7Xyy8E6VgWBPC01f39MXeTzLBifzGeVYKzVM5n6HPb4xUE8eqLA==
   dependencies:
     "@github/auto-complete-element" "^3.6.2"
     "@hotwired/stimulus" "^3.2.2"
