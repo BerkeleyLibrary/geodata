@@ -57,6 +57,8 @@ The GeoBlacklight map basemap provider defaults to `openstreetmapStandard` and c
 overridden by setting the `GEOBLACKLIGHT_BASEMAP_PROVIDER` environment variable (see
 `app/controllers/catalog_controller.rb` for the list of providers).
 
+Set `CARTO_API_KEY` in your .env file. The API key is available in LastPass.
+
 ### CSS development
 
 The updater performs the initial CSS build. Rebuild after changing stylesheets, or
