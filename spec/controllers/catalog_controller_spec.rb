@@ -21,7 +21,7 @@ RSpec.describe CatalogController do
       ENV.delete('GEOBLACKLIGHT_BASEMAP_PROVIDER')
       reload_catalog_controller
 
-      expect(described_class.blacklight_config.basemap_provider).to eq('openstreetmapStandard')
+      expect(described_class.blacklight_config.basemap_provider).to eq('positron')
     end
 
     it 'uses the value of GEOBLACKLIGHT_BASEMAP_PROVIDER when set' do
