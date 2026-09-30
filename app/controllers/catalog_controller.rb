@@ -335,4 +335,11 @@ class CatalogController < ApplicationController
       end
     end
   end
+
+  private
+
+  # Keep anonymous traffic from creating records in the searches table.
+  def find_search_session
+    super if current_user.present?
+  end
 end
