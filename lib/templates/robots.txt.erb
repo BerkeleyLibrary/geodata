@@ -11,8 +11,9 @@ Disallow: /?_
 Disallow: /?bbox
 Disallow: /?page=
 Disallow: /bookmarks
-Disallow: /catalog.html?f
-Disallow: /catalog.html?_
+# Block search query combinations while allowing individual catalog records.
+Disallow: /catalog?
+Disallow: /catalog.html?
 Disallow: /catalog.atom
 Disallow: /catalog.rss
 Disallow: /catalog*f[
