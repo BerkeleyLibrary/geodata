@@ -25,7 +25,7 @@ RSpec.describe 'View Search Result' do
       expect(page).to have_css('a.pill-metadata.nav-link.active',
                                text: 'ISO 19139',
                                visible: true)
-      expect(page).to have_css('a.pill-metadata.nav-link.active[data-ref-endpoint="https://spatial.lib.berkeley.edu/metadata/berkeley-s7038h/iso19139.xml"]')
+      expect(page).to have_css('a.pill-metadata.nav-link.active[data-ref-endpoint="https://spatial.ucblib.org/maps/berkeley-ark28722-s7038h/metadata/iso19139.xml"]')
       expect(page).to have_css('a.pill-metadata.nav-link.active[data-bs-toggle="pill"]')
     end
   end

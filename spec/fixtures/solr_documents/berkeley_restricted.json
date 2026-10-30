@@ -34,7 +34,7 @@
   "dct_accessRights_s": "Restricted",
   "dct_format_s": "Shapefile",
   "gbl_wxsIdentifier_s": "s7b12n",
-  "dct_references_s": "{\"http://www.opengis.net/def/serviceType/ogc/wfs\":\"https://geoservices-secure.lib.berkeley.edu/geoserver/wfs\",\"http://www.opengis.net/def/serviceType/ogc/wms\":\"https://geoservices-secure.lib.berkeley.edu/geoserver/wms\",\"http://www.isotc211.org/schemas/2005/gmd/\":\"https://spatial.lib.berkeley.edu/metadata/berkeley-s7b12n/iso19139.xml\",\"http://schema.org/downloadUrl\":\"https://spatial.lib.berkeley.edu/UCB/berkeley-s7b12n/data.zip\"}",
+  "dct_references_s": "{\"http://www.opengis.net/def/serviceType/ogc/wfs\":\"https://geoservices.ucblib.org/geoserver/restricted/wfs\",\"http://www.opengis.net/def/serviceType/ogc/wms\":\"https://geoservices.ucblib.org/geoserver/restricted/wms\",\"http://www.isotc211.org/schemas/2005/gmd/\":\"https://spatial.ucblib.org/maps/berkeley-ark28722-s7b12n/metadata/iso19139.xml\",\"http://schema.org/downloadUrl\":\"https://spatial.ucblib.org/maps/berkeley-ark28722-s7b12n/data/original/data.zip\"}",
   "id": "berkeley-s7b12n",
   "dct_identifier_sm": [
     "https://spatial.lib.berkeley.edu/viewpublic/berkeley-s7b12n"
