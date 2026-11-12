@@ -26,7 +26,6 @@ end
 
 {
   geoserver: Rails.configuration.x.servers[:geoserver],
-  geoserver_secure: Rails.configuration.x.servers[:geoserver_secure],
   spatial_server: Rails.configuration.x.servers[:spatial_server]
 }.each do |name, url|
   next if url.blank?
