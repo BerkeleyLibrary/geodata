@@ -8,26 +8,63 @@ import Geoblacklight from "geoblacklight";
 import { application } from "controllers/application"
 import LeafletViewerController from "geoblacklight/controllers/leaflet_viewer_controller";
 
+const focusableSelectors = 'a[href], button, input, select, object, embed, summary, [tabindex]';
+
 // Custom Leaflet Viewer Controller that adds aria-hidden for accessibility
 class CustomLeafletViewerController extends LeafletViewerController {
   connect() {
     super.connect();
+
     // Hide map from screen readers but allow mouse interaction
     this.element.setAttribute('aria-hidden', 'true');
     this.element.setAttribute('tabindex', '-1');
-
-    // Disable keyboard focus on all focusable children but keep mouse interaction
-    this.disableFocusableChildren();
-
+    this.observeFocusableChildren();
+    this.disableFocusableChildren(this.element);
   }
 
-  disableFocusableChildren() {
-    const focusableSelectors = 'button, [href], input, select, textarea';
-    this.element.querySelectorAll(focusableSelectors).forEach(el => {
-      el.setAttribute('tabindex', '-1');
+  disconnect() {
+    this.focusableObserver?.disconnect();
+    super.disconnect();
+  }
+
+  disableFocusableChildren(root) {
+    if (root.matches(focusableSelectors) && root.getAttribute('tabindex') !== '-1') {
+      root.setAttribute('tabindex', '-1');
+    }
+    root.querySelectorAll(focusableSelectors).forEach(element => {
+      if (element.getAttribute('tabindex') !== '-1') {
+        element.setAttribute('tabindex', '-1');
+      }
     });
   }
 
+  observeFocusableChildren() {
+    this.focusableObserver = new MutationObserver((mutations) => {
+      mutations.forEach(mutation => {
+        if (mutation.type === 'attributes') {
+          if (!this.element.contains(mutation.target)) return;
+          if (mutation.target === this.element && mutation.target.getAttribute('tabindex') !== '-1') {
+            mutation.target.setAttribute('tabindex', '-1');
+          } else if (mutation.target.matches(focusableSelectors) && mutation.target.getAttribute('tabindex') !== '-1') {
+            mutation.target.setAttribute('tabindex', '-1');
+          }
+        } else if (mutation.type === 'childList') {
+          mutation.addedNodes.forEach(node => {
+            if (node.nodeType === 1 && this.element.contains(node)) {
+              this.disableFocusableChildren(node);
+            }
+          });
+        }
+      });
+    });
+
+    this.focusableObserver.observe(this.element, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['tabindex', 'href', 'contenteditable', 'controls']
+    });
+  }
 }
 
 // Register the custom controller after GeoBlacklight loads to override its registration
