@@ -110,12 +110,10 @@ docker compose down -v
 
 - GeoData: https://geodata.ucblib.org/
 - Solr: https://solr.ucblib.org
-- GeoServer Public (not in stack): https://geoserver-public.ucblib.org/
-- GeoServer Secure (not in stack): https://geoserver-secure.ucblib.org/
+- GeoServer (not in stack): https://geoservices.ucblib.org/
 
 ### Production
 
 - GeoData: https://geodata.lib.berkeley.edu/
 - Solr: https://solr.swarm-ewh-prod.devlib.berkeley.edu/
-- GeoServer Public (not in stack): https://geoservices.lib.berkeley.edu/
-- GeoServer Secure (not in stack): https://geoservices-secure.lib.berkeley.edu/
+- GeoServer (not in stack): https://geoservices.lib.berkeley.edu/

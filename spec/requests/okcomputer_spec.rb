@@ -13,7 +13,6 @@ RSpec.describe 'OKComputer', type: :request do
 
     {
       'geoserver' => Rails.configuration.x.servers[:geoserver],
-      'geoserver_secure' => Rails.configuration.x.servers[:geoserver_secure],
       'spatial_server' => Rails.configuration.x.servers[:spatial_server]
     }.each { |name, url| expected_keys << name if url.present? }
 
