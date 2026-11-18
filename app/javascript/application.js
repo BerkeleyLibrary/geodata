@@ -62,7 +62,7 @@ class CustomLeafletViewerController extends LeafletViewerController {
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: ['tabindex', 'href', 'contenteditable', 'controls']
+      attributeFilter: ['tabindex', 'href']
     });
   }
 }
