@@ -2,7 +2,7 @@
 # Target: base
 # Includes system dependencies common to both dev and production.
 
-FROM ruby:3.4.10 AS base
+FROM ruby:3.4.12-slim AS base
 
 # This is just metadata and doesn't actually "expose" this port. Rather, it
 # tells other tools (e.g. Traefik) what port the service in this image is
@@ -20,17 +20,15 @@ RUN groupadd --system --gid $APP_UID $APP_USER && \
 
 # Install standard packages from the Debian repository
 RUN apt-get update -qq && \
+    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    bash \
     curl \
-    default-jre-headless \
     ca-certificates \
-    libpq-dev \
+    libpq5 \
     libvips42 && \
     rm -rf /var/lib/apt/lists/*
 
-#Install Node.js and Yarn from their own repositories
-# Add Node.js package repository (version 16 LTS release) & install Node.js
+# Install Node.js 24 and Yarn.
 # -- note that the Node.js setup script takes care of updating the package list
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y --no-install-recommends nodejs
@@ -65,10 +63,12 @@ FROM base AS development
 USER root
 
 # Install system packages needed to build gems with C extensions.
-RUN apt-get install -y --no-install-recommends \
-    gcc \
-    g++ \
-    make
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    libyaml-dev \
+    pkg-config && \
+    rm -rf /var/lib/apt/lists/*
 
 # Drop back to the GeoData user
 USER $APP_USER
