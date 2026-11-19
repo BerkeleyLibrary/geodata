@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.10'
+ruby '3.4.12'
 
 gem 'berkeley_library-logging', '~> 0.3.0'
 gem 'berkeley_library-util', '~> 0.3'
