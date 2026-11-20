@@ -56,6 +56,20 @@ main#main-container {
     }
 }
 
+.show-tools .list-group-item button:is(#citationLink, #metadataLink) {
+    width: 100%;
+    padding: 8px 1rem 8px 1.5rem;
+    text-align: start;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.show-tools .list-group-item button#metadataLink {
+    width: calc(100% - 0.1rem);
+}
+
 ul.facet-values {
     span.selected {
         color: #208836 !important;

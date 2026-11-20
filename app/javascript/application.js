@@ -69,3 +69,18 @@ class CustomLeafletViewerController extends LeafletViewerController {
 
 // Register the custom controller after GeoBlacklight loads to override its registration
 application.register("leaflet-viewer", CustomLeafletViewerController);
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest('button[data-blacklight-modal~="trigger"][data-modal-url]');
+  if (!button) return;
+
+  event.preventDefault();
+  const url = button.dataset.modalUrl;
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) throw new TypeError("Request failed");
+      return response.text();
+    })
+    .then((content) => Blacklight.Modal.receiveAjax(content))
+    .catch((error) => Blacklight.Modal.onFailure.call({ url }, error));
+});
