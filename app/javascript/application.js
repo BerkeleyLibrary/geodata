@@ -71,11 +71,11 @@ class CustomLeafletViewerController extends LeafletViewerController {
 application.register("leaflet-viewer", CustomLeafletViewerController);
 
 document.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-citation-url]");
+  const button = event.target.closest('button[data-blacklight-modal~="trigger"][data-modal-url]');
   if (!button) return;
 
   event.preventDefault();
-  const url = button.dataset.citationUrl;
+  const url = button.dataset.modalUrl;
   fetch(url)
     .then((response) => {
       if (!response.ok) throw new TypeError("Request failed");
