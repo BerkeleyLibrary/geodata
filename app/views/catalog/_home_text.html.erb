@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class='col-sm'>
-      <%= content_tag :h3, t('geoblacklight.home.map_heading') %>
+      <%= content_tag :h3, t('geoblacklight.home.map_heading'), aria: { hidden: true } %>
       <%= render(Geoblacklight::LocationLeafletMapComponent.new(page: 'home', geosearch: { dynamic: false })) %>
     </div>
   </div>
