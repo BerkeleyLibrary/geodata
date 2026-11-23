@@ -11,12 +11,12 @@ RSpec.describe 'View Search Result' do
     end
   end
 
-  context 'metadata link' do
-    it 'displays the metadata link' do
-      expect(page).to have_link('Metadata', href: "/catalog/#{CommonHelpers::PUBLIC_RECORD_ID}/metadata")
+  context 'metadata button' do
+    it 'displays the metadata button with its metadata URL' do
+      expect(page).to have_css("button#metadataLink[data-modal-url='/catalog/#{CommonHelpers::PUBLIC_RECORD_ID}/metadata']", text: 'Metadata')
     end
 
-    it 'clicking the metadata link, triggers the modal', js: true do
+    it 'clicking the metadata button triggers the modal', js: true do
       find('#metadataLink').click
 
       expect(page).to have_css('.metadata-view a.pill-metadata.nav-link', visible: true)
@@ -27,6 +27,16 @@ RSpec.describe 'View Search Result' do
                                visible: true)
       expect(page).to have_css('a.pill-metadata.nav-link.active[data-ref-endpoint="https://spatial.ucblib.org/maps/berkeley-ark28722-s7038h/metadata/iso19139.xml"]')
       expect(page).to have_css('a.pill-metadata.nav-link.active[data-bs-toggle="pill"]')
+    end
+  end
+
+  context 'citation button' do
+    it 'opens the citation modal', js: true do
+      expect(page).to have_button('citationLink')
+
+      find('#citationLink').click
+
+      expect(page).to have_css('#blacklight-modal .modal-title', text: I18n.t('blacklight.tools.citation'))
     end
   end
 
